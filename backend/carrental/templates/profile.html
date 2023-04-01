@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+        <h3>Your Profile</h3>
+        <hr class="my-4">
+{#        <div style="display: inline-block"><h5>Username:</h5></div><div style="display: inline-block"><a>&nbsp;&nbsp;{{ current_user.username }}</a></div>#}
+{#        <br/>#}
+        <div style="display: inline-block"><h5>Email:</h5></div><div style="display: inline-block"><a>&nbsp;&nbsp;{{ current_user.email }}</a></div>
+        <br/>
+        <div style="display: inline-block"><h5>Birth date:</h5></div><div style="display: inline-block"><a>&nbsp;&nbsp;{{ current_user.birth_date }}</a></div>
+        <br/>
+        <div style="display: inline-block"><h5>Bio:</h5></div><div style="display: inline-block"><a>&nbsp;&nbsp;{{ current_user.bio }}</a></div>
+        <hr class="my-4">
+    </div>
+
+{% endblock %}

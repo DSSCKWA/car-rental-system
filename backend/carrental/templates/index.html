@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% set active_page = "index" %}
+{% block content %}
+<br/>
+    <div class="container">
+        <h1>Hello Houston!</h1>
+        <hr>
+        <p>Are you interested in astronomy?<br>If so, this is the perfect place for you. Here you can learn a lot about the planets and also see interesting animations.</p>
+        <div class="row">
+            <img src="{{url_for('static', filename='assets/astronaut.png')}}" alt="astronaut" width="400" height="400" class="col-md-auto">
+            <h4 class="col align-self-center">Have a good time! :D</h4>
+        </div>
+    </div>
+<br/>
+<script src="{{url_for('static', filename='js/main.js')}}"></script>
+{% endblock %}
