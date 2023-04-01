@@ -14,19 +14,19 @@ class User(db.Model, UserMixin):
     phone_number = db.Column(db.Integer, nullable=True)
     birth_date = db.Column(db.Date, nullable=True)
 
-    # username = db.Column(db.String(20), nullable=False, unique=True)
-    # settings = db.relationship("Settings", uselist=False, back_populates="user")
+    def get_id(self):
+        return self.user_id
 
-    # def __init__(self, user_dict):
-    #     self.user_id = user_dict['']
-    #     self.user_email_adress = user_dict['']
-    #     self.name = user_dict['']
-    #     self.surname = user_dict['']
-    #     self.permission = user_dict['']
-    #     self.password = user_dict['']
-    #     self.account_status = user_dict['']
-    #     self.phone_number = user_dict['']
-    #     self.birth_date = user_dict['']
+    def __init__(self, user_dict):
+        # self.user_id = user_dict['user_id']
+        self.user_email_adress = user_dict['user_email_adress']
+        self.name = user_dict['name']
+        self.surname = user_dict['surname']
+        self.permission = user_dict['permission']
+        self.password = user_dict['password']
+        self.account_status = user_dict['account_status']
+        self.phone_number = user_dict['phone_number']
+        self.birth_date = user_dict['birth_date']
 
     def serialize(self):
         return {

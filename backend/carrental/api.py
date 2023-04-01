@@ -1,9 +1,5 @@
 from flask import Blueprint
-from flask import request
-from flask_login import current_user
-from flask import Response
 
-from .extensions import db
 # from .models import Settings
 
 api = Blueprint('api', __name__)
