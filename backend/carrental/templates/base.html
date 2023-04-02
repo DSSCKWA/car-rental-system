@@ -5,7 +5,7 @@
         {%- block head %}
         <meta charset="UTF-8">
         <title>{% block title %}{{ title|default("Planets", true) }}{% endblock title %}</title>
-        <link rel="icon" href="{{url_for('static', filename='assets/planet-logo.png')}}">
+{#        <link rel="icon" href="{{url_for('static', filename='assets/planet-logo.png')}}">#}
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.1.3/dist/lux/bootstrap.min.css">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -19,7 +19,7 @@
         {% block navbar %}
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
           <div class="container">
-              <a class="navbar-brandar" href="/"><div class="logo-image"><img src="{{url_for('static', filename='assets/planet-logo.png')}}" width="50" height="50"></div></a>
+{#              <a class="navbar-brandar" href="/"><div class="logo-image"><img src="{{url_for('static', filename='assets/planet-logo.png')}}" width="50" height="50"></div></a>#}
               <a class="navbar-brand" href="/" style="font-size: 25px">&nbsp;&nbsp;PLANETS</a>
               <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"

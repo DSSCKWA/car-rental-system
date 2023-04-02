@@ -7,18 +7,28 @@ from .extensions import bcrypt, db, login_manager
 from .views import views
 
 
+def bad_request(e):
+    return {"code": e.code, "name": e.name, "description": e.description}, 400
+
+
 def unauthorized(e):
-    print("eeee: ", e)
-    return {"code": e.code, "name":e.name, "description": e.description}, 401
+    return {"code": e.code, "name": e.name, "description": e.description}, 401
+
+
+def forbidden(e):
+    return {"code": e.code, "name": e.name, "description": e.description}, 403
+
 
 def page_not_found(e):
-    print("eeee: ", e)
-    return {"code": e.code, "name":e.name, "description": e.description}, 404
+    return {"code": e.code, "name": e.name, "description": e.description}, 404
+
+
+def conflict(e):
+    return {"code": e.code, "name": e.name, "description": e.description}, 409
 
 
 def internal_server_error(e):
-    print("eeee: ", e)
-    return {"code": e.code, "name":e.name, "description": e.description}, 500
+    return {"code": e.code, "name": e.name, "description": e.description}, 500
 
 
 def create_app(config_class=Config):
@@ -34,8 +44,11 @@ def create_app(config_class=Config):
     app.register_blueprint(auth)
     app.register_blueprint(api)
 
+    app.register_error_handler(400, unauthorized)
+    app.register_error_handler(401, page_not_found)
+    app.register_error_handler(403, page_not_found)
     app.register_error_handler(404, page_not_found)
-    app.register_error_handler(401, unauthorized)
+    app.register_error_handler(409, page_not_found)
     app.register_error_handler(500, internal_server_error)
 
     with app.app_context():
