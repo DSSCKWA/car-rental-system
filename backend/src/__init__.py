@@ -18,9 +18,8 @@ def create_app(config_class=Config):
     app.register_blueprint(auth)
     app.register_blueprint(users)
 
-    app.register_error_handler(404, handle_error)
-    app.register_error_handler(401, handle_error)
-    app.register_error_handler(500, handle_error)
+    for code in [400, 401, 403, 404, 409, 500]:
+        app.register_error_handler(code, handle_error)
 
     with app.app_context():
         db.create_all()

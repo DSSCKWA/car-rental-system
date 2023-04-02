@@ -14,8 +14,10 @@ class User(db.Model, UserMixin):
     phone_number = db.Column(db.Integer, nullable=True)
     date_of_birth = db.Column(db.Date, nullable=True)
 
+
     def get_id(self):
         return self.user_id
+    
 
     def __init__(self, user_dict):
         self.user_email_address = user_dict['user_email_address']
@@ -26,6 +28,7 @@ class User(db.Model, UserMixin):
         self.account_status = user_dict['account_status']
         self.phone_number = user_dict['phone_number']
         self.date_of_birth = user_dict['date_of_birth']
+
 
     def serialize(self):
         return {
@@ -39,6 +42,7 @@ class User(db.Model, UserMixin):
             'phone_number': self.phone_number,
             'date_of_birth': self.date_of_birth
         }
+
 
     def deserialize(self, user_dict):
         User(user_dict)
