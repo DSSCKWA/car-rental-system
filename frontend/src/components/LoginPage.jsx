@@ -1,8 +1,11 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export function LoginPage() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+
+    const navigate = useNavigate()
 
     async function handleSubmit(e) {
         e.preventDefault()
@@ -24,16 +27,16 @@ export function LoginPage() {
 
         switch (body.permissions) {
             case 'admin':
-                window.location.href = '/admin'
+                navigate('/admin')
                 break
             case 'manager':
-                window.location.href = '/manager'
+                navigate('/manager')
                 break
             case 'worker':
-                window.location.href = '/worker'
+                navigate('/worker')
                 break
             case 'client':
-                window.location.href = '/client'
+                navigate('/client')
                 break
             default:
                 console.log('no permissions')
