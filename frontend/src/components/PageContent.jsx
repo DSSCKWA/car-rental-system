@@ -7,14 +7,15 @@ import { AdminPage } from './AdminPage'
 import { ManagerPage } from './ManagerPage.jsx'
 import { WorkerPage } from './WorkerPage.jsx'
 import { ClientPage } from './ClientPage.jsx'
-export function PageContent() {
+export function PageContent(props) {
+    const { user, setUser } = props
     return (
         <section className='page_content'>
             <Routes>
                 <Route path='/' element={<MainPage />} />
                 <Route path='/about' element={<AboutPage />} />
                 <Route path='/register' element={<RegisterPage />} />
-                <Route path='/login' element={<LoginPage />} />
+                <Route path='/login' element={<LoginPage user={user} setUser={setUser} />} />
                 <Route path='/admin' element={<AdminPage />} />
                 <Route path='/worker' element={<WorkerPage />} />
                 <Route path='/manager' element={<ManagerPage />} />

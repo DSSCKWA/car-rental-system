@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 export function RegisterPage() {
     const [email, setEmail] = useState('')
@@ -9,6 +10,7 @@ export function RegisterPage() {
     const [surname, setSurname] = useState('')
     const [dateOfBirth, setDateOfBirth] = useState('')
     const [registerSuccess, setRegisterSuccess] = useState(false)
+    const [error, setError] = useState('')
 
     async function handleSubmit(e) {
         e.preventDefault()
@@ -20,19 +22,18 @@ export function RegisterPage() {
             },
             body: JSON.stringify({ 'user_email_address': email, password, confirmPassword, 'name': username, 'phone_number': phone, surname, 'date_of_birth': dateOfBirth }),
         })
-        if (!response.ok) {
-            console.log('register failed')
-            return
-        }
         const body = await response.json()
         console.log('response', body)
+
+        if (!response.ok) {
+            console.log('register failed')
+            setError(body.description)
+            return
+        }
 
         if (body['user_id']) {
             console.log('register success', body)
             setRegisterSuccess(true)
-        } else {
-            console.log('register failed')
-            // TODO: add error message
         }
     }
 
@@ -40,7 +41,9 @@ export function RegisterPage() {
         return (
             <div className='register_success'>
                 <h1>Register Success</h1>
-                <p>You can now login</p>
+                <p>You can now
+                    <Link to={'/login'}> login </Link>
+                </p>
             </div>
         )
     }
@@ -81,8 +84,10 @@ export function RegisterPage() {
                 <div className='form_group'>
                     <button type='submit'>Register</button>
                 </div>
+                <div className='form_group'>
+                    <p>{error}</p>
+                </div>
             </form>
         </div>
     )
-
 }
