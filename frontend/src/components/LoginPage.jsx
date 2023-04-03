@@ -1,9 +1,12 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-export function LoginPage() {
+export function LoginPage(props) {
+    const { user, setUser } = props
+
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [error, setError] = useState('')
 
     const navigate = useNavigate()
 
@@ -18,12 +21,17 @@ export function LoginPage() {
             },
             body: JSON.stringify({ }),
         })
-        if (!response.ok) {
-            console.log('login failed')
-            return
-        }
+
         const body = await response.json()
         console.log('response', body)
+
+        if (!response.ok) {
+            console.log('login failed')
+            setError(body.description)
+            return
+        }
+
+        setUser(body)
 
         switch (body.permissions) {
             case 'admin':
@@ -40,7 +48,7 @@ export function LoginPage() {
                 break
             default:
                 console.log('no permissions')
-                // TODO: add error message
+                navigate('/')
         }
     }
 
@@ -58,6 +66,9 @@ export function LoginPage() {
                 </div>
                 <div className='form_group'>
                     <button type='submit'>Login</button>
+                </div>
+                <div className='form_group'>
+                    <p className='errorMessage'>{error}</p>
                 </div>
             </form>
         </div>
