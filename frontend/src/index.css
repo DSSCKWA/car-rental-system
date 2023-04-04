@@ -99,7 +99,7 @@ button:focus-visible {
   background-color: #202020;
 }
 
-.menu_item {
+.menu_item, .menu_btn {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -113,7 +113,7 @@ button:focus-visible {
     padding: 0 1em;
 }
 
-.menu_item > a {
+.menu_item > a,.menu_btn > a {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -127,13 +127,91 @@ button:focus-visible {
     padding: 0 1em;
 }
 
-.menu_item:hover {
+.menu_item:hover .menu_btn:hover{
     background-color: #1a1a1a;
     cursor: pointer;
 }
 
-.menu_item a:hover {
+.menu_item a:hover, .menu_btn:hover {
     color: #299bbe;
+    background-color: #1a1a1a;
+}
+
+.menu_btn {
+    width: 100%;
+    border: none;
+    border-radius: 0;
+    background-color: #202020;
+    font-weight: bold;
+}
+
+.reg_form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding: 1em;
+}
+
+.form_group {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    padding: 1em;
+    justify-content: space-between;
+}
+
+.form_group input {
+    width: 50%;
+    height: 100%;
+    padding: 0.5em;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: #1a1a1a;
+    cursor: pointer;
+    transition: border-color 0.25s;
+}
+
+.form_group label {
+    width: 35%;
+    height: 100%;
+    padding: 0.5em;
+    font-size: 1em;
+    font-weight: bold;
+    font-family: inherit;
+}
+
+.form_group button[type="submit"] {
+    width: 100%;
+    height: 100%;
+    padding: 0.5em;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    font-size: 1em;
+    font-weight: bold;
+    font-family: inherit;
+    background-color: #1a1a1a;
+    cursor: pointer;
+    transition: border-color 0.25s;
+}
+
+.form_group button[type="submit"]:hover {
+    border-color: #299bbe;
+}
+
+.errorMessage {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    padding: 1em;
+    justify-content: center;
+    color: chocolate;
+    text-align: center;
+    margin: 0 auto;
 }
 
 @media (prefers-color-scheme: light) {
@@ -148,3 +226,4 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
