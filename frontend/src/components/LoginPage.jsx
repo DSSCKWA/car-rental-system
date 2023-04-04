@@ -56,6 +56,7 @@ export function LoginPage(props) {
         <div className='login_page'>
             <h1>Login</h1>
             <form className='log_form' onSubmit={handleSubmit}>
+                <p className='errorMessage'>{error}</p>
                 <div className='form_group'>
                     <label htmlFor='email'>Email</label>
                     <input type='email' id='email' name='email' value={email} onChange={e => setEmail(e.target.value)} />
@@ -66,9 +67,6 @@ export function LoginPage(props) {
                 </div>
                 <div className='form_group'>
                     <button type='submit'>Login</button>
-                </div>
-                <div className='form_group'>
-                    <p className='errorMessage'>{error}</p>
                 </div>
             </form>
         </div>

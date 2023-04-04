@@ -62,7 +62,7 @@ export function Menu(props) {
             )}
 
             {props.user && <div className='menu_item'>
-                <button onClick={logout}>Log Out</button>
+                <button className='menu_btn' onClick={logout}>Log Out</button>
             </div>}
 
         </div>

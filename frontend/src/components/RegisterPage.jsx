@@ -53,6 +53,9 @@ export function RegisterPage() {
             <h1>Register</h1>
             <form className='reg_form' onSubmit={handleSubmit}>
                 <div className='form_group'>
+                    <p className='errorMessage'>{error}</p>
+                </div>
+                <div className='form_group'>
                     <label htmlFor='username'>Username</label>
                     <input type='text' id='username' name='username' value={username} onChange={e => setUsername(e.target.value)} />
                 </div>
@@ -76,16 +79,12 @@ export function RegisterPage() {
                     <label htmlFor='phone'>Phone</label>
                     <input type='tel' id='phone' name='phone' value={phone} onChange={e => setPhone(e.target.value)} />
                 </div>
-
                 <div className='form_group'>
                     <label htmlFor='date_of_birth'>Date of Birth</label>
                     <input type='date' id='date_of_birth' name='date_of_birth' value={dateOfBirth} onChange={e => setDateOfBirth(e.target.value)} />
                 </div>
                 <div className='form_group'>
                     <button type='submit'>Register</button>
-                </div>
-                <div className='form_group'>
-                    <p>{error}</p>
                 </div>
             </form>
         </div>
