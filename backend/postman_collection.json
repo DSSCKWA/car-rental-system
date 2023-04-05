@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a8c51519-8524-49f3-baa9-89be7d4104f0",
+		"_postman_id": "1f349e4f-cfe4-456d-882c-4735485ba31d",
 		"name": "Car Rental Service",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -66,6 +66,24 @@
 							"path": [
 								"auth",
 								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "me",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_PATH}}/auth/me",
+							"host": [
+								"{{BASE_PATH}}"
+							],
+							"path": [
+								"auth",
+								"me"
 							]
 						}
 					},

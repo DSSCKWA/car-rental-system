@@ -44,6 +44,14 @@ def register():
         db.session.commit()
         return new_user.serialize()
 
+@auth.route('/me', methods=['GET'])
+def me():
+    if session:
+        user = User.query.get(int(session['_user_id']))
+        if not user:
+            abort(404, description="User does not exist")
+        return user.serialize()
+    return {}
 
 @login_manager.user_loader
 def load_user(user_id):

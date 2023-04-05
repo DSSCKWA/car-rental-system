@@ -37,23 +37,7 @@ class User(db.Model, UserMixin):
             'name': self.name,
             'surname': self.surname,
             'permissions': self.permissions,
-            'password': self.password,
             'account_status': self.account_status,
             'phone_number': self.phone_number,
             'date_of_birth': self.date_of_birth
         }
-
-
-    def deserialize(self, user_dict):
-        User(user_dict)
-        # return {
-        #     self.user_id: user_dict['user_id'],
-        #     'user_email_address': self.user_email_address,
-        #     'name': self.name,
-        #     'surname': self.surname,
-        #     'permissions': self.permissions,
-        #     'password': self.password,
-        #     'account_status': self.account_status,
-        #     'phone_number': self.phone_number,
-        #     'date_of_birth': self.date_of_birth
-        # }
