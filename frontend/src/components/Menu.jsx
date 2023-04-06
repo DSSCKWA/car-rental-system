@@ -28,7 +28,7 @@ export function Menu(props) {
         menuItems.push({ name: 'Client Panel', path: '/client' })
     }
 
-    if (!props.user) {
+    if (!props.user?.permissions) {
         menuItems.push({ name: 'Log In', path: '/login' })
         menuItems.push({ name: 'Register', path: '/register' })
     }
@@ -61,7 +61,7 @@ export function Menu(props) {
                 </div>,
             )}
 
-            {props.user && <div className='menu_item'>
+            {props.user?.permissions && <div className='menu_item'>
                 <button className='menu_btn' onClick={logout}>Log Out</button>
             </div>}
 

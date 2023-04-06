@@ -12,7 +12,7 @@ export function PageContent(props) {
     return (
         <section className='page_content'>
             <Routes>
-                <Route path='/' element={<MainPage />} />
+                <Route path='/' element={<MainPage user={user} />} />
                 <Route path='/about' element={<AboutPage />} />
                 <Route path='/register' element={<RegisterPage />} />
                 <Route path='/login' element={<LoginPage user={user} setUser={setUser} />} />
