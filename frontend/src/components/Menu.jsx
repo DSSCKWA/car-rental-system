@@ -44,12 +44,11 @@ export function Menu(props) {
             if (response.ok) {
                 console.log('logout success')
                 props.setUser(null)
+                navigate('/')
             } else {
                 console.log('logout failed')
-                // TODO: remove this
-                props.setUser(null)
+                window.alert('Logout failed')
             }
-            navigate('/')
         })
     }
 
