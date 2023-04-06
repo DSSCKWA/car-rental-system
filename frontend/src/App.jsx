@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/logo.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -7,6 +7,23 @@ import { PageContent } from './components/PageContent.jsx'
 
 function App() {
     const [user, setUser] = useState(null)
+    useEffect(() => {
+        console.log('Getting info about the user')
+        fetch('/api/auth/me', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Got user info', data)
+                setUser(data)
+            })
+            .catch(error => {
+                console.log('Error getting user info', error)
+            })
+    }, [])
 
     return (
         <div className='App'>
