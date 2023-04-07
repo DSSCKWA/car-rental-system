@@ -5,7 +5,7 @@ export function RegisterPage() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
-    const [username, setUsername] = useState('')
+    const [name, setName] = useState('')
     const [phone, setPhone] = useState('')
     const [surname, setSurname] = useState('')
     const [dateOfBirth, setDateOfBirth] = useState('')
@@ -14,13 +14,13 @@ export function RegisterPage() {
 
     async function handleSubmit(e) {
         e.preventDefault()
-        console.log('submitting form', { email, password, confirmPassword, username, phone, surname, dateOfBirth })
+        console.log('submitting form', { email, password, confirmPassword, name, phone, surname, dateOfBirth })
         const response = await fetch('/api/auth/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ 'user_email_address': email, password, confirmPassword, 'name': username, 'phone_number': phone, surname, 'date_of_birth': dateOfBirth }),
+            body: JSON.stringify({ 'user_email_address': email, password, confirmPassword, name, 'phone_number': phone, surname, 'date_of_birth': dateOfBirth }),
         })
         const body = await response.json()
         console.log('response', body)
@@ -56,8 +56,8 @@ export function RegisterPage() {
                     <p className='errorMessage'>{error}</p>
                 </div>
                 <div className='form_group'>
-                    <label htmlFor='username'>Username</label>
-                    <input type='text' id='username' name='username' value={username} onChange={e => setUsername(e.target.value)} />
+                    <label htmlFor='name'>Name</label>
+                    <input type='text' id='name' name='name' value={name} onChange={e => setName(e.target.value)} />
                 </div>
                 <div className='form_group'>
                     <label htmlFor='surname'>Surname</label>
