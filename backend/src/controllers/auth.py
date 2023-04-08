@@ -1,4 +1,4 @@
-from flask import Blueprint, flash, request, jsonify, Response, session, abort
+from flask import Blueprint, request, Response, session, abort
 from flask_login import login_required, logout_user, login_user
 
 from ..config.extensions import db, bcrypt, login_manager
@@ -44,6 +44,7 @@ def register():
         db.session.commit()
         return new_user.serialize()
 
+
 @auth.route('/me', methods=['GET'])
 def me():
     if session:
@@ -52,6 +53,7 @@ def me():
             abort(404, description="User does not exist")
         return user.serialize()
     return {}
+
 
 @login_manager.user_loader
 def load_user(user_id):

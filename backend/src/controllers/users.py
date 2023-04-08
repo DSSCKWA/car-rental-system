@@ -6,6 +6,7 @@ from ..models.user import User
 users = Blueprint('users', __name__, url_prefix='/users')
 response_class = Blueprint('response_class', __name__)
 
+
 @users.route('/', methods=['GET'])
 def get_all():
     users = User.query.all()
