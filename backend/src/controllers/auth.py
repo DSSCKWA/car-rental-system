@@ -33,16 +33,16 @@ def logout():
 
 @auth.route('/register', methods=['POST'])
 def register():
-        new_user_body = request.json
-        validate_registration_request_body(new_user_body)
+    new_user_body = request.json
+    validate_registration_request_body(new_user_body)
 
-        new_user_body["password"] = bcrypt.generate_password_hash(new_user_body["password"]).decode("utf-8")
-        new_user_body["permissions"] = "client"
-        new_user_body["account_status"] = "active"
-        new_user = User(new_user_body)
-        db.session.add(new_user)
-        db.session.commit()
-        return new_user.serialize()
+    new_user_body["password"] = bcrypt.generate_password_hash(new_user_body["password"]).decode("utf-8")
+    new_user_body["permissions"] = "client"
+    new_user_body["account_status"] = "active"
+    new_user = User(new_user_body)
+    db.session.add(new_user)
+    db.session.commit()
+    return new_user.serialize()
 
 
 @auth.route('/me', methods=['GET'])

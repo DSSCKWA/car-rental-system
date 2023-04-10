@@ -1,6 +1,10 @@
+import datetime
+import re
+
 from flask import abort
+
 from ..models.user import User
-import re, datetime
+
 
 def is_valid_email(email):
     regex = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
@@ -8,19 +12,19 @@ def is_valid_email(email):
 
 
 def validate_registration_request_body(user_body):
-    if (user_already_exist(user_body["user_email_address"])):
+    if user_exists(user_body["user_email_address"]):
         abort(409, description="Email already taken")
-    if (not is_valid_email(user_body["user_email_address"])):
+    if not is_valid_email(user_body["user_email_address"]):
         abort(400, description="Invalid email")
-    if (not is_valid_password(user_body["password"])):
+    if not is_valid_password(user_body["password"]):
         abort(400, description="Invalid password")
-    if (not is_valid_phone_number(user_body["phone_number"])):
+    if not is_valid_phone_number(user_body["phone_number"]):
         abort(400, description="Invalid phone number")
-    if (not is_valid_date(user_body["date_of_birth"])):
+    if not is_valid_date(user_body["date_of_birth"]):
         abort(400, description="Invalid date")
 
 
-def user_already_exist(email):
+def user_exists(email):
     user = User.query.filter_by(user_email_address=email).first()
     return not user is None
 
@@ -28,12 +32,12 @@ def user_already_exist(email):
 def is_valid_date(date):
     current_date = datetime.datetime.now().date()
     date_string = current_date.strftime('%Y-%m-%d')
-    current_date_formated = datetime.datetime.strptime(date_string, '%Y-%m-%d').date()
+    current_date_formatted = datetime.datetime.strptime(date_string, '%Y-%m-%d').date()
 
     regex = re.compile(r'^\d{4}-\d{2}-\d{2}$')
     if regex.match(date):
-        date_formated = datetime.datetime.strptime(date, '%Y-%m-%d').date()
-        if date_formated < current_date_formated:
+        date_formatted = datetime.datetime.strptime(date, '%Y-%m-%d').date()
+        if date_formatted < current_date_formatted:
             return True
     return False
 
