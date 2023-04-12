@@ -112,6 +112,47 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Files Api",
+			"item": [
+				{
+					"name": "getTermsOfService",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_PATH}}/files/terms-of-service",
+							"host": [
+								"{{BASE_PATH}}"
+							],
+							"path": [
+								"files",
+								"terms-of-service"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPrivacyPolicy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_PATH}}/files/privacy-policy",
+							"host": [
+								"{{BASE_PATH}}"
+							],
+							"path": [
+								"files",
+								"privacy-policy"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"auth": {
