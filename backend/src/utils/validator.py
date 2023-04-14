@@ -1,5 +1,6 @@
 from flask import abort
 from ..models.user import User
+from ..models.vehicle import Vehicle
 import re, datetime
 
 def is_valid_email(email):
@@ -45,3 +46,27 @@ def is_valid_phone_number(phone_number):
 
 def is_valid_password(password):
     return not len(password) < 3
+
+
+def validate_addition_request_body(vehicle_body):
+    if (not is_valid_review_date(vehicle_body["technical_review_date"])):
+        abort(400, description="Invalid date")
+    if (not registration_number_avaliable(vehicle_body["registration_number"])):
+        abort(400, description="Registration number taken")
+
+
+def registration_number_avaliable(reg_number):
+    vehicle = Vehicle.query.filter_by(registration_number=reg_number).first()
+    return not vehicle is None
+
+def is_valid_review_date(date):
+    current_date = datetime.datetime.now().date()
+    date_string = current_date.strftime('%Y-%m-%d')
+    current_date_formated = datetime.datetime.strptime(date_string, '%Y-%m-%d').date()
+
+    regex = re.compile(r'^\d{4}-\d{2}-\d{2}$')
+    if regex.match(date):
+        date_formated = datetime.datetime.strptime(date, '%Y-%m-%d').date()
+        if date_formated > current_date_formated:
+            return True
+    return False

@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "1f349e4f-cfe4-456d-882c-4735485ba31d",
+		"_postman_id": "44b0b68f-664c-4685-abc4-3b276a7cd4a0",
 		"name": "Car Rental Service",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26765812"
 	},
 	"item": [
 		{
@@ -106,6 +107,46 @@
 							],
 							"path": [
 								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Vehicles Api",
+			"item": [
+				{
+					"name": "GetVehicles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_PATH}}/vehicles",
+							"host": [
+								"{{BASE_PATH}}"
+							],
+							"path": [
+								"vehicles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetVehicle",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_PATH}}/vehicles/1",
+							"host": [
+								"{{BASE_PATH}}"
+							],
+							"path": [
+								"vehicles",
+								"1"
 							]
 						}
 					},
