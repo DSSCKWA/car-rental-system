@@ -10,6 +10,7 @@ export function Menu(props) {
     const menuItems = [
         { name: 'Home', path: '/' },
         { name: 'About', path: '/about' },
+        { name: 'Vehicles', path: '/vehicles' },
     ]
 
     if (props.user && props.user['permissions'] === 'admin') {

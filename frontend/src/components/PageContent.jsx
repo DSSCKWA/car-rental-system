@@ -7,6 +7,7 @@ import { AdminPage } from './AdminPage'
 import { ManagerPage } from './ManagerPage.jsx'
 import { WorkerPage } from './WorkerPage.jsx'
 import { ClientPage } from './ClientPage.jsx'
+import { VehiclesPage } from './VehiclesPage.jsx'
 export function PageContent(props) {
     const { user, setUser } = props
     return (
@@ -20,6 +21,7 @@ export function PageContent(props) {
                 <Route path='/worker' element={<WorkerPage />} />
                 <Route path='/manager' element={<ManagerPage />} />
                 <Route path='/client' element={<ClientPage />} />
+                <Route path='/vehicles' element={<VehiclesPage />} />
             </Routes>
         </section>
     )
