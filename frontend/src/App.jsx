@@ -4,6 +4,7 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import { Menu } from './components/Menu'
 import { PageContent } from './components/PageContent.jsx'
+import { Footer } from './components/Footer'
 
 function App() {
     const [user, setUser] = useState(null)
@@ -33,6 +34,7 @@ function App() {
             </header>
             <Menu user={user} setUser={setUser} />
             <PageContent user={user} setUser={setUser} />
+            <Footer />
         </div>
     )
 }

@@ -13,7 +13,8 @@ response_class = Blueprint('response_class', __name__)
 def login():
     user_credentials = request.authorization
 
-    user = User.query.filter_by(user_email_address=user_credentials.username).first()
+    user = User.query.filter_by(
+        user_email_address=user_credentials.username).first()
     if user:
         if bcrypt.check_password_hash(user.password, user_credentials.password):
             login_user(user)
@@ -33,16 +34,18 @@ def logout():
 
 @auth.route('/register', methods=['POST'])
 def register():
-        new_user_body = request.json
-        validate_registration_request_body(new_user_body)
+    new_user_body = request.json
+    validate_registration_request_body(new_user_body)
 
-        new_user_body["password"] = bcrypt.generate_password_hash(new_user_body["password"]).decode("utf-8")
-        new_user_body["permissions"] = "client"
-        new_user_body["account_status"] = "active"
-        new_user = User(new_user_body)
-        db.session.add(new_user)
-        db.session.commit()
-        return new_user.serialize()
+    new_user_body["password"] = bcrypt.generate_password_hash(
+        new_user_body["password"]).decode("utf-8")
+    new_user_body["permissions"] = "client"
+    new_user_body["account_status"] = "active"
+    new_user = User(new_user_body)
+    db.session.add(new_user)
+    db.session.commit()
+    return new_user.serialize()
+
 
 @auth.route('/me', methods=['GET'])
 def me():
@@ -52,6 +55,7 @@ def me():
             abort(404, description="User does not exist")
         return user.serialize()
     return {}
+
 
 @login_manager.user_loader
 def load_user(user_id):
