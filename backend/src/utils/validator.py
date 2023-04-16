@@ -51,8 +51,8 @@ def is_valid_password(password):
 def validate_addition_request_body(vehicle_body):
     if (not is_valid_review_date(vehicle_body["technical_review_date"])):
         abort(400, description="Invalid date")
-    if (not registration_number_avaliable(vehicle_body["registration_number"])):
-        abort(400, description="Registration number taken")
+    if (registration_number_avaliable(vehicle_body["registration_number"])):
+        abort(409, description="Registration number taken")
 
 
 def registration_number_avaliable(reg_number):

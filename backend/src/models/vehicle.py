@@ -13,7 +13,7 @@ class Vehicle(db.Model):
     vehicle_class = db.Column(db.String(10), nullable=False)
     technical_review_date = db.Column(db.Date, nullable=False)
     number_of_doors = db.Column(db.Integer, nullable=False)
-    image = db.Column(db.LargeBinary, nullable=False) # check bytea usage
+    image = db.Column(db.LargeBinary, nullable=False) 
     drive_type = db.Column(db.String(30), nullable=False) 
     engine_power = db.Column(db.Integer, nullable=False)
     engine_capacity = db.Column(db.Float, nullable=False)
