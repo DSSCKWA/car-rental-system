@@ -57,17 +57,19 @@ export function VehiclesPage() {
             </div>
             <div className='vehicle-list'>
                 {filteredVehicles.map(vehicle =>
-                    <div key={vehicle.vehicle_id} className='vehicle-card'>
-                        <img src={`data:image/jpeg;base64,${vehicle.image}`} alt={`${vehicle.brand} ${vehicle.model}`} />
-                        <div className='vehicle-details'>
-                            <h3>{vehicle.brand} {vehicle.model}</h3>
-                            <p><b>Year of production: </b> {vehicle.year_of_production}</p>
-                            <p><b>Body type:</b> {vehicle.body_type}</p>
-                            <p><b>Status: </b> {vehicle.status}</p>
-                            <p><b>Engine power:</b> {vehicle.engine_power} KM</p>
-                            <p><b>Fuel type: </b> {vehicle.fuel_type}</p>
+                    vehicle.status === 'available' ?
+                        <div key={vehicle.vehicle_id} className='vehicle-card'>
+                            <img src={`data:image/jpeg;base64,${vehicle.image}`} alt={`${vehicle.brand} ${vehicle.model}`} />
+                            <div className='vehicle-details'>
+                                <h3>{vehicle.brand} {vehicle.model}</h3>
+                                <p><b>Year of production: </b> {vehicle.year_of_production}</p>
+                                <p><b>Body type:</b> {vehicle.body_type}</p>
+                                <p><b>Status: </b> {vehicle.status}</p>
+                                <p><b>Engine power:</b> {vehicle.engine_power} KM</p>
+                                <p><b>Fuel type: </b> {vehicle.fuel_type}</p>
+                            </div>
                         </div>
-                    </div>,
+                        : null,
                 )}
             </div>
         </div>
