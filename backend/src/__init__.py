@@ -2,7 +2,7 @@ from flask import Flask
 from .config.config import Config
 from .controllers.auth import auth
 from .controllers.users import users
-from .controllers.manager import worker
+from .controllers.worker import worker
 from .config.extensions import bcrypt, db, login_manager
 
 
