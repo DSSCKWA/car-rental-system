@@ -5,15 +5,15 @@ from ..config.extensions import db, bcrypt
 from ..models.user import User
 from ..utils.validator import validate_registration_request_body, user_exists
 
-manager = Blueprint('manager', __name__, url_prefix='/manager')
+worker = Blueprint('worker', __name__, url_prefix='/worker')
 
 
-@manager.route('/add_worker', methods=['POST'])
+@worker.route('/', methods=['POST'])
 @login_required
 def add_employee():
-    user_permissions = current_user.permissions  # sprawdzac account_status?
+    user_permissions = current_user.permissions
     print({"user_permissions": user_permissions})
-    if user_permissions == "manager":  # admin tez?
+    if user_permissions == "manager":
         new_user_body = request.json
         validate_registration_request_body(new_user_body)
         new_user_body["password"] = bcrypt.generate_password_hash(new_user_body["password"]).decode("utf-8")
@@ -24,29 +24,25 @@ def add_employee():
         db.session.commit()
         return new_user.serialize()
     else:
-        abort(401, description="Invalid permissions")
+        abort(403, description="Invalid permissions")
 
 
-@manager.route('/remove_worker', methods=['DELETE'])
+@worker.route('/<int:id>', methods=['PUT'])
 @login_required
-def remove_employee():
-    user_permissions = current_user.permissions  # sprawdzac account_status?
-    print({"user_permissions": user_permissions})
-    if user_permissions == "manager":  # admin tez?
-        worker_email = request.json["user_email_address"]
-        print("worker_email: ", worker_email)
-        # walidacja poprawnego requesta tu i w innych miejscach?
-        if not user_exists(worker_email):
+def remove_employee(id):
+    user_permissions = current_user.permissions
+    if user_permissions == "manager":
+        if not user_exists(id):
             abort(404, description="User not found")
         else:
-            worker_to_delete = get_data_from_email(worker_email)
-            db.session.delete(worker_to_delete)
+            worker_to_delete = get_data_from_id(id)
+            worker_to_delete.account_status = "deleted"
             db.session.commit()
-        return {"jest w": "pyte"}
+            return worker_to_delete.serialize()
     else:
-        abort(401, description="Invalid permissions")
+        abort(403, description="Invalid permissions")
 
 
-def get_data_from_email(email):
-    user = User.query.filter_by(user_email_address=email).first()
+def get_data_from_id(id):
+    user = User.query.filter_by(user_id=id).first()
     return user

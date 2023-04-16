@@ -12,7 +12,7 @@ def is_valid_email(email):
 
 
 def validate_registration_request_body(user_body):
-    if user_exists(user_body["user_email_address"]):
+    if email_taken(user_body["user_email_address"]):
         abort(409, description="Email already taken")
     if not is_valid_email(user_body["user_email_address"]):
         abort(400, description="Invalid email")
@@ -24,7 +24,12 @@ def validate_registration_request_body(user_body):
         abort(400, description="Invalid date")
 
 
-def user_exists(email):
+def user_exists(user_id):
+    user = User.query.filter_by(user_id=user_id).first()
+    return not user is None
+
+
+def email_taken(email):
     user = User.query.filter_by(user_email_address=email).first()
     return not user is None
 
