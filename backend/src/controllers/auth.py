@@ -1,4 +1,4 @@
-from flask import Blueprint, flash, request, jsonify, Response, session, abort
+from flask import Blueprint, request, Response, session, abort
 from flask_login import login_required, logout_user, login_user
 
 from ..config.extensions import db, bcrypt, login_manager
@@ -16,6 +16,8 @@ def login():
     user = User.query.filter_by(
         user_email_address=user_credentials.username).first()
     if user:
+        if user.account_status == "deleted":
+            abort(403, description="User has been deleted")
         if bcrypt.check_password_hash(user.password, user_credentials.password):
             login_user(user)
             return user.serialize()
@@ -37,8 +39,7 @@ def register():
     new_user_body = request.json
     validate_registration_request_body(new_user_body)
 
-    new_user_body["password"] = bcrypt.generate_password_hash(
-        new_user_body["password"]).decode("utf-8")
+    new_user_body["password"] = bcrypt.generate_password_hash(new_user_body["password"]).decode("utf-8")
     new_user_body["permissions"] = "client"
     new_user_body["account_status"] = "active"
     new_user = User(new_user_body)
