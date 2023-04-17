@@ -2,6 +2,7 @@ from flask import Flask
 from .config.config import Config
 from .controllers.auth import auth
 from .controllers.users import users
+from .controllers.vehicles import vehicles
 from .controllers.files import files
 from .config.extensions import bcrypt, db, login_manager
 
@@ -20,6 +21,7 @@ def create_app(config_class=Config):
 
     app.register_blueprint(auth)
     app.register_blueprint(users)
+    app.register_blueprint(vehicles)
     app.register_blueprint(files)
 
     for code in [400, 401, 403, 404, 409, 500]:
