@@ -4,7 +4,11 @@ import {Link} from "react-router-dom";
 export function ManagerWorkersPage() {
 
     const [workers, setWorkers] = useState(null)
-    useEffect(() => {
+    useEffect(()=>{
+        get_users()
+    }, [])
+
+    function get_users() {
         fetch('/api/worker/', {
             method: 'GET',
             headers: {
@@ -13,12 +17,13 @@ export function ManagerWorkersPage() {
         })
             .then(response => response.json())
             .then(data => {
+                data.sort((a,b) => a.user_id - b.user_id);
                 setWorkers(data)
             })
             .catch(error => {
                 console.log('Error getting user info', error)
             })
-    }, [])
+    }
 
     function change_worker_status(id, account_status) {
         fetch(`/api/worker/${id}`, {
@@ -28,6 +33,7 @@ export function ManagerWorkersPage() {
             },
             body: JSON.stringify({account_status})
         })
+        get_users()
     }
 
     return (
