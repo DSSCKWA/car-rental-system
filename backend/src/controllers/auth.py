@@ -13,7 +13,8 @@ response_class = Blueprint('response_class', __name__)
 def login():
     user_credentials = request.authorization
 
-    user = User.query.filter_by(user_email_address=user_credentials.username).first()
+    user = User.query.filter_by(
+        user_email_address=user_credentials.username).first()
     if user:
         if user.account_status == "deleted":
             abort(403, description="User has been deleted")
