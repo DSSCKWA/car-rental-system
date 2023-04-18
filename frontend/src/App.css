@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 #root {
   padding: 0;
   text-align: center;
@@ -39,4 +43,73 @@
 
 .read-the-docs {
   color: #888;
+}
+
+.footer_container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #242424;
+  border-top: 3px solid #299bbe;
+  width: 100%;
+  flex-wrap: wrap;
+  padding: 2em 1em 1em;
+}
+
+.footer_container .footer_rights {
+  width: 100%;
+  padding: 2em;
+  color: #888;
+}
+
+.footer_container .footer_links, .footer_container .footer_contact {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.footer_container .footer_logo {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  height: 3em;
+}
+
+.footer_container .footer_logo img {
+  height: 3em;
+  margin-right: 1em;
+}
+
+.footer_container .footer_logo p {
+  line-height: 3em;
+  font-weight: bold;
+}
+
+.footer_contact_title {
+  font-weight: bold;
+  margin-bottom: 1em;
+}
+
+.footer_links .footer_link {
+  color: #888;
+  margin-bottom: 0.5em;
+}
+
+.footer_links .footer_link:hover {
+  color: #299bbe;
+}
+
+.footer_social {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+    align-items: flex-start;
+}
+
+.footer_social img {
+  height: 2.5em;
+  margin: 0 0.5em;
+  width: 2.5em;
 }
