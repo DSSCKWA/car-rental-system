@@ -1,8 +1,12 @@
-
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 .Vehicles {
     width: 100%;
     margin-top: 30px;
-    min-width: 100vw;
+    /*min-width: 100vw;*/
 }
 
 .vehicle-list {

@@ -1,10 +1,10 @@
-import {useEffect, useState} from 'react'
-import {Link} from "react-router-dom";
+import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 export function ManagerWorkersPage() {
 
     const [workers, setWorkers] = useState(null)
-    useEffect(()=>{
+    useEffect(() => {
         get_users()
     }, [])
 
@@ -17,7 +17,7 @@ export function ManagerWorkersPage() {
         })
             .then(response => response.json())
             .then(data => {
-                data.sort((a,b) => a.user_id - b.user_id);
+                data.sort((a, b) => a.user_id - b.user_id)
                 setWorkers(data)
             })
             .catch(error => {
@@ -31,25 +31,24 @@ export function ManagerWorkersPage() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({account_status})
+            body: JSON.stringify({ account_status }),
         })
         get_users()
     }
 
     return (
         <div className='manager_workers_page'>
-            <h1>Workers</h1>
-            <Link to="/manager/add-worker">Add worker</Link>
+            <h2>Workers</h2>
             <table>
                 <thead>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Surname</th>
-                <th>Email</th>
-                <th>Phone number</th>
-                <th>Birth date</th>
-                <th>Status</th>
-                <th>Actions</th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Email</th>
+                    <th>Phone number</th>
+                    <th>Birth date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
                 </thead>
                 <tbody>{workers?.map(worker => <tr>
                     <td>{worker.user_id}</td>
@@ -61,8 +60,8 @@ export function ManagerWorkersPage() {
                     <td>{worker.account_status}</td>
                     <td>
                         <button onClick={() => {
-                            change_worker_status(worker.user_id, worker.account_status === "deleted" ? "active" : "deleted")
-                        }}>{worker.account_status === "deleted" ? "Activate" : "Delete"}
+                            change_worker_status(worker.user_id, worker.account_status === 'deleted' ? 'active' : 'deleted')
+                        }}>{worker.account_status === 'deleted' ? 'Activate' : 'Delete'}
                         </button>
                     </td>
                 </tr>)}</tbody>

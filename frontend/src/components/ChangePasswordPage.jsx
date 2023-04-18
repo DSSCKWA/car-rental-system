@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import '../styles/ChangePasswordStyles.css'
 
 export function ChangePasswordPage() {
     const [currentPassword, setCurrentPassword] = useState('')
@@ -30,16 +31,16 @@ export function ChangePasswordPage() {
     if (passwordChangeSuccess) {
         return (
             <div className='change_password_success'>
-                <h1>Password Changed Successfully</h1>
-                <Link to={`/profile`}>Go back</Link>
+                <h2>Password Changed Successfully</h2>
+                <Link to={'/profile'}>Go back</Link>
             </div >
         )
     }
 
     return (
         <div className='change_password_page'>
-            <h1>Change Password</h1>
-            <form className='change_password_form' onSubmit={handleSubmit}>
+            <h2>Change Password</h2>
+            <form className='change_password_form small' onSubmit={handleSubmit}>
                 <div className='form_group'>
                     <p className='errorMessage'>{error}</p>
                 </div>

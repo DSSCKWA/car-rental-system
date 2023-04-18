@@ -7,6 +7,7 @@
   text-align: center;
   width: 100%;
   margin: 0;
+  min-height: 100vh;
 }
 
 .logo {
@@ -45,6 +46,16 @@
   color: #888;
 }
 
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.App {
+  min-height: 100vh;
+}
+
 .footer_container {
   display: flex;
   justify-content: space-around;
@@ -54,6 +65,8 @@
   width: 100%;
   flex-wrap: wrap;
   padding: 2em 1em 1em;
+  margin-top: auto;
+
 }
 
 .footer_container .footer_rights {
@@ -240,6 +253,11 @@
 .location .map iframe {
   width: 100%;
   height: 100%;
+}
+
+.page_content {
+  width: 80%;
+  margin: 0 auto;
 }
 
 @media (max-width: 768px) {
