@@ -25,8 +25,8 @@ export function ManagerWorkersPage() {
             })
     }
 
-    function change_worker_status(id, account_status) {
-        fetch(`/api/worker/${id}`, {
+    async function change_worker_status(id, account_status) {
+        await fetch(`/api/worker/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
