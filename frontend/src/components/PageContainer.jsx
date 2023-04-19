@@ -10,13 +10,11 @@ import { ClientPage } from './ClientPage.jsx'
 import { VehiclesPage } from './VehiclesPage.jsx'
 import { ProfilePage } from './ProfilePage'
 import { ChangePasswordPage } from './ChangePasswordPage'
-import { ManagerWorkersPage } from './ManagerWorkersPage'
-import { AddWorkerPage } from './AddWorkerPage'
 
-export function PageContent(props) {
+export function PageContainer(props) {
     const { user, setUser } = props
     return (
-        <section className='page_content'>
+        <section className={'page_container'}>
             <Routes>
                 <Route path='/' element={<MainPage user={user}/>}/>
                 <Route path='/about' element={<AboutPage/>}/>
@@ -27,8 +25,6 @@ export function PageContent(props) {
                 <Route path='/worker/*' element={<WorkerPage/>}/>
                 <Route path='/manager' element={<ManagerPage/>}/>
                 <Route path='/manager/*' element={<ManagerPage/>}/>
-                {/* <Route path='/manager/workers' element={<ManagerWorkersPage/>}/>*/}
-                {/* <Route path='/manager/add-worker' element={<AddWorkerPage/>}/>*/}
                 <Route path='/client' element={<ClientPage/>}/>
                 <Route path='/vehicles' element={<VehiclesPage />} />
                 <Route path='/profile' element={<ProfilePage user={user} />} />

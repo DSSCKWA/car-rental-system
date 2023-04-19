@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
 import reactLogo from './assets/logo.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import { Menu } from './components/Menu'
-import { PageContent } from './components/PageContent.jsx'
+import { PageContainer } from './components/PageContainer.jsx'
 import { Footer } from './components/Footer'
 
 function App() {
@@ -33,7 +32,7 @@ function App() {
                 <h1 className='title'>Car Rental System</h1>
             </header>
             <Menu user={user} setUser={setUser} />
-            <PageContent user={user} setUser={setUser} />
+            <PageContainer user={user} setUser={setUser} />
             <Footer />
         </div>
     )
