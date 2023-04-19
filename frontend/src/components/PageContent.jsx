@@ -24,6 +24,7 @@ export function PageContent(props) {
                 <Route path='/login' element={<LoginPage user={user} setUser={setUser}/>}/>
                 <Route path='/admin' element={<AdminPage/>}/>
                 <Route path='/worker' element={<WorkerPage/>}/>
+                <Route path='/worker/*' element={<WorkerPage/>}/>
                 <Route path='/manager' element={<ManagerPage/>}/>
                 <Route path='/manager/*' element={<ManagerPage/>}/>
                 {/* <Route path='/manager/workers' element={<ManagerWorkersPage/>}/>*/}
