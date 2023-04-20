@@ -50,6 +50,7 @@ def get_data_from_id(id):
 
 
 @worker.route('/', methods=['GET'])
+@login_required
 def get_all():
     users = User.query.filter_by(permissions="worker")
     return [user.serialize() for user in users]

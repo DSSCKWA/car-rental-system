@@ -2,6 +2,7 @@ from ..config.extensions import db
 
 import base64
 
+
 class Vehicle(db.Model):
     vehicle_id = db.Column(db.Integer, primary_key=True)
     brand = db.Column(db.String(30), nullable=False)
@@ -25,7 +26,6 @@ class Vehicle(db.Model):
 
     def get_id(self):
         return self.vehicle_id
-    
 
     def __init__(self, vehicle_dict):
         self.brand = vehicle_dict['brand']
