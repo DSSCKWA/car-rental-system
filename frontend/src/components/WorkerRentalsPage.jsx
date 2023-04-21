@@ -1,10 +1,12 @@
 import {useEffect, useState} from 'react'
 import {Link} from "react-router-dom";
+import {useNavigate} from 'react-router-dom'
 
 export function WorkerRentalsPage() {
 
+    const navigate = useNavigate()
     const [rentals, setRentals] = useState(null)
-    useEffect(()=>{
+    useEffect(() => {
         get_rentals()
     }, [])
 
@@ -15,9 +17,14 @@ export function WorkerRentalsPage() {
                 'Content-Type': 'application/json',
             },
         })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    navigate('');
+                }
+                return response.json();
+            })
             .then(data => {
-                data.sort((a,b) => a.rental_id - b.rental_id);
+                data.sort((a, b) => a.rental_id - b.rental_id);
                 setRentals(data)
             })
             .catch(error => {

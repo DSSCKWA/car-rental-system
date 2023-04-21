@@ -1,7 +1,7 @@
-from flask import Blueprint, flash, request, jsonify, Response, session, abort
-from flask_login import login_required
+from flask import Blueprint, request, session, abort
+from flask_login import login_required, current_user
 
-from ..config.extensions import db, bcrypt, login_manager
+from ..config.extensions import db, bcrypt
 from ..utils.validator import validate_password_change
 from ..models.user import User
 
@@ -10,12 +10,18 @@ response_class = Blueprint('response_class', __name__)
 
 
 @users.route('/', methods=['GET'])
+@login_required
 def get_all():
-    users = User.query.all()
-    return [user.serialize() for user in users]
+    user_permissions = current_user.permissions
+    if user_permissions == "manager":
+        users = User.query.all()
+        return [user.serialize() for user in users]
+    else:
+        abort(403, description="Invalid permissions")
 
 
 @users.route('/<int:id>', methods=['GET'])
+@login_required
 def get_by_id(id):
     user = User.query.get(id)
     if user is None:
@@ -32,7 +38,8 @@ def change_password():
 
     body = request.json
     current_password, new_password, confirm_new_password = body[
-        'currentPassword'], body['newPassword'], body['confirmNewPassword']
+                                                               'currentPassword'], body['newPassword'], body[
+                                                               'confirmNewPassword']
     validate_password_change(user, current_password, new_password,
                              confirm_new_password)
 

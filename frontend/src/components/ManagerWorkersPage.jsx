@@ -1,10 +1,12 @@
 import {useEffect, useState} from 'react'
 import {Link} from "react-router-dom";
+import {useNavigate} from 'react-router-dom'
 
 export function ManagerWorkersPage() {
 
+    const navigate = useNavigate()
     const [workers, setWorkers] = useState(null)
-    useEffect(()=>{
+    useEffect(() => {
         get_users()
     }, [])
 
@@ -15,14 +17,19 @@ export function ManagerWorkersPage() {
                 'Content-Type': 'application/json',
             },
         })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    navigate('/');
+                }
+                return response.json();
+            })
             .then(data => {
-                data.sort((a,b) => a.user_id - b.user_id);
+                data.sort((a, b) => a.user_id - b.user_id);
                 setWorkers(data)
             })
             .catch(error => {
-                console.log('Error getting user info', error)
-            })
+                console.log('Error getting user info', error);
+            });
     }
 
     async function change_worker_status(id, account_status) {

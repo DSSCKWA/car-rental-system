@@ -6,7 +6,7 @@ from .controllers.worker import worker
 from .controllers.rentals import rental
 from .controllers.vehicles import vehicles
 from .controllers.files import files
-from .config.extensions import bcrypt, db, login_manager
+from .config.extensions import bcrypt, db, login_manager, LoginManager
 
 
 def handle_error(e):

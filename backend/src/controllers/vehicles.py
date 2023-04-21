@@ -8,17 +8,20 @@ import base64
 vehicles = Blueprint('vehicles', __name__, url_prefix='/vehicles')
 response_class = Blueprint('response_class', __name__)
 
+
 @vehicles.route('/', methods=['GET'])
 def get_all():
     vehicles = Vehicle.query.all()
     return [vehicle.serialize() for vehicle in vehicles]
 
+
 @vehicles.route('/<int:id>', methods=['GET'])
 def get_by_id(id):
     vehicle = Vehicle.query.get(id)
     if vehicle is None:
-         abort(404, description="Vehicle not found")
+        abort(404, description="Vehicle not found")
     return vehicle.serialize()
+
 
 @vehicles.route('/', methods=['POST'])
 def add():
@@ -40,7 +43,7 @@ def edit(id):
         abort(404, description="Vehicle not found")
     vehicle_body = request.json
     vehicle.status = vehicle_body["status"]
-    vehicle.technical_review_date = vehicle_body["technical_review_date"] #szukać (Łukasz)
+    vehicle.technical_review_date = vehicle_body["technical_review_date"]  # szukać (Łukasz)
     vehicle.image = base64.b64decode(vehicle_body["image"])
     vehicle.description = vehicle_body["description"]
     vehicle.additional_equipment = vehicle_body["additional_equipment"]
@@ -49,7 +52,7 @@ def edit(id):
 
     db.session.commit()
     return vehicle.serialize()
-        
+
 
 @vehicles.route('/<int:id>', methods=['PATCH'])
 def delete(id):
