@@ -67,7 +67,7 @@ export function VehiclesPage() {
                                     <p><b>Body type:</b> {vehicle.body_type.replace(/_/g, ' ')}</p>
                                     <p><b>Vehicle class:</b> {vehicle.vehicle_class}</p>
                                     <p><b>Number of seats:</b> {vehicle.number_of_seats}</p>
-                                    <p><b>Transmission type:</b> manual</p>
+                                    <p><b>Transmission type:</b> {vehicle.gearbox_type}</p>
                                     <p><b>Engine power:</b> {vehicle.engine_power} HP</p>
                                     <p><b>Fuel type: </b> {vehicle.fuel_type}</p>
                                     <p><b>Drive type:</b> {vehicle.drive_type}</p>

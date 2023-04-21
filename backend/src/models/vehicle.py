@@ -22,6 +22,8 @@ class Vehicle(db.Model):
     registration_number = db.Column(db.String(10), nullable=False)
     additional_equipment = db.Column(db.ARRAY(db.String), nullable=True)
     description = db.Column(db.String(3000), nullable=True)
+    color = db.Column(db.String(30), nullable=False)
+    gearbox_type = db.Column(db.String(30), nullable=False)
 
     def get_id(self):
         return self.vehicle_id
@@ -46,6 +48,8 @@ class Vehicle(db.Model):
         self.registration_number = vehicle_dict['registration_number']
         self.additional_equipment = vehicle_dict['additional_equipment']
         self.description = vehicle_dict['description']
+        self.color = vehicle_dict['color']
+        self.gearbox_type = vehicle_dict['gearbox_type']
 
     def serialize(self):
         return {
@@ -67,5 +71,7 @@ class Vehicle(db.Model):
             'tank_capacity': self.tank_capacity,
             'registration_number': self.registration_number,
             'additional_equipment': self.additional_equipment,
-            'description': self.description
+            'description': self.description,
+            'color': self.color,
+            'gearbox_type': self.gearbox_type
         }
