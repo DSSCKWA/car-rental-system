@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import '../styles/ProfileStyles.css'
 
 export function ProfilePage(props) {
     const { user } = props
@@ -7,12 +8,14 @@ export function ProfilePage(props) {
         <div className='profile_page'>
             <div className='profile'>
                 <h1>User Profile</h1>
-                <p>Email Address: {user?.user_email_address}</p>
-                <p>Name: {user?.name}</p>
-                <p>Surname: {user?.surname}</p>
-                <p>Permissions: {user?.permissions}</p>
-                <p>Phone Number: {user?.phone_number}</p>
-                <p>Date of Birth: {new Date(user?.date_of_birth).toLocaleDateString()}</p>
+                <div className='profile_info'>
+                    <p>Email Address: {user?.user_email_address}</p>
+                    <p>Name: {user?.name}</p>
+                    <p>Surname: {user?.surname}</p>
+                    <p>Permissions: {user?.permissions}</p>
+                    <p>Phone Number: {user?.phone_number}</p>
+                    <p>Date of Birth: {new Date(user?.date_of_birth).toLocaleDateString()}</p>
+                </div>
             </div>
             <div className='profile_actions'>
                 <h2>Actions</h2>

@@ -1,0 +1,35 @@
+.sidebar_layout {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "sidebar main";
+    gap: 1em;
+}
+
+.sidebar_layout .navigation_panel {
+    grid-area: sidebar;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar_layout .navigation_panel .navigation_panel_item {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1em;
+    font-weight: 500;
+    padding: 1em;
+    background-color: #252525;
+}
+
+.sidebar_layout .navigation_panel .navigation_panel_item:hover {
+    background-color: #202020;
+    color: #299bbe;
+}
+
+.sidebar_layout .page_content {
+    grid-area: main;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
