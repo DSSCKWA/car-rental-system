@@ -26,6 +26,7 @@ export function WorkerRentalsPage() {
             .then(data => {
                 data.sort((a, b) => a.rental_id - b.rental_id);
                 setRentals(data)
+                console.log(data); // log the response data
             })
             .catch(error => {
                 console.log('Error getting rental info', error)
@@ -51,7 +52,12 @@ export function WorkerRentalsPage() {
                 <thead>
                 <th>Rental ID</th>
                 <th>Client ID</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Email</th>
+                <th>Phone number</th>
                 <th>Vehicle ID</th>
+                <th>Registration number</th>
                 <th>Start time</th>
                 <th>End time</th>
                 <th>Discount code ID</th>
@@ -60,7 +66,12 @@ export function WorkerRentalsPage() {
                 <tbody>{rentals?.map(rental => <tr>
                     <td>{rental.rental_id}</td>
                     <td>{rental.client_id}</td>
+                    <td>{rental.name}</td>
+                    <td>{rental.surname}</td>
+                    <td>{rental.user_email_address}</td>
+                    <td>{rental.phone_number}</td>
                     <td>{rental.vehicle_id}</td>
+                    <td>{rental.registration_number}</td>
                     <td>{rental.start_time}</td>
                     <td>{rental.end_time}</td>
                     {/*<td>{new Date(rental.date_of_birth).toLocaleDateString()}</td>*/}
