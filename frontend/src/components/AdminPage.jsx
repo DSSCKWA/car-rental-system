@@ -1,7 +1,13 @@
+import { SidebarLayout } from './SidebarLayout.jsx'
+import { AdminEditUsersPage } from './AdminEditUsersPage.jsx'
+
 export function AdminPage() {
     return (
-        <div className='admin_page'>
-            <h1>Admin</h1>
-        </div>
+        <SidebarLayout className='admin_page' navItems={[
+            { name: 'Edit Users', path: '/admin/edit-users' },
+        ]}
+        routes={[
+            { path: '/edit-users', element: <AdminEditUsersPage/> },
+        ]}/>
     )
 }
