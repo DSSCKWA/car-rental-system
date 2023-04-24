@@ -362,6 +362,24 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "getAllPolicyPriceLists",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_PATH}}/price-lists/policies",
+							"host": [
+								"{{BASE_PATH}}"
+							],
+							"path": [
+								"price-lists",
+								"policies"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
