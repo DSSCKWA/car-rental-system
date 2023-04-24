@@ -7,7 +7,7 @@ import { VehiclesListPage } from './VehiclesListPage.jsx'
 export function VehiclesBasePage() {
 
     return (
-        <div className='vehicle_page'>
+        <div className='vehicles_page'>
             <Routes>
                 <Route path='/' element={<VehiclesListPage />} />
                 <Route path='details' element={<VehicleDetailsPage />} />
