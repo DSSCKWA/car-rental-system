@@ -55,7 +55,7 @@ export function VehicleDetailsPage() {
     return (
         <div className='vehicle'>
             <VehicleCard vehicle={vehicle} extra={true} />
-            <label for="insurance_policy_select"><b>Insurance: </b></label>
+            <label htmlFor="insurance_policy_select" className='insurance_policy_select_label'>Insurance: </label>
             <select className='insurance_policy_select' value={policyCost} onChange={e => setPolicyCost(e.target.value)}>
                 <option value={0} key="None">
                     None
