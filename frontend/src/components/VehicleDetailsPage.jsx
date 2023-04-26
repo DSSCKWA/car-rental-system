@@ -23,6 +23,7 @@ export function VehicleDetailsPage() {
     const endDateTime = new Date(`${endDate}T${endTime}`);
     const timeDifferenceMs = endDateTime - startDateTime;
     const totalHours = timeDifferenceMs / (1000 * 60 * 60);
+    const totalDays = Math.ceil(totalHours / 24);
 
     function formatCost(cost) {
         let costStr = cost.toString();
@@ -56,11 +57,11 @@ export function VehicleDetailsPage() {
             <VehicleCard vehicle={vehicle} extra={true} />
             <label for="insurance_policy_select"><b>Insurance: </b></label>
             <select className='insurance_policy_select' value={policyCost} onChange={e => setPolicyCost(e.target.value)}>
-                <option value={0}>
+                <option value={0} key="None">
                     None
                 </option>
                 {policies.map(policy => (
-                    <option value={policy.price}>
+                    <option value={policy.price * totalDays} key={policy.policy_type}>
                         {capitalizeFirstLetter(policy.policy_type).replace(/_/g, ' ')}
                     </option>
                 ))}
