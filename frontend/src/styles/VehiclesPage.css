@@ -3,6 +3,7 @@
     padding: 0;
     box-sizing: border-box;
 }
+
 .Vehicles {
     width: 100%;
 }
@@ -55,6 +56,10 @@
     margin: 0;
 }
 
+.vehicle_card_line_name {
+    font-weight: bold;
+}
+
 .vehicle-title {
     margin-top: 0;
     margin-bottom: 0.5rem;
@@ -98,4 +103,6 @@
     transform: translateY(-2px);
 }
 
-
+.insurance_policy_select_label {
+    font-weight: bold;
+}
