@@ -44,6 +44,18 @@ export function WorkerRentalsPage() {
     //     get_rentals()
     // }
 
+    function formatDate(dateString) {
+    const date = new Date(dateString);
+    const options = {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    };
+    return date.toLocaleString('en-GB', options);
+  }
+
     return (
         <div className='manager_rentalsManagerRentalsPage.jsx_page'>
             <h1>Rentals</h1>
@@ -51,38 +63,29 @@ export function WorkerRentalsPage() {
             <table>
                 <thead>
                 <th>Rental ID</th>
-                <th>Client ID</th>
                 <th>Name</th>
                 <th>Surname</th>
                 <th>Email</th>
                 <th>Phone number</th>
-                <th>Vehicle ID</th>
+                <th>Brand</th>
+                <th>Model</th>
                 <th>Registration number</th>
                 <th>Start time</th>
                 <th>End time</th>
-                <th>Discount code ID</th>
-                <th>Policy number</th>
+                <th>Policy</th>
                 </thead>
                 <tbody>{rentals?.map(rental => <tr>
                     <td>{rental.rental_id}</td>
-                    <td>{rental.client_id}</td>
                     <td>{rental.name}</td>
                     <td>{rental.surname}</td>
                     <td>{rental.user_email_address}</td>
                     <td>{rental.phone_number}</td>
-                    <td>{rental.vehicle_id}</td>
+                    <td>{rental.brand}</td>
+                    <td>{rental.model}</td>
                     <td>{rental.registration_number}</td>
-                    <td>{rental.start_time}</td>
-                    <td>{rental.end_time}</td>
-                    {/*<td>{new Date(rental.date_of_birth).toLocaleDateString()}</td>*/}
-                    <td>{rental.discount_code_id}</td>
-                    <td>{rental.policy_number}</td>
-                    {/*<td>*/}
-                    {/*    <button onClick={() => {*/}
-                    {/*        change_rental_status(rental.user_id, rental.account_status === "deleted" ? "active" : "deleted")*/}
-                    {/*    }}>{rental.account_status === "deleted" ? "Activate" : "Delete"}*/}
-                    {/*    </button>*/}
-                    {/*</td>*/}
+                    <td>{formatDate(rental.start_time)}</td>
+                    <td>{formatDate(rental.end_time)}</td>
+                    <td>{rental.policy_name}</td>
                 </tr>)}</tbody>
             </table>
         </div>
