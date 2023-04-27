@@ -51,32 +51,31 @@ export function WorkerRentalsPage() {
             <table>
                 <thead>
                 <th>Rental ID</th>
-                <th>Client ID</th>
                 <th>Name</th>
                 <th>Surname</th>
                 <th>Email</th>
                 <th>Phone number</th>
-                <th>Vehicle ID</th>
+                <th>Brand</th>
+                <th>Model</th>
                 <th>Registration number</th>
                 <th>Start time</th>
                 <th>End time</th>
-                <th>Discount code ID</th>
-                <th>Policy number</th>
+                <th>Policy</th>
+                {/*<th>puste</th>*/}
                 </thead>
                 <tbody>{rentals?.map(rental => <tr>
                     <td>{rental.rental_id}</td>
-                    <td>{rental.client_id}</td>
                     <td>{rental.name}</td>
                     <td>{rental.surname}</td>
                     <td>{rental.user_email_address}</td>
                     <td>{rental.phone_number}</td>
-                    <td>{rental.vehicle_id}</td>
+                    <td>{rental.brand}</td>
+                    <td>{rental.model}</td>
                     <td>{rental.registration_number}</td>
                     <td>{rental.start_time}</td>
                     <td>{rental.end_time}</td>
                     {/*<td>{new Date(rental.date_of_birth).toLocaleDateString()}</td>*/}
-                    <td>{rental.discount_code_id}</td>
-                    <td>{rental.policy_number}</td>
+                    <td>{rental.policy_type}</td>
                     {/*<td>*/}
                     {/*    <button onClick={() => {*/}
                     {/*        change_rental_status(rental.user_id, rental.account_status === "deleted" ? "active" : "deleted")*/}
