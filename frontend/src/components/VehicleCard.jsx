@@ -9,6 +9,7 @@ export function VehicleCardLine({ name, value }) {
     )
 }
 
+
 export function VehicleCard(props) {
     const vehicle = props.vehicle
     const extra = props.extra

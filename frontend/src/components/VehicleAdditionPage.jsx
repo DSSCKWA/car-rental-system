@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom';
 import '../styles/vehiclesPage.css'
-import { VehicleCard, VehicleCardLine } from './VehicleCard';
-import { VehicleCardForm, VehicleCardLineForm } from './VehicleCardForm';
+import { VehicleCardFormFull, VehicleCardLineForm } from './VehicleCardFormFull';
 
 
-export function VehicleDetailsPage(props) {
+export function VehicleAdditionPage(props) {
     const [rentalCost, setRentalCost] = useState(0)
-    const [policies, setPolicies] = useState([])
     const [policyCost, setPolicyCost] = useState(0)
     const [policyType, setPolicyType] = useState("")
     const [submitSuccess, setSubmitSuccess] = useState(false)
@@ -24,6 +22,7 @@ export function VehicleDetailsPage(props) {
     const startTime = location.state?.startTime;
     const endDate = location.state?.endDate;
     const endTime = location.state?.endTime;
+    //const policy_number = 
     history.pushState({ startDate, startTime, endDate, endTime, vehicles }, '', '/vehicles')
 
     const startDateTime = new Date(`${startDate}T${startTime}`);
@@ -70,27 +69,8 @@ export function VehicleDetailsPage(props) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
-    useEffect(() => {
-        fetch(
-            `/api/price-lists/?` + new URLSearchParams({
-                vehicleClass: `${vehicle.vehicle_class}`,
-            })
-            , { method: 'GET' }
-        )
-            .then(response => response.json())
-            .then(data => setRentalCost(data[0].price))
-    }, [])
-
-    useEffect(() => {
-        fetch(`/api/price-lists/policies`, { method: 'GET' })
-            .then(response => response.json())
-            .then(data => setPolicies(data))
-    }, [])
-
 
     async function handleSubmit(e) {
-        console.log(startDate)
-        console.log(startDateTime)
         e.preventDefault()
         let policy_number = null
         if (!(policyType == null) && !(policyType == "none")) {
@@ -161,44 +141,13 @@ export function VehicleDetailsPage(props) {
             </div>
         )
     }
-    if (user.permissions == "client") {
-        return (
 
 
-            <div className='vehicle'>
-                <VehicleCard vehicle={vehicle} extra={true} />
-                <label htmlFor="insurance_policy_select" className='insurance_policy_select_label'>Insurance: </label>
-                <select className='insurance_policy_select' value={policyCost} onChange={e => { setPolicyCost(e.target.value); setPolicyType(e.target.options[e.target.options.selectedIndex].innerHTML.toLowerCase().replace(/ /g, '_')) }}>
-                    <option value={0} key="None">
-                        None
-                    </option>
-                    {policies.map(policy => (
-                        <option value={policy.price * totalDays} key={policy.policy_type}>
-                            {capitalizeFirstLetter(policy.policy_type).replace(/_/g, ' ')}
-                        </option>
-                    ))}
-                </select>
-                <div className='rental_cost'>
-                    <VehicleCardLine name={"Rental cost"} value={`${rentalCost}${currency}/h`} />
-                    {policyCost != 0 ? <VehicleCardLine name={"Insurance policy cost"} value={`${policyCost}${currency}`} /> : null}
-                    <VehicleCardLine name={"Total cost"} value={formatCost(parseInt(rentalCost * totalHours) + parseInt(policyCost))} />
-                </div>
-                <form className='log_form' onSubmit={handleSubmit}>
-                    <p className='errorMessage'>{error}</p>
-                    <div className='form_group'>
-                        <button type='submit'>Rent</button>
-                    </div>
-                </form>
-            </div>
-        )
-    } else if (user.permissions == "worker") {
+    return (
 
-        return (
+        <div className='vehicle'>
+            <VehicleCardFormFull vehicle={vehicle} />
+        </div>
+    )
 
-
-            <div className='vehicle'>
-                <VehicleCardForm vehicle={vehicle} />
-            </div>
-        )
-    }
 }

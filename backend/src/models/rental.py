@@ -21,7 +21,6 @@ class Rental(db.Model):
         return self.rental_id
 
     def __init__(self, rental_dict):
-        self.rental_id = rental_dict['rental_id']
         self.vehicle_id = rental_dict['vehicle_id']
         self.start_time = rental_dict['start_time']
         self.end_time = rental_dict['end_time']
