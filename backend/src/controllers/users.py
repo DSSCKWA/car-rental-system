@@ -9,8 +9,8 @@ users = Blueprint('users', __name__, url_prefix='/users')
 response_class = Blueprint('response_class', __name__)
 
 
-@login_required
 @users.route('/', methods=['GET'])
+@login_required
 def get_all():
     user_permissions = current_user.permissions
     if user_permissions == "manager":
@@ -20,8 +20,8 @@ def get_all():
         abort(403, description="Invalid permissions")
 
 
-@login_required
 @users.route('/<int:id>', methods=['GET'])
+@login_required
 def get_by_id(id):
     user = User.query.get(id)
     if user is None:
@@ -29,8 +29,8 @@ def get_by_id(id):
     return user.serialize()
 
 
-@login_required
 @users.route('/change-password', methods=['PUT'])
+@login_required
 def change_password():
     user = User.query.get(int(session['_user_id']))
     if user is None:

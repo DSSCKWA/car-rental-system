@@ -17,49 +17,31 @@ export function WorkerRentalsPage() {
                 'Content-Type': 'application/json',
             },
         })
-            .then(response => {
-                if (!response.ok) {
-                    navigate('');
-                }
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
                 data.sort((a, b) => a.rental_id - b.rental_id);
                 setRentals(data)
-                console.log(data); // log the response data
             })
             .catch(error => {
                 console.log('Error getting rental info', error)
             })
     }
 
-    // async function change_rental_status(id, account_status) {
-    //     await fetch(`/api/rental/${id}`, {
-    //         method: 'PUT',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify({account_status})
-    //     })
-    //     get_rentals()
-    // }
-
     function formatDate(dateString) {
-    const date = new Date(dateString);
-    const options = {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    };
-    return date.toLocaleString('en-GB', options);
-  }
+        const date = new Date(dateString);
+        const options = {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        };
+        return date.toLocaleString('en-GB', options);
+    }
 
     return (
-        <div className='manager_rentalsManagerRentalsPage.jsx_page'>
-            <h1>Rentals</h1>
-            {/*<Link to="/manager/add-rental">Add rental</Link>*/}
+        <div className='worker_rentals_page page_content'>
+            <h2>Rentals</h2>
             <table>
                 <thead>
                 <th>Rental ID</th>

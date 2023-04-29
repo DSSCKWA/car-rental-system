@@ -47,8 +47,9 @@ def get_data_from_id(id):
     user = User.query.filter_by(user_id=id).first()
     return user
 
-@login_required
+
 @worker.route('/', methods=['GET'])
+@login_required
 def get_all():
     user_permissions = current_user.permissions
     if user_permissions == "manager":

@@ -10,11 +10,12 @@ rental = Blueprint('rental', __name__, url_prefix='/rental')
 response_class = Blueprint('response_class', __name__)
 
 
-@login_required
+
 @rental.route('/', methods=['GET'])
+@login_required
 def get_all():
     user_permissions = current_user.permissions
-    if user_permissions == "manager" or user_permissions == "worker":
+    if user_permissions in ["manager", "worker"]:
         rentals = Rental.query.join(User, Rental.client_id == User.user_id).join(Vehicle, Rental.vehicle_id == Vehicle.vehicle_id).join(Insurance, Rental.policy_number == Insurance.policy_number).all()
         return [rental.serialize() for rental in rentals]
     else:
