@@ -62,7 +62,7 @@ export function AdminEditUsersPage() {
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody> {users?.map(user => <tr>
+                <tbody>{users?.map(user => <tr key={user.user_id}>
                     <td>{user.user_id}</td>
                     <td>{user.user_email_address}</td>
                     <td>{user.name}</td>
