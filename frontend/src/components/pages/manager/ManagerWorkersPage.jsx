@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Table } from '../../page_elements/Table.jsx'
 
 export function ManagerWorkersPage() {
 
@@ -35,36 +36,18 @@ export function ManagerWorkersPage() {
         get_users()
     }
 
+    if (!workers) return <div>Loading...</div>
+
     return (
         <div className='manager_workers_page'>
             <h2>Workers</h2>
-            <table>
-                <thead>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Surname</th>
-                    <th>Email</th>
-                    <th>Phone number</th>
-                    <th>Birth date</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </thead>
-                <tbody>{workers?.map(worker => <tr>
-                    <td>{worker.user_id}</td>
-                    <td>{worker.name}</td>
-                    <td>{worker.surname}</td>
-                    <td>{worker.user_email_address}</td>
-                    <td>{worker.phone_number}</td>
-                    <td>{new Date(worker.date_of_birth).toLocaleDateString()}</td>
-                    <td>{worker.account_status}</td>
-                    <td>
-                        <button onClick={() => {
-                            change_worker_status(worker.user_id, worker.account_status === 'deleted' ? 'active' : 'deleted')
-                        }}>{worker.account_status === 'deleted' ? 'Activate' : 'Delete'}
-                        </button>
-                    </td>
-                </tr>)}</tbody>
-            </table>
+            <Table data={workers} keys={'user_id'} columns={[{ label: 'ID', key: 'user_id', type: 'text' },
+                { label: 'Name', key: 'name', type: 'text' },
+                { label: 'Surname', key: 'surname', type: 'text' },
+                { label: 'Email', key: 'user_email_address', type: 'text' },
+                { label: 'Phone number', key: 'phone_number', type: 'text' },
+                { label: 'Birth date', key: 'date_of_birth', type: 'date', format: 'dd/MM/yyyy' },
+                { label: 'Status', key: 'account_status', type: 'select', options: ['active', 'deleted'], onChange: (row, e) => change_worker_status(row.user_id, e.target.value) }]} />
         </div>
     )
 }
