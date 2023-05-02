@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Table } from '../../page_elements/Table.jsx'
 
 export function AdminEditUsersPage() {
 
@@ -17,7 +18,6 @@ export function AdminEditUsersPage() {
         })
             .then(response => response.json())
             .then(data => {
-                console.log(data)
                 data.sort((a, b) => a.user_id - b.user_id)
                 setUsers(data)
             })
@@ -45,48 +45,31 @@ export function AdminEditUsersPage() {
         get_users()
     }
 
+    function onChangePermissions(row, e) {
+        changeUserPermissions(row.user_id, e.target.value)
+    }
+
+    function onClickEditUser(row) {
+        console.log('Edit user', row.user_id)
+    }
+
+    if (!users) return <div>Loading...</div>
+
     return (
         <div className='admin_edit_users_page page_content'>
             <h2>Edit Users</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Email</th>
-                        <th>Name</th>
-                        <th>Surname</th>
-                        <th>Permissions</th>
-                        <th>Status</th>
-                        <th>Phone number</th>
-                        <th>Birth date</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>{users?.map(user => <tr key={user.user_id}>
-                    <td>{user.user_id}</td>
-                    <td>{user.user_email_address}</td>
-                    <td>{user.name}</td>
-                    <td>{user.surname}</td>
-                    <td>
-                        <select name='permissions' value={user.permissions} onChange={e => {
-                            console.log(e.target.value)
-                            changeUserPermissions(user.user_id, e.target.value)
-                        }}>
-                            <option value='admin'>admin</option>
-                            <option value='manager'>manager</option>
-                            <option value='worker'>worker</option>
-                            <option value='client'>client</option>
-                        </select>
-                    </td>
-                    <td>{user.account_status}</td>
-                    <td>{user.phone_number}</td>
-                    <td>{new Date(user.date_of_birth).toLocaleDateString()}</td>
-                    <td>
-                        <button>Edit</button>
-                    </td>
-                </tr>)}
-                </tbody>
-            </table>
+            <Table data={users} keys={'user_id'} columns={[
+                { label: 'ID', key: 'user_id', type: 'text' },
+                { label: 'Email', key: 'user_email_address', type: 'text' },
+                { label: 'Name', key: 'name', type: 'text' },
+                { label: 'Surname', key: 'surname', type: 'text' },
+                { label: 'Permissions', key: 'permissions', type: 'select', options: ['client', 'worker', 'manager', 'admin'], onChange: onChangePermissions },
+                { label: 'Status', key: 'account_status', type: 'text' },
+                { label: 'Phone number', key: 'phone_number', type: 'text' },
+                { label: 'Birth date', key: 'date_of_birth', type: 'date', format: 'dd/MM/yyyy' },
+                { label: 'Edit', key: 'actions', type: 'button', onClick: onClickEditUser },
+            ]}
+            />
         </div>
     )
 }
