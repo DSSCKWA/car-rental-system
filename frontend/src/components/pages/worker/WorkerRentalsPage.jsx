@@ -1,9 +1,7 @@
-import {useEffect, useState} from 'react'
-import {useNavigate} from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Table } from '../../page_elements/Table.jsx'
 
 export function WorkerRentalsPage() {
-
-    const navigate = useNavigate()
     const [rentals, setRentals] = useState(null)
     useEffect(() => {
         get_rentals()
@@ -18,7 +16,11 @@ export function WorkerRentalsPage() {
         })
             .then(response => response.json())
             .then(data => {
-                data.sort((a, b) => a.rental_id - b.rental_id);
+                data.sort((a, b) => a.rental_id - b.rental_id)
+                for (const rental of data) {
+                    rental.start_time = formatDate(rental.start_time)
+                    rental.end_time = formatDate(rental.end_time)
+                }
                 setRentals(data)
             })
             .catch(error => {
@@ -27,48 +29,35 @@ export function WorkerRentalsPage() {
     }
 
     function formatDate(dateString) {
-        const date = new Date(dateString);
+        const date = new Date(dateString)
         const options = {
             day: '2-digit',
             month: '2-digit',
             year: 'numeric',
             hour: '2-digit',
-            minute: '2-digit'
-        };
-        return date.toLocaleString('en-GB', options);
+            minute: '2-digit',
+        }
+        return date.toLocaleString('en-GB', options)
     }
+
+    if (!rentals) return <div>Loading...</div>
 
     return (
         <div className='worker_rentals_page page_content'>
             <h2>Rentals</h2>
-            <table>
-                <thead>
-                <th>Rental ID</th>
-                <th>Name</th>
-                <th>Surname</th>
-                <th>Email</th>
-                <th>Phone number</th>
-                <th>Brand</th>
-                <th>Model</th>
-                <th>Registration number</th>
-                <th>Start time</th>
-                <th>End time</th>
-                <th>Policy</th>
-                </thead>
-                <tbody>{rentals?.map(rental => <tr>
-                    <td>{rental.rental_id}</td>
-                    <td>{rental.name}</td>
-                    <td>{rental.surname}</td>
-                    <td>{rental.user_email_address}</td>
-                    <td>{rental.phone_number}</td>
-                    <td>{rental.brand}</td>
-                    <td>{rental.model}</td>
-                    <td>{rental.registration_number}</td>
-                    <td>{formatDate(rental.start_time)}</td>
-                    <td>{formatDate(rental.end_time)}</td>
-                    <td>{rental.policy_name}</td>
-                </tr>)}</tbody>
-            </table>
+            <Table data={rentals} keys={'rental_id'} columns={[
+                { label: 'Rental ID', key: 'rental_id', type: 'text' },
+                { label: 'Name', key: 'name', type: 'text' },
+                { label: 'Surname', key: 'surname', type: 'text' },
+                { label: 'Email', key: 'user_email_address', type: 'text' },
+                { label: 'Phone number', key: 'phone_number', type: 'text' },
+                { label: 'Brand', key: 'brand', type: 'text' },
+                { label: 'Model', key: 'model', type: 'text' },
+                { label: 'Registration number', key: 'registration_number', type: 'text' },
+                { label: 'Start time', key: 'start_time', type: 'text' },
+                { label: 'End time', key: 'end_time', type: 'text' },
+                { label: 'Policy', key: 'policy_name', type: 'text' },
+            ]} />
         </div>
     )
 }
