@@ -14,7 +14,7 @@ response_class = Blueprint('response_class', __name__)
 @login_required
 def get_all():
     user_permissions = current_user.permissions
-    if user_permissions == "manager":
+    if user_permissions in ['admin', 'manager']:
         users = User.query.all()
         return [user.serialize() for user in users]
     else:
