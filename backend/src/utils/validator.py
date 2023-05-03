@@ -77,7 +77,7 @@ def validate_addition_request_body(vehicle_body):
 
 def registration_number_avaliable(reg_number):
     vehicle = Vehicle.query.filter_by(registration_number=reg_number).first()
-    return not vehicle is None
+    return vehicle is None
 
 def is_valid_review_date(date):
     current_date = datetime.datetime.now().date()

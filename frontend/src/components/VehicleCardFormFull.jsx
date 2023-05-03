@@ -1,6 +1,8 @@
 import '../styles/VehiclesPage.css'
+import Resizer from "react-image-file-resizer";
 
 import React, { useState, useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom';
 
 export function VehicleCardLineForm({ name, value }) {
     return (
@@ -16,24 +18,24 @@ export function VehicleCardFormFull(props) {
     const [brand, setBrand] = useState(vehicle?.brand ? vehicle.brand : "")
     const [model, setModel] = useState(vehicle?.model ? vehicle.model : "")
     const [yearOfProduction, setYearOfProduction] = useState(vehicle?.year_of_production ? vehicle.year_of_production : "")
-    const [bodyType, setBodyType] = useState(vehicle?.body_type ? vehicle.body_type : "")
+    const [bodyType, setBodyType] = useState(vehicle?.body_type ? vehicle.body_type : "sedan")
     const [numberOfSeats, setNumberOfSeats] = useState(vehicle?.number_of_seats ? vehicle.number_of_seats : "")
-    const [vehicleClass, setVehicleClass] = useState(vehicle?.vehicle_class ? vehicle.vehicle_class : "")
+    const [vehicleClass, setVehicleClass] = useState(vehicle?.vehicle_class ? vehicle.vehicle_class : "S")
     const [numberOfDoors, setNumberOfDoors] = useState(vehicle?.number_of_doors ? vehicle.number_of_doors : "")
-    const [driveType, setDriveType] = useState(vehicle?.drive_type ? vehicle.drive_type : "")
+    const [driveType, setDriveType] = useState(vehicle?.drive_type ? vehicle.drive_type : "FWD")
     const [enginePower, setEnginePower] = useState(vehicle?.engine_power ? vehicle.engine_power : "")
     const [engineCapacity, setEngineCapacity] = useState(vehicle?.engine_capacity ? vehicle.engine_capacity : "")
-    const [fuelType, setFuelType] = useState(vehicle?.fuel_type ? vehicle.fuel_type : "")
+    const [fuelType, setFuelType] = useState(vehicle?.fuel_type ? vehicle.fuel_type : "petrol")
     const [tankCapacity, setTankCapacity] = useState(vehicle?.tank_capacity ? vehicle.tank_capacity : "")
-    const [gearboxType, setGearboxType] = useState(vehicle?.gearbox_type ? vehicle.gearbox_type : "")
+    const [gearboxType, setGearboxType] = useState(vehicle?.gearbox_type ? vehicle.gearbox_type : "automatic")
     const [additionalEquipment, setAdditionalEquipment] = useState(vehicle?.additional_equipment ? vehicle.additional_equipment : [])
     const [description, setDescription] = useState(vehicle?.description ? vehicle.description : "")
     const [registrationNumber, setRegistrationNumber] = useState(vehicle?.registration_number ? vehicle.registration_number : "")
-    const [status, setStatus] = useState(vehicle?.status ? vehicle.status : "")
+    const [status, setStatus] = useState(vehicle?.status ? vehicle.status : "available")
     const [technicalReviewDate, setTechnicalReviewDate] = useState(vehicle?.technical_review_date ? vehicle.technical_review_date : "01/01/2024 12:00:00")
     const [techDate, setTechDate] = useState(new Date(technicalReviewDate).toISOString().substring(0, 10))
     const [color, setColor] = useState(vehicle?.color ? vehicle.color : "")
-    const [image, setImage] = useState(vehicle?.image ? vehicle.image : "")
+    const [image, setImage] = useState(vehicle?.image ? vehicle.image : null)
     const [addSuccess, setAddSuccess] = useState(false)
     const [error, setError] = useState('')
     const getMinDate = () => {
@@ -60,7 +62,7 @@ export function VehicleCardFormFull(props) {
         e.preventDefault()
         const techDateTime = new Date(`${techDate}T${"12:00:00"}`)
         console.log('submitting form', { yearOfProduction, bodyType, numberOfSeats, vehicleClass, numberOfDoors, driveType, enginePower, engineCapacity, fuelType, tankCapacity, additionalEquipment, description, registrationNumber, status, techDate, color, image, gearboxType })
-        const response = await fetch('/api/vehicles', {
+        const response = await fetch('/api/vehicles/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -82,7 +84,7 @@ export function VehicleCardFormFull(props) {
                 description,
                 'registration_number': registrationNumber,
                 status,
-                'technical_review_date': technicalReviewDate,
+                'technical_review_date': techDate,
                 color,
                 image,
                 'gearbox_type': gearboxType
@@ -99,7 +101,7 @@ export function VehicleCardFormFull(props) {
 
         if (body['vehicle_id']) {
             console.log('Addition success', body)
-            setRegisterSuccess(true)
+            setAddSuccess(true)
         }
     }
 
@@ -124,8 +126,8 @@ export function VehicleCardFormFull(props) {
                     <p className='errorMessage'>{error}</p>
                 </div>
                 <div className='form_group'>
-                    <label htmlFor='image2'>Image</label>
-                    <img src={`data:image/jpg;base64,${image}`} alt='Image' onClick={handleImageClick} />
+                    <label htmlFor='image'>Image</label>
+                    <img src={image ? `data:image/jpg;base64,${image}` : `../src/assets/placeholder.png`} alt='Image' onClick={handleImageClick} />
                     <input
                         type='file'
                         id='image-file'

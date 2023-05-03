@@ -1,7 +1,7 @@
 import '../styles/VehiclesPage.css'
 
-
 import React, { useState, useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom';
 
 export function VehicleCardLineForm({ name, value }) {
     return (
@@ -68,7 +68,7 @@ export function VehicleCardForm(props) {
 
         if (body['vehicle_id']) {
             console.log('Edition success', body)
-            setRegisterSuccess(true)
+            setEditSuccess(true)
         }
     }
 
