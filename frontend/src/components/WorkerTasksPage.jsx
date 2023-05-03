@@ -55,18 +55,14 @@ export function WorkerTasksPage() {
                 <th>Rental ID</th>
                 <th>Description</th>
                 <th>Status</th>
-                <th>Assigned worker name</th>
-                <th>Assigned worker surname</th>
-                <th>Worker ID</th>
+                <th>Assigned worker</th>
                 <th>Actions</th>
                 </thead>
                 <tbody>{tasks?.map(task => <tr>
                     <td>{task.rental_id}</td>
                     <td>{task.task_description}</td>
                     <td>{task.task_status}</td>
-                    <td>{task.worker_name}</td>
-                    <td>{task.worker_surname}</td>
-                    <td>{task.staff_id}</td>
+                    <td>{task.worker_name} {task.worker_surname}</td>
                     <td>
                         <button onClick={() => {
                             change_task_status(task.task_id,

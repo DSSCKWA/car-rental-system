@@ -23,9 +23,6 @@ class Task(db.Model):
         self.staff_id = task_dict['staff_id']
 
     def serialize(self):
-        # worker_name = '-'
-        # if self.worker:
-        #     worker_name = self.worker.name + ' ' + self.worker.surname
         return {
             'task_id': self.task_id,
             'task_description': self.task_description,
