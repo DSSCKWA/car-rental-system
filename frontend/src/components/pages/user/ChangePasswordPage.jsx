@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import './ChangePasswordStyles.css'
+import { Form } from '../../page_elements/Form.jsx'
 
 export function ChangePasswordPage() {
     const [currentPassword, setCurrentPassword] = useState('')
@@ -39,27 +40,11 @@ export function ChangePasswordPage() {
 
     return (
         <div className='change_password_page'>
-            <h2>Change Password</h2>
-            <form className='change_password_form small' onSubmit={handleSubmit}>
-                <div className='form_group'>
-                    <p className='errorMessage'>{error}</p>
-                </div>
-                <div className='form_group'>
-                    <label htmlFor='current_password'>Current Password</label>
-                    <input type='password' id='current_password' name='current_password' value={currentPassword} onChange={e => setCurrentPassword(e.target.value)} />
-                </div>
-                <div className='form_group'>
-                    <label htmlFor='new_password'>New Password</label>
-                    <input type='password' id='new_password' name='new_password' value={newPassword} onChange={e => setNewPassword(e.target.value)} />
-                </div>
-                <div className='form_group'>
-                    <label htmlFor='confirm_new_password'>Confirm New Password</label>
-                    <input type='password' id='confirm_new_password' name='confirm_new_password' value={confirmNewPassword} onChange={e => setConfirmNewPassword(e.target.value)} />
-                </div>
-                <div className='form_group'>
-                    <button type='submit'>Change Password</button>
-                </div>
-            </form>
+            <Form formName='Change password' className='small' onSubmit={handleSubmit} submitText='Change password' error={error} inputs={[
+                { name: 'currentPassword', label: 'Password', type: 'password', onChange: e => setCurrentPassword(e.target.value) },
+                { name: 'newPassword', label: 'New password', type: 'password', onChange: e => setNewPassword(e.target.value) },
+                { name: 'confirmNewPassword', label: 'Confirm new password', type: 'password', onChange: e => setConfirmNewPassword(e.target.value) },
+            ]} />
         </div>
     )
 }
