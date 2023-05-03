@@ -13,7 +13,6 @@ response_class = Blueprint('response_class', __name__)
 @login_required
 def add_worker():
     user_permissions = current_user.permissions
-    print({"user_permissions": user_permissions})
     if user_permissions == "manager":
         new_user_body = request.json
         validate_registration_request_body(new_user_body)
@@ -50,6 +49,11 @@ def get_data_from_id(id):
 
 
 @worker.route('/', methods=['GET'])
+@login_required
 def get_all():
-    users = User.query.filter_by(permissions="worker")
-    return [user.serialize() for user in users]
+    user_permissions = current_user.permissions
+    if user_permissions == "manager":
+        users = User.query.filter_by(permissions="worker")
+        return [user.serialize() for user in users]
+    else:
+        abort(403, description="Invalid permissions")

@@ -91,5 +91,11 @@ def is_valid_review_date(date):
             return True
     return False
 
+def validate_permissions_change(permissions):
+    if permissions not in ["admin", "client", "worker", "manager"]:
+        abort(400, description="Invalid permissions")
+        return False
+    return True
+
 
 
