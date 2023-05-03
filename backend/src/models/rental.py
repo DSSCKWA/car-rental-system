@@ -23,7 +23,7 @@ class Rental(db.Model):
         self.end_time = rental_dict['end_time']
         self.discount_code_id = rental_dict['discount_code_id']
         self.client_id = rental_dict['client_id']
-        self.policy_name = rental_dict['policy_name']
+        self.policy_number = rental_dict['policy_number']
 
     def serialize(self):
         return {
@@ -41,5 +41,5 @@ class Rental(db.Model):
             'registration_number': self.vehicle.registration_number,
             'brand': self.vehicle.brand,
             'model': self.vehicle.model,
-            'policy_name': self.insurance.policy_name
+            'policy_number': self.insurance.policy_number
         }

@@ -123,7 +123,7 @@ export function VehicleCardForm(props) {
                     <select id='status' name='status' value={status} onChange={e => setStatus(e.target.value)} >
                         <option value="available">Avaliable</option>
                         <option value="rented">Rented</option>
-                        <option value="out_of_commision">Out of commision</option>
+                        <option value="out_of_comission">Out of commision</option>
                         <option value="in_service">In service</option>
                     </select>
                 </div>

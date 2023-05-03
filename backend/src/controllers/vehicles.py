@@ -84,7 +84,6 @@ def edit(id):
     vehicle.additional_equipment = vehicle_body["additional_equipment"]
     vehicle.registration_number = vehicle_body["registration_number"]
     vehicle.color = vehicle_body["color"]
-    validate_addition_request_body(vehicle_body)
 
     db.session.commit()
     return vehicle.serialize()

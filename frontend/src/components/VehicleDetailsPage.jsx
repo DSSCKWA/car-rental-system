@@ -107,7 +107,7 @@ export function VehicleDetailsPage(props) {
                 return
             }
 
-            policy_number = policyBody[0].insurance_number
+            policy_number = policyBody[0].policy_number
             console.log(policyBody)
             console.log(policy_number)
         }
