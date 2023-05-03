@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Form } from '../../page_elements/Form.jsx'
 
 export function LoginPage(props) {
     const { user, setUser } = props
@@ -54,21 +55,10 @@ export function LoginPage(props) {
 
     return (
         <div className='login_page'>
-            <h1>Login</h1>
-            <form className='log_form' onSubmit={handleSubmit}>
-                <p className='errorMessage'>{error}</p>
-                <div className='form_group'>
-                    <label htmlFor='email'>Email</label>
-                    <input type='email' id='email' name='email' value={email} onChange={e => setEmail(e.target.value)} />
-                </div>
-                <div className='form_group'>
-                    <label htmlFor='password'>Password</label>
-                    <input type='password' id='password' name='password' value={password} onChange={e => setPassword(e.target.value)} />
-                </div>
-                <div className='form_group'>
-                    <button type='submit'>Login</button>
-                </div>
-            </form>
+            <Form formName='Login' className='small' onSubmit={handleSubmit} submitText='Login' inputs={[
+                { name: 'email', label: 'Email', type: 'email', onChange: e => setEmail(e.target.value) },
+                { name: 'password', label: 'Password', type: 'password', onChange: e => setPassword(e.target.value) },
+            ]} error={error} />
         </div>
     )
 }
