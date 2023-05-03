@@ -6,6 +6,7 @@ from .controllers.worker import worker
 from .controllers.vehicles import vehicles
 from .controllers.rentals import rental
 from .controllers.files import files
+from .controllers.tasks import task
 from .controllers.price_lists import price_lists
 from .config.extensions import bcrypt, db, login_manager
 
@@ -33,6 +34,7 @@ def create_app(config_class=Config):
     app.register_blueprint(files)
     app.register_blueprint(price_lists)
     app.register_blueprint(rental)
+    app.register_blueprint(task)
 
     for code in [400, 401, 403, 404, 409, 500]:
         app.register_error_handler(code, handle_error)
