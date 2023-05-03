@@ -10,7 +10,6 @@ rental = Blueprint('rental', __name__, url_prefix='/rental')
 response_class = Blueprint('response_class', __name__)
 
 
-
 @rental.route('/', methods=['GET'])
 @login_required
 def get_all():
