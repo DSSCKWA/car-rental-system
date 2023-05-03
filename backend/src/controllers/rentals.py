@@ -1,10 +1,15 @@
-from flask import Blueprint, abort
+from flask import Blueprint, abort, request, jsonify
 from flask_login import login_required, current_user
+
+from sqlalchemy import and_, not_
+from datetime import datetime
 
 from ..models.rental import Rental
 from ..models.user import User
 from ..models.vehicle import Vehicle
 from ..models.insurance import Insurance
+
+
 
 rental = Blueprint('rental', __name__, url_prefix='/rental')
 response_class = Blueprint('response_class', __name__)
@@ -20,3 +25,5 @@ def get_all():
         return [rental.serialize() for rental in rentals]
     else:
         abort(403, description="Invalid permissions")
+
+
