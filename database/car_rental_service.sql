@@ -749,7 +749,7 @@ CREATE TABLE public.task (
     name character varying(300) NOT NULL,
     rental_id integer NOT NULL,
     task_status public.task_status NOT NULL,
-    staff_id integer NOT NULL
+    staff_id integer
 );
 
 

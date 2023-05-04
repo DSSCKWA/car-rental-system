@@ -145,6 +145,28 @@ export function VehicleDetailsPage(props) {
             return
         }
 
+        const tasksResponse = await fetch('/api/tasks/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                'description': "Prepare vehicle for the client",
+                'name': "Prepare vehicle",
+                'rental_id': rentalBody.rental_id,
+                'task_status': "active",
+                'staff_id': null
+            }),
+        })
+        const tasksBody = await tasksResponse.json()
+        console.log('response', tasksBody)
+
+        if (!tasksResponse.ok) {
+            console.log('task table setting failed')
+            setError(tasksBody.description)
+            return
+        }
+
         if (rentalBody['rental_id']) {
             console.log('rental success', rentalBody)
             setSubmitSuccess(true)
