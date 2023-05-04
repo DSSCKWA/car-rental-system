@@ -22,7 +22,6 @@ export function VehicleAdditionPage(props) {
     const startTime = location.state?.startTime;
     const endDate = location.state?.endDate;
     const endTime = location.state?.endTime;
-    //const policy_number = 
     history.pushState({ startDate, startTime, endDate, endTime, vehicles }, '', '/vehicles')
 
     const startDateTime = new Date(`${startDate}T${startTime}`);
@@ -88,8 +87,7 @@ export function VehicleAdditionPage(props) {
             }
 
             policy_number = policyBody[0].policy_number
-            console.log(policyBody)
-            console.log(policy_number)
+
         }
 
         console.log('submitting form', `${vehicle.vehicle_id}`, startTime, endTime, `${user.user_id}`)

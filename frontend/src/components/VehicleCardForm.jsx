@@ -17,6 +17,7 @@ export function VehicleCardLineForm({ name, value }) {
 export function VehicleCardForm(props) {
     const vehicle = props.vehicle
     const [additionalEquipment, setAdditionalEquipment] = useState(vehicle?.additional_equipment ? vehicle.additional_equipment : [])
+    const [additionalEquipmentString, setAdditionalEquipmentString] = useState(additionalEquipment.join(','))
     const [description, setDescription] = useState(vehicle?.description ? vehicle.description : "")
     const [registrationNumber, setRegistrationNumber] = useState(vehicle?.registration_number ? vehicle.registration_number : "")
     const [status, setStatus] = useState(vehicle?.status ? vehicle.status : "avaliable")
@@ -46,6 +47,7 @@ export function VehicleCardForm(props) {
     };
 
     const techDateTime = new Date(`${techDate}T${"12:00:00"}`)
+    const additionalEquipmentSend = additionalEquipmentString.split(',')
     async function handleSubmit(e) {
         e.preventDefault()
         console.log('submitting form', { additionalEquipment, description, registrationNumber, status, techDateTime, color, image })
@@ -54,7 +56,7 @@ export function VehicleCardForm(props) {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ "additional_equipment": additionalEquipment, description, "registration_number": registrationNumber, status, "technical_review_date": techDate, color, image }),
+            body: JSON.stringify({ "additional_equipment": additionalEquipmentSend, description, "registration_number": registrationNumber, status, "technical_review_date": techDate, "color": color.replace(/ /g, '_'), image }),
         })
         const body = await response.json()
         console.log('response', body)
@@ -75,7 +77,7 @@ export function VehicleCardForm(props) {
     if (editSuccess) {
         return (
             <div className='edit_success'>
-                <h1>Edit Success</h1>
+                <h2>Edit Success</h2>
                 <p>You can now
                     <Link to={'/vehicles'}> go here </Link>
                 </p>
@@ -83,13 +85,12 @@ export function VehicleCardForm(props) {
         )
     }
 
-
     const img = new Image();
     img.src = image;
 
     return (
         <div className='vehicle_edition_page'>
-            <h1>Edit</h1>
+            <h2>Edit</h2>
             <form className='reg_form' onSubmit={handleSubmit}>
                 <div className='form_group'>
                     <p className='errorMessage'>{error}</p>
@@ -108,7 +109,7 @@ export function VehicleCardForm(props) {
                 </div>
                 <div className='form_group'>
                     <label htmlFor='additional_equipment'>Additional Equipment</label>
-                    <input type='text' id='additional_equipment' name='additional_equipment' value={additionalEquipment} onChange={e => setAdditionalEquipment(e.target.value)} />
+                    <input type='text' id='additional_equipment' name='additional_equipment' value={additionalEquipmentString} onChange={e => setAdditionalEquipmentString(e.target.value)} />
                 </div>
                 <div className='form_group'>
                     <label htmlFor='description'>Description</label>
@@ -133,7 +134,7 @@ export function VehicleCardForm(props) {
                 </div>
                 <div className='form_group'>
                     <label htmlFor='color'>Color</label>
-                    <input type='text' id='color' name='color' value={color} onChange={e => setColor(e.target.value)} />
+                    <input type='text' id='color' name='color' value={color.replace(/_/g, ' ')} onChange={e => setColor(e.target.value)} />
                 </div>
                 <div className='form_group'>
                     <button type='submit'>Edit</button>

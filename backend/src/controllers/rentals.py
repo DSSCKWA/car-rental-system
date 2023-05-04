@@ -22,6 +22,7 @@ def get_all():
         abort(403, description="Invalid permissions")
 
 @rentals.route('/', methods=['POST'])
+@login_required
 def add():
     new_rental_body = request.json
 

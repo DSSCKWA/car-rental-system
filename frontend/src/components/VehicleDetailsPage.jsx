@@ -154,14 +154,24 @@ export function VehicleDetailsPage(props) {
     if (submitSuccess) {
         return (
             <div className='register_success'>
-                <h1>Rental Success</h1>
+                <h2>Rental Success</h2>
                 <p>You can track your rental in the
                     <Link to={'/client'}> History </Link> tab
                 </p>
             </div>
         )
     }
-    if (user.permissions == "client") {
+
+    if (user.permissions == "worker") {
+
+        return (
+
+
+            <div className='vehicle'>
+                <VehicleCardForm vehicle={vehicle} />
+            </div>
+        )
+    } else if (user.permissions == "client") {
         return (
 
 
@@ -191,13 +201,26 @@ export function VehicleDetailsPage(props) {
                 </form>
             </div>
         )
-    } else if (user.permissions == "worker") {
-
+    } else {
         return (
-
-
             <div className='vehicle'>
-                <VehicleCardForm vehicle={vehicle} />
+                <VehicleCard vehicle={vehicle} extra={true} />
+                <label htmlFor="insurance_policy_select" className='insurance_policy_select_label'>Insurance: </label>
+                <select className='insurance_policy_select' value={policyCost} onChange={e => { setPolicyCost(e.target.value); setPolicyType(e.target.options[e.target.options.selectedIndex].innerHTML.toLowerCase().replace(/ /g, '_')) }}>
+                    <option value={0} key="None">
+                        None
+                    </option>
+                    {policies.map(policy => (
+                        <option value={policy.price * totalDays} key={policy.policy_type}>
+                            {capitalizeFirstLetter(policy.policy_type).replace(/_/g, ' ')}
+                        </option>
+                    ))}
+                </select>
+                <div className='rental_cost'>
+                    <VehicleCardLine name={"Rental cost"} value={`${rentalCost}${currency}/h`} />
+                    {policyCost != 0 ? <VehicleCardLine name={"Insurance policy cost"} value={`${policyCost}${currency}`} /> : null}
+                    <VehicleCardLine name={"Total cost"} value={formatCost(parseInt(rentalCost * totalHours) + parseInt(policyCost))} />
+                </div>
             </div>
         )
     }

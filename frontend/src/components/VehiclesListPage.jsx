@@ -56,9 +56,7 @@ export function VehiclesListPage(props) {
     }
 
     const goToDetailsPage = async (vehicle) => {
-        if (startDate && startTime && endDate && endTime) {
-            navigate('/vehicles/details', { state: { vehicle, vehicles, startDate, startTime, endDate, endTime } });
-        } else if (user?.permissions == "worker") {
+        if ((startDate && startTime && endDate && endTime) || user?.permissions == "worker") {
             navigate('/vehicles/details', { state: { vehicle, vehicles, startDate, startTime, endDate, endTime } });
         } else {
             alert("Pick a date range first!")
@@ -85,7 +83,42 @@ export function VehiclesListPage(props) {
     )
 
 
-    if (user?.permissions == "client") {
+    if (user?.permissions == "worker") {
+        return (
+            <div className='Vehicles'>
+                <div className='vehicle_add'>
+                    <Link to={'/vehicles/new'}> Add new </Link>
+                </div>
+
+                {vehicles.length != 0 ? <>
+                    <div className='vehicle-filter-sort'>
+                        <input
+                            className='vehicle-filter'
+                            type='text'
+                            placeholder='Filter by brand or model'
+                            value={filter}
+                            onChange={e => setFilter(e.target.value)}
+                        />
+                        <select className='vehicle-sort' value={sortType} onChange={e => setSortType(e.target.value)}>
+                            <option value='none'>Sort by year of production</option>
+                            <option value='year_asc'>Oldest</option>
+                            <option value='year_desc'>Newest</option>
+                        </select>
+                    </div>
+                    <div className='vehicle-list'>
+                        {filteredVehicles.map(vehicle =>
+                            vehicle.status === 'available' ?
+                                <div key={vehicle.vehicle_id} className='vehicle-card' onClick={() => { goToDetailsPage(vehicle); }}>
+                                    <VehicleCard vehicle={vehicle} extra={false} />
+                                </div>
+                                : null,
+                        )}
+                    </div>
+                </> : null}
+
+            </div>
+        )
+    } else {
         return (
             <div className='Vehicles'>
                 <form className='vehicle_time_search_from' onSubmit={(e) => {
@@ -116,41 +149,6 @@ export function VehiclesListPage(props) {
                         <button type='submit'>Search</button>
                     </div>
                 </form>
-                {vehicles.length != 0 ? <>
-                    <div className='vehicle-filter-sort'>
-                        <input
-                            className='vehicle-filter'
-                            type='text'
-                            placeholder='Filter by brand or model'
-                            value={filter}
-                            onChange={e => setFilter(e.target.value)}
-                        />
-                        <select className='vehicle-sort' value={sortType} onChange={e => setSortType(e.target.value)}>
-                            <option value='none'>Sort by year of production</option>
-                            <option value='year_asc'>Oldest</option>
-                            <option value='year_desc'>Newest</option>
-                        </select>
-                    </div>
-                    <div className='vehicle-list'>
-                        {filteredVehicles.map(vehicle =>
-                            vehicle.status === 'available' ?
-                                <div key={vehicle.vehicle_id} className='vehicle-card' onClick={() => { goToDetailsPage(vehicle); }}>
-                                    <VehicleCard vehicle={vehicle} extra={false} />
-                                </div>
-                                : null,
-                        )}
-                    </div>
-                </> : null}
-
-            </div>
-        )
-    } else if (user?.permissions == "worker") {
-        return (
-            <div className='Vehicles'>
-                <div className='vehicle_add'>
-                    <Link to={'/vehicles/new'}> Add new </Link>
-                </div>
-
                 {vehicles.length != 0 ? <>
                     <div className='vehicle-filter-sort'>
                         <input
