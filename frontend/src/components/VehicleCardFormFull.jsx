@@ -1,5 +1,4 @@
 import '../styles/VehiclesPage.css'
-import Resizer from "react-image-file-resizer";
 
 import React, { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom';
@@ -15,26 +14,27 @@ export function VehicleCardLineForm({ name, value }) {
 
 export function VehicleCardFormFull(props) {
     const vehicle = props.vehicle
-    const [brand, setBrand] = useState(vehicle?.brand ? vehicle.brand : "")
-    const [model, setModel] = useState(vehicle?.model ? vehicle.model : "")
-    const [yearOfProduction, setYearOfProduction] = useState(vehicle?.year_of_production ? vehicle.year_of_production : "")
+    const [brand, setBrand] = useState(vehicle?.brand ? vehicle.brand : null)
+    const [model, setModel] = useState(vehicle?.model ? vehicle.model : null)
+    const [yearOfProduction, setYearOfProduction] = useState(vehicle?.year_of_production ? vehicle.year_of_production : null)
     const [bodyType, setBodyType] = useState(vehicle?.body_type ? vehicle.body_type : "sedan")
-    const [numberOfSeats, setNumberOfSeats] = useState(vehicle?.number_of_seats ? vehicle.number_of_seats : "")
+    const [numberOfSeats, setNumberOfSeats] = useState(vehicle?.number_of_seats ? vehicle.number_of_seats : null)
     const [vehicleClass, setVehicleClass] = useState(vehicle?.vehicle_class ? vehicle.vehicle_class : "S")
-    const [numberOfDoors, setNumberOfDoors] = useState(vehicle?.number_of_doors ? vehicle.number_of_doors : "")
+    const [numberOfDoors, setNumberOfDoors] = useState(vehicle?.number_of_doors ? vehicle.number_of_doors : null)
     const [driveType, setDriveType] = useState(vehicle?.drive_type ? vehicle.drive_type : "FWD")
-    const [enginePower, setEnginePower] = useState(vehicle?.engine_power ? vehicle.engine_power : "")
-    const [engineCapacity, setEngineCapacity] = useState(vehicle?.engine_capacity ? vehicle.engine_capacity : "")
+    const [enginePower, setEnginePower] = useState(vehicle?.engine_power ? vehicle.engine_power : null)
+    const [engineCapacity, setEngineCapacity] = useState(vehicle?.engine_capacity ? vehicle.engine_capacity : null)
     const [fuelType, setFuelType] = useState(vehicle?.fuel_type ? vehicle.fuel_type : "petrol")
-    const [tankCapacity, setTankCapacity] = useState(vehicle?.tank_capacity ? vehicle.tank_capacity : "")
+    const [tankCapacity, setTankCapacity] = useState(vehicle?.tank_capacity ? vehicle.tank_capacity : null)
     const [gearboxType, setGearboxType] = useState(vehicle?.gearbox_type ? vehicle.gearbox_type : "automatic")
     const [additionalEquipment, setAdditionalEquipment] = useState(vehicle?.additional_equipment ? vehicle.additional_equipment : [])
+    const [additionalEquipmentString, setAdditionalEquipmentString] = useState(additionalEquipment.join(','))
     const [description, setDescription] = useState(vehicle?.description ? vehicle.description : "")
-    const [registrationNumber, setRegistrationNumber] = useState(vehicle?.registration_number ? vehicle.registration_number : "")
+    const [registrationNumber, setRegistrationNumber] = useState(vehicle?.registration_number ? vehicle.registration_number : null)
     const [status, setStatus] = useState(vehicle?.status ? vehicle.status : "available")
     const [technicalReviewDate, setTechnicalReviewDate] = useState(vehicle?.technical_review_date ? vehicle.technical_review_date : "01/01/2024 12:00:00")
     const [techDate, setTechDate] = useState(new Date(technicalReviewDate).toISOString().substring(0, 10))
-    const [color, setColor] = useState(vehicle?.color ? vehicle.color : "")
+    const [color, setColor] = useState(vehicle?.color ? vehicle.color : null)
     const [image, setImage] = useState(vehicle?.image ? vehicle.image : null)
     const [addSuccess, setAddSuccess] = useState(false)
     const [error, setError] = useState('')
@@ -61,6 +61,7 @@ export function VehicleCardFormFull(props) {
     async function handleSubmit(e) {
         e.preventDefault()
         const techDateTime = new Date(`${techDate}T${"12:00:00"}`)
+        const additionalEquipmentSend = additionalEquipmentString.split(',')
         console.log('submitting form', { yearOfProduction, bodyType, numberOfSeats, vehicleClass, numberOfDoors, driveType, enginePower, engineCapacity, fuelType, tankCapacity, additionalEquipment, description, registrationNumber, status, techDate, color, image, gearboxType })
         const response = await fetch('/api/vehicles/', {
             method: 'POST',
@@ -80,7 +81,7 @@ export function VehicleCardFormFull(props) {
                 'engine_capacity': engineCapacity,
                 'fuel_type': fuelType,
                 'tank_capacity': tankCapacity,
-                'additional_equipment': additionalEquipment,
+                'additional_equipment': additionalEquipmentSend,
                 description,
                 'registration_number': registrationNumber,
                 status,
@@ -221,7 +222,7 @@ export function VehicleCardFormFull(props) {
                 </div>
                 <div className='form_group'>
                     <label htmlFor='additional_equipment'>Additional Equipment</label>
-                    <input type='text' id='additional_equipment' name='additional_equipment' value={additionalEquipment} onChange={e => setAdditionalEquipment(e.target.value)} />
+                    <input type='text' id='additional_equipment' name='additional_equipment' value={additionalEquipmentString} onChange={e => setAdditionalEquipmentString(e.target.value)} />
                 </div>
                 <div className='form_group'>
                     <label htmlFor='description'>Description</label>
