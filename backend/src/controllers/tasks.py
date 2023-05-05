@@ -59,6 +59,7 @@ def assign_worker_to_task(task_id):
             task.staff_id = current_user.user_id
             task.worker_name = current_user.name
             task.worker_surname = current_user.surname
+            task.task_status = request.json["assign_status"]
             db.session.commit()
             return task.serialize()
     else:

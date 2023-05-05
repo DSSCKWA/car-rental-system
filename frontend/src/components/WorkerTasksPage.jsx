@@ -1,7 +1,9 @@
 import {useEffect, useState} from 'react'
 
-export function WorkerTasksPage() {
+export function WorkerTasksPage(props) {
 
+    const { user } = props
+    console.log(user)
     const [tasks, setTasks] = useState(null)
     useEffect(() => {
         get_tasks()
@@ -35,13 +37,13 @@ export function WorkerTasksPage() {
         get_tasks()
     }
 
-    async function assign_worker_to_task(task_id) {
+    async function assign_worker_to_task(task_id, assign_status) {
         await fetch(`/api/task/${task_id}/assign`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({task_id}),
+            body: JSON.stringify({assign_status}),
         })
         get_tasks()
     }
@@ -75,8 +77,9 @@ export function WorkerTasksPage() {
                     </td>
                     <td>
                         <button onClick={() => {
-                            assign_worker_to_task(task.task_id)
-                        }}>Assign to me
+                            assign_worker_to_task(task.task_id, task.staff_id === user?.user_id ? 'completed' : 'active')
+                        }}>
+                            {task.staff_id === user?.user_id ? 'Unassign' : 'Assign to me'}
                         </button>
                     </td>
                 </tr>)}</tbody>
