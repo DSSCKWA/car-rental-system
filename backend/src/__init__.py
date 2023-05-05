@@ -5,6 +5,7 @@ from .controllers.users import users
 from .controllers.worker import worker
 from .controllers.vehicles import vehicles
 from .controllers.files import files
+from .controllers.tasks import task
 from .controllers.price_lists import price_lists
 from .config.extensions import bcrypt, db, login_manager
 from .controllers.rentals import rentals

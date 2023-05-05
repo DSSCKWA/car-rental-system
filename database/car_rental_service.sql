@@ -5,7 +5,7 @@
 -- Dumped from database version 15.2
 -- Dumped by pg_dump version 15.2
 
--- Started on 2023-04-28 15:42:30
+-- Started on 2023-05-02 16:33:45
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -20,10 +20,10 @@ SET row_security = off;
 
 DROP DATABASE car_rental_service;
 --
--- TOC entry 3545 (class 1262 OID 16806)
+-- TOC entry 3545 (class 1262 OID 18507)
 -- Name: car_rental_service; Type: DATABASE; Schema: -; Owner: crs_user
 --
-
+CREATE USER  crs_user  with PASSWORD 'CRS';
 CREATE DATABASE car_rental_service WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'English_United States.1252';
 
 
@@ -43,7 +43,7 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- TOC entry 865 (class 1247 OID 16808)
+-- TOC entry 865 (class 1247 OID 18509)
 -- Name: account_status; Type: TYPE; Schema: public; Owner: crs_user
 --
 
@@ -57,7 +57,7 @@ CREATE TYPE public.account_status AS ENUM (
 ALTER TYPE public.account_status OWNER TO crs_user;
 
 --
--- TOC entry 868 (class 1247 OID 16816)
+-- TOC entry 868 (class 1247 OID 18516)
 -- Name: body_type; Type: TYPE; Schema: public; Owner: crs_user
 --
 
@@ -77,7 +77,7 @@ CREATE TYPE public.body_type AS ENUM (
 ALTER TYPE public.body_type OWNER TO crs_user;
 
 --
--- TOC entry 871 (class 1247 OID 16836)
+-- TOC entry 871 (class 1247 OID 18536)
 -- Name: complaint_status; Type: TYPE; Schema: public; Owner: crs_user
 --
 
@@ -90,7 +90,7 @@ CREATE TYPE public.complaint_status AS ENUM (
 ALTER TYPE public.complaint_status OWNER TO crs_user;
 
 --
--- TOC entry 874 (class 1247 OID 16842)
+-- TOC entry 874 (class 1247 OID 18542)
 -- Name: discount_status; Type: TYPE; Schema: public; Owner: crs_user
 --
 
@@ -103,7 +103,7 @@ CREATE TYPE public.discount_status AS ENUM (
 ALTER TYPE public.discount_status OWNER TO crs_user;
 
 --
--- TOC entry 877 (class 1247 OID 16848)
+-- TOC entry 877 (class 1247 OID 18548)
 -- Name: discount_type; Type: TYPE; Schema: public; Owner: crs_user
 --
 
@@ -116,7 +116,7 @@ CREATE TYPE public.discount_type AS ENUM (
 ALTER TYPE public.discount_type OWNER TO crs_user;
 
 --
--- TOC entry 880 (class 1247 OID 16854)
+-- TOC entry 880 (class 1247 OID 18554)
 -- Name: drive_type; Type: TYPE; Schema: public; Owner: crs_user
 --
 
@@ -131,7 +131,7 @@ CREATE TYPE public.drive_type AS ENUM (
 ALTER TYPE public.drive_type OWNER TO crs_user;
 
 --
--- TOC entry 883 (class 1247 OID 16864)
+-- TOC entry 883 (class 1247 OID 18564)
 -- Name: fuel_level; Type: TYPE; Schema: public; Owner: crs_user
 --
 
@@ -145,7 +145,7 @@ CREATE TYPE public.fuel_level AS ENUM (
 ALTER TYPE public.fuel_level OWNER TO crs_user;
 
 --
--- TOC entry 886 (class 1247 OID 16872)
+-- TOC entry 886 (class 1247 OID 18572)
 -- Name: fuel_type; Type: TYPE; Schema: public; Owner: crs_user
 --
 
@@ -162,7 +162,7 @@ CREATE TYPE public.fuel_type AS ENUM (
 ALTER TYPE public.fuel_type OWNER TO crs_user;
 
 --
--- TOC entry 916 (class 1247 OID 16982)
+-- TOC entry 889 (class 1247 OID 18586)
 -- Name: gearbox_type; Type: TYPE; Schema: public; Owner: crs_user
 --
 
@@ -176,7 +176,7 @@ CREATE TYPE public.gearbox_type AS ENUM (
 ALTER TYPE public.gearbox_type OWNER TO crs_user;
 
 --
--- TOC entry 889 (class 1247 OID 16886)
+-- TOC entry 892 (class 1247 OID 18594)
 -- Name: issue_status; Type: TYPE; Schema: public; Owner: crs_user
 --
 
@@ -189,7 +189,7 @@ CREATE TYPE public.issue_status AS ENUM (
 ALTER TYPE public.issue_status OWNER TO crs_user;
 
 --
--- TOC entry 892 (class 1247 OID 16892)
+-- TOC entry 895 (class 1247 OID 18600)
 -- Name: issue_type; Type: TYPE; Schema: public; Owner: crs_user
 --
 
@@ -203,7 +203,7 @@ CREATE TYPE public.issue_type AS ENUM (
 ALTER TYPE public.issue_type OWNER TO crs_user;
 
 --
--- TOC entry 895 (class 1247 OID 16900)
+-- TOC entry 898 (class 1247 OID 18608)
 -- Name: item_status; Type: TYPE; Schema: public; Owner: crs_user
 --
 
@@ -219,7 +219,7 @@ CREATE TYPE public.item_status AS ENUM (
 ALTER TYPE public.item_status OWNER TO crs_user;
 
 --
--- TOC entry 898 (class 1247 OID 16912)
+-- TOC entry 901 (class 1247 OID 18620)
 -- Name: other_mechanical_damage; Type: TYPE; Schema: public; Owner: crs_user
 --
 
@@ -233,7 +233,7 @@ CREATE TYPE public.other_mechanical_damage AS ENUM (
 ALTER TYPE public.other_mechanical_damage OWNER TO crs_user;
 
 --
--- TOC entry 901 (class 1247 OID 16920)
+-- TOC entry 904 (class 1247 OID 18628)
 -- Name: permissions; Type: TYPE; Schema: public; Owner: crs_user
 --
 
@@ -248,7 +248,7 @@ CREATE TYPE public.permissions AS ENUM (
 ALTER TYPE public.permissions OWNER TO crs_user;
 
 --
--- TOC entry 904 (class 1247 OID 16930)
+-- TOC entry 907 (class 1247 OID 18638)
 -- Name: policy_type; Type: TYPE; Schema: public; Owner: crs_user
 --
 
@@ -263,7 +263,7 @@ CREATE TYPE public.policy_type AS ENUM (
 ALTER TYPE public.policy_type OWNER TO crs_user;
 
 --
--- TOC entry 907 (class 1247 OID 16940)
+-- TOC entry 910 (class 1247 OID 18648)
 -- Name: task_status; Type: TYPE; Schema: public; Owner: crs_user
 --
 
@@ -277,7 +277,7 @@ CREATE TYPE public.task_status AS ENUM (
 ALTER TYPE public.task_status OWNER TO crs_user;
 
 --
--- TOC entry 910 (class 1247 OID 16948)
+-- TOC entry 913 (class 1247 OID 18656)
 -- Name: vehicle_class; Type: TYPE; Schema: public; Owner: crs_user
 --
 
@@ -298,7 +298,7 @@ CREATE TYPE public.vehicle_class AS ENUM (
 ALTER TYPE public.vehicle_class OWNER TO crs_user;
 
 --
--- TOC entry 913 (class 1247 OID 16970)
+-- TOC entry 916 (class 1247 OID 18678)
 -- Name: vehicle_status; Type: TYPE; Schema: public; Owner: crs_user
 --
 
@@ -318,7 +318,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- TOC entry 214 (class 1259 OID 16989)
+-- TOC entry 214 (class 1259 OID 18689)
 -- Name: complaint; Type: TABLE; Schema: public; Owner: crs_user
 --
 
@@ -335,7 +335,7 @@ CREATE TABLE public.complaint (
 ALTER TABLE public.complaint OWNER TO crs_user;
 
 --
--- TOC entry 215 (class 1259 OID 16994)
+-- TOC entry 215 (class 1259 OID 18694)
 -- Name: complaint_complaint_id_seq; Type: SEQUENCE; Schema: public; Owner: crs_user
 --
 
@@ -360,7 +360,7 @@ ALTER SEQUENCE public.complaint_complaint_id_seq OWNED BY public.complaint.compl
 
 
 --
--- TOC entry 216 (class 1259 OID 16995)
+-- TOC entry 216 (class 1259 OID 18695)
 -- Name: cost_distribution; Type: TABLE; Schema: public; Owner: crs_user
 --
 
@@ -378,7 +378,7 @@ CREATE TABLE public.cost_distribution (
 ALTER TABLE public.cost_distribution OWNER TO crs_user;
 
 --
--- TOC entry 217 (class 1259 OID 16998)
+-- TOC entry 217 (class 1259 OID 18698)
 -- Name: cost_distribution_cost_distribution_id_seq; Type: SEQUENCE; Schema: public; Owner: crs_user
 --
 
@@ -403,7 +403,7 @@ ALTER SEQUENCE public.cost_distribution_cost_distribution_id_seq OWNED BY public
 
 
 --
--- TOC entry 218 (class 1259 OID 16999)
+-- TOC entry 218 (class 1259 OID 18699)
 -- Name: discount_code; Type: TABLE; Schema: public; Owner: crs_user
 --
 
@@ -419,7 +419,7 @@ CREATE TABLE public.discount_code (
 ALTER TABLE public.discount_code OWNER TO crs_user;
 
 --
--- TOC entry 219 (class 1259 OID 17002)
+-- TOC entry 219 (class 1259 OID 18702)
 -- Name: discount_code_discount_code_id_seq; Type: SEQUENCE; Schema: public; Owner: crs_user
 --
 
@@ -444,7 +444,7 @@ ALTER SEQUENCE public.discount_code_discount_code_id_seq OWNED BY public.discoun
 
 
 --
--- TOC entry 220 (class 1259 OID 17003)
+-- TOC entry 220 (class 1259 OID 18703)
 -- Name: feedback; Type: TABLE; Schema: public; Owner: crs_user
 --
 
@@ -463,7 +463,7 @@ CREATE TABLE public.feedback (
 ALTER TABLE public.feedback OWNER TO crs_user;
 
 --
--- TOC entry 221 (class 1259 OID 17008)
+-- TOC entry 221 (class 1259 OID 18708)
 -- Name: feedback_feedback_id_seq; Type: SEQUENCE; Schema: public; Owner: crs_user
 --
 
@@ -488,7 +488,7 @@ ALTER SEQUENCE public.feedback_feedback_id_seq OWNED BY public.feedback.feedback
 
 
 --
--- TOC entry 222 (class 1259 OID 17009)
+-- TOC entry 222 (class 1259 OID 18709)
 -- Name: insurance; Type: TABLE; Schema: public; Owner: crs_user
 --
 
@@ -503,7 +503,7 @@ CREATE TABLE public.insurance (
 ALTER TABLE public.insurance OWNER TO crs_user;
 
 --
--- TOC entry 223 (class 1259 OID 17014)
+-- TOC entry 223 (class 1259 OID 18714)
 -- Name: insurance_policy_number_seq; Type: SEQUENCE; Schema: public; Owner: crs_user
 --
 
@@ -528,7 +528,7 @@ ALTER SEQUENCE public.insurance_policy_number_seq OWNED BY public.insurance.poli
 
 
 --
--- TOC entry 224 (class 1259 OID 17015)
+-- TOC entry 224 (class 1259 OID 18715)
 -- Name: issue_report; Type: TABLE; Schema: public; Owner: crs_user
 --
 
@@ -545,7 +545,7 @@ CREATE TABLE public.issue_report (
 ALTER TABLE public.issue_report OWNER TO crs_user;
 
 --
--- TOC entry 225 (class 1259 OID 17020)
+-- TOC entry 225 (class 1259 OID 18720)
 -- Name: issue_report_issue_report_id_seq; Type: SEQUENCE; Schema: public; Owner: crs_user
 --
 
@@ -570,7 +570,7 @@ ALTER SEQUENCE public.issue_report_issue_report_id_seq OWNED BY public.issue_rep
 
 
 --
--- TOC entry 226 (class 1259 OID 17021)
+-- TOC entry 226 (class 1259 OID 18721)
 -- Name: item; Type: TABLE; Schema: public; Owner: crs_user
 --
 
@@ -586,7 +586,7 @@ CREATE TABLE public.item (
 ALTER TABLE public.item OWNER TO crs_user;
 
 --
--- TOC entry 227 (class 1259 OID 17026)
+-- TOC entry 227 (class 1259 OID 18726)
 -- Name: item_item_id_seq; Type: SEQUENCE; Schema: public; Owner: crs_user
 --
 
@@ -611,7 +611,7 @@ ALTER SEQUENCE public.item_item_id_seq OWNED BY public.item.item_id;
 
 
 --
--- TOC entry 228 (class 1259 OID 17027)
+-- TOC entry 228 (class 1259 OID 18727)
 -- Name: item_rental; Type: TABLE; Schema: public; Owner: crs_user
 --
 
@@ -624,7 +624,7 @@ CREATE TABLE public.item_rental (
 ALTER TABLE public.item_rental OWNER TO crs_user;
 
 --
--- TOC entry 229 (class 1259 OID 17030)
+-- TOC entry 229 (class 1259 OID 18730)
 -- Name: login_history; Type: TABLE; Schema: public; Owner: crs_user
 --
 
@@ -638,7 +638,7 @@ CREATE TABLE public.login_history (
 ALTER TABLE public.login_history OWNER TO crs_user;
 
 --
--- TOC entry 230 (class 1259 OID 17033)
+-- TOC entry 230 (class 1259 OID 18733)
 -- Name: login_history_log_id_seq; Type: SEQUENCE; Schema: public; Owner: crs_user
 --
 
@@ -663,7 +663,7 @@ ALTER SEQUENCE public.login_history_log_id_seq OWNED BY public.login_history.log
 
 
 --
--- TOC entry 231 (class 1259 OID 17034)
+-- TOC entry 231 (class 1259 OID 18734)
 -- Name: policy_price_list; Type: TABLE; Schema: public; Owner: crs_user
 --
 
@@ -676,7 +676,7 @@ CREATE TABLE public.policy_price_list (
 ALTER TABLE public.policy_price_list OWNER TO crs_user;
 
 --
--- TOC entry 232 (class 1259 OID 17037)
+-- TOC entry 232 (class 1259 OID 18737)
 -- Name: price_list; Type: TABLE; Schema: public; Owner: crs_user
 --
 
@@ -696,7 +696,7 @@ CREATE TABLE public.price_list (
 ALTER TABLE public.price_list OWNER TO crs_user;
 
 --
--- TOC entry 233 (class 1259 OID 17040)
+-- TOC entry 233 (class 1259 OID 18740)
 -- Name: rental; Type: TABLE; Schema: public; Owner: crs_user
 --
 
@@ -714,7 +714,7 @@ CREATE TABLE public.rental (
 ALTER TABLE public.rental OWNER TO crs_user;
 
 --
--- TOC entry 234 (class 1259 OID 17043)
+-- TOC entry 234 (class 1259 OID 18743)
 -- Name: rental_rental_id_seq; Type: SEQUENCE; Schema: public; Owner: crs_user
 --
 
@@ -739,14 +739,14 @@ ALTER SEQUENCE public.rental_rental_id_seq OWNED BY public.rental.rental_id;
 
 
 --
--- TOC entry 235 (class 1259 OID 17044)
+-- TOC entry 235 (class 1259 OID 18744)
 -- Name: task; Type: TABLE; Schema: public; Owner: crs_user
 --
 
 CREATE TABLE public.task (
     task_id integer NOT NULL,
-    description character varying(3000) NOT NULL,
-    name character varying(300) NOT NULL,
+    task_description character varying(3000) NOT NULL,
+    task_name character varying(300) NOT NULL,
     rental_id integer NOT NULL,
     task_status public.task_status NOT NULL,
     staff_id integer
@@ -756,7 +756,7 @@ CREATE TABLE public.task (
 ALTER TABLE public.task OWNER TO crs_user;
 
 --
--- TOC entry 236 (class 1259 OID 17049)
+-- TOC entry 236 (class 1259 OID 18749)
 -- Name: task_task_id_seq; Type: SEQUENCE; Schema: public; Owner: crs_user
 --
 
@@ -781,7 +781,7 @@ ALTER SEQUENCE public.task_task_id_seq OWNED BY public.task.task_id;
 
 
 --
--- TOC entry 237 (class 1259 OID 17050)
+-- TOC entry 237 (class 1259 OID 18750)
 -- Name: user; Type: TABLE; Schema: public; Owner: crs_user
 --
 
@@ -801,7 +801,7 @@ CREATE TABLE public."user" (
 ALTER TABLE public."user" OWNER TO crs_user;
 
 --
--- TOC entry 238 (class 1259 OID 17055)
+-- TOC entry 238 (class 1259 OID 18755)
 -- Name: user_user_id_seq; Type: SEQUENCE; Schema: public; Owner: crs_user
 --
 
@@ -826,7 +826,7 @@ ALTER SEQUENCE public.user_user_id_seq OWNED BY public."user".user_id;
 
 
 --
--- TOC entry 239 (class 1259 OID 17056)
+-- TOC entry 239 (class 1259 OID 18756)
 -- Name: vehicle; Type: TABLE; Schema: public; Owner: crs_user
 --
 
@@ -858,7 +858,7 @@ CREATE TABLE public.vehicle (
 ALTER TABLE public.vehicle OWNER TO crs_user;
 
 --
--- TOC entry 240 (class 1259 OID 17061)
+-- TOC entry 240 (class 1259 OID 18761)
 -- Name: vehicle_review; Type: TABLE; Schema: public; Owner: crs_user
 --
 
@@ -877,7 +877,7 @@ CREATE TABLE public.vehicle_review (
 ALTER TABLE public.vehicle_review OWNER TO crs_user;
 
 --
--- TOC entry 241 (class 1259 OID 17064)
+-- TOC entry 241 (class 1259 OID 18764)
 -- Name: vehicle_review_vehicle_review_id_seq; Type: SEQUENCE; Schema: public; Owner: crs_user
 --
 
@@ -902,7 +902,7 @@ ALTER SEQUENCE public.vehicle_review_vehicle_review_id_seq OWNED BY public.vehic
 
 
 --
--- TOC entry 242 (class 1259 OID 17065)
+-- TOC entry 242 (class 1259 OID 18765)
 -- Name: vehicle_vehicle_id_seq; Type: SEQUENCE; Schema: public; Owner: crs_user
 --
 
@@ -927,7 +927,7 @@ ALTER SEQUENCE public.vehicle_vehicle_id_seq OWNED BY public.vehicle.vehicle_id;
 
 
 --
--- TOC entry 3299 (class 2604 OID 17067)
+-- TOC entry 3299 (class 2604 OID 18766)
 -- Name: complaint complaint_id; Type: DEFAULT; Schema: public; Owner: crs_user
 --
 
@@ -935,7 +935,7 @@ ALTER TABLE ONLY public.complaint ALTER COLUMN complaint_id SET DEFAULT nextval(
 
 
 --
--- TOC entry 3300 (class 2604 OID 17071)
+-- TOC entry 3300 (class 2604 OID 18767)
 -- Name: cost_distribution cost_distribution_id; Type: DEFAULT; Schema: public; Owner: crs_user
 --
 
@@ -943,7 +943,7 @@ ALTER TABLE ONLY public.cost_distribution ALTER COLUMN cost_distribution_id SET 
 
 
 --
--- TOC entry 3301 (class 2604 OID 17068)
+-- TOC entry 3301 (class 2604 OID 18768)
 -- Name: discount_code discount_code_id; Type: DEFAULT; Schema: public; Owner: crs_user
 --
 
@@ -951,7 +951,7 @@ ALTER TABLE ONLY public.discount_code ALTER COLUMN discount_code_id SET DEFAULT 
 
 
 --
--- TOC entry 3302 (class 2604 OID 17069)
+-- TOC entry 3302 (class 2604 OID 18769)
 -- Name: feedback feedback_id; Type: DEFAULT; Schema: public; Owner: crs_user
 --
 
@@ -959,7 +959,7 @@ ALTER TABLE ONLY public.feedback ALTER COLUMN feedback_id SET DEFAULT nextval('p
 
 
 --
--- TOC entry 3303 (class 2604 OID 17070)
+-- TOC entry 3303 (class 2604 OID 18770)
 -- Name: insurance policy_number; Type: DEFAULT; Schema: public; Owner: crs_user
 --
 
@@ -967,7 +967,7 @@ ALTER TABLE ONLY public.insurance ALTER COLUMN policy_number SET DEFAULT nextval
 
 
 --
--- TOC entry 3304 (class 2604 OID 17072)
+-- TOC entry 3304 (class 2604 OID 18771)
 -- Name: issue_report issue_report_id; Type: DEFAULT; Schema: public; Owner: crs_user
 --
 
@@ -975,7 +975,7 @@ ALTER TABLE ONLY public.issue_report ALTER COLUMN issue_report_id SET DEFAULT ne
 
 
 --
--- TOC entry 3305 (class 2604 OID 17073)
+-- TOC entry 3305 (class 2604 OID 18772)
 -- Name: item item_id; Type: DEFAULT; Schema: public; Owner: crs_user
 --
 
@@ -983,7 +983,7 @@ ALTER TABLE ONLY public.item ALTER COLUMN item_id SET DEFAULT nextval('public.it
 
 
 --
--- TOC entry 3306 (class 2604 OID 17074)
+-- TOC entry 3306 (class 2604 OID 18773)
 -- Name: login_history log_id; Type: DEFAULT; Schema: public; Owner: crs_user
 --
 
@@ -991,7 +991,7 @@ ALTER TABLE ONLY public.login_history ALTER COLUMN log_id SET DEFAULT nextval('p
 
 
 --
--- TOC entry 3307 (class 2604 OID 17075)
+-- TOC entry 3307 (class 2604 OID 18774)
 -- Name: rental rental_id; Type: DEFAULT; Schema: public; Owner: crs_user
 --
 
@@ -999,7 +999,7 @@ ALTER TABLE ONLY public.rental ALTER COLUMN rental_id SET DEFAULT nextval('publi
 
 
 --
--- TOC entry 3308 (class 2604 OID 17076)
+-- TOC entry 3308 (class 2604 OID 18775)
 -- Name: task task_id; Type: DEFAULT; Schema: public; Owner: crs_user
 --
 
@@ -1007,7 +1007,7 @@ ALTER TABLE ONLY public.task ALTER COLUMN task_id SET DEFAULT nextval('public.ta
 
 
 --
--- TOC entry 3309 (class 2604 OID 17077)
+-- TOC entry 3309 (class 2604 OID 18776)
 -- Name: user user_id; Type: DEFAULT; Schema: public; Owner: crs_user
 --
 
@@ -1015,7 +1015,7 @@ ALTER TABLE ONLY public."user" ALTER COLUMN user_id SET DEFAULT nextval('public.
 
 
 --
--- TOC entry 3310 (class 2604 OID 17078)
+-- TOC entry 3310 (class 2604 OID 18777)
 -- Name: vehicle vehicle_id; Type: DEFAULT; Schema: public; Owner: crs_user
 --
 
@@ -1023,7 +1023,7 @@ ALTER TABLE ONLY public.vehicle ALTER COLUMN vehicle_id SET DEFAULT nextval('pub
 
 
 --
--- TOC entry 3311 (class 2604 OID 17066)
+-- TOC entry 3311 (class 2604 OID 18778)
 -- Name: vehicle_review vehicle_review_id; Type: DEFAULT; Schema: public; Owner: crs_user
 --
 
@@ -1031,7 +1031,7 @@ ALTER TABLE ONLY public.vehicle_review ALTER COLUMN vehicle_review_id SET DEFAUL
 
 
 --
--- TOC entry 3511 (class 0 OID 16989)
+-- TOC entry 3511 (class 0 OID 18689)
 -- Dependencies: 214
 -- Data for Name: complaint; Type: TABLE DATA; Schema: public; Owner: crs_user
 --
@@ -1041,7 +1041,7 @@ INSERT INTO public.complaint (complaint_id, title, client_id, staff_id, complain
 
 
 --
--- TOC entry 3513 (class 0 OID 16995)
+-- TOC entry 3513 (class 0 OID 18695)
 -- Dependencies: 216
 -- Data for Name: cost_distribution; Type: TABLE DATA; Schema: public; Owner: crs_user
 --
@@ -1049,7 +1049,7 @@ INSERT INTO public.complaint (complaint_id, title, client_id, staff_id, complain
 
 
 --
--- TOC entry 3515 (class 0 OID 16999)
+-- TOC entry 3515 (class 0 OID 18699)
 -- Dependencies: 218
 -- Data for Name: discount_code; Type: TABLE DATA; Schema: public; Owner: crs_user
 --
@@ -1059,7 +1059,7 @@ INSERT INTO public.discount_code (discount_code_id, code, discount_type, discoun
 
 
 --
--- TOC entry 3517 (class 0 OID 17003)
+-- TOC entry 3517 (class 0 OID 18703)
 -- Dependencies: 220
 -- Data for Name: feedback; Type: TABLE DATA; Schema: public; Owner: crs_user
 --
@@ -1073,7 +1073,7 @@ INSERT INTO public.feedback (feedback_id, vehicle_rating, comment, client_id, se
 
 
 --
--- TOC entry 3519 (class 0 OID 17009)
+-- TOC entry 3519 (class 0 OID 18709)
 -- Dependencies: 222
 -- Data for Name: insurance; Type: TABLE DATA; Schema: public; Owner: crs_user
 --
@@ -1084,7 +1084,7 @@ INSERT INTO public.insurance (policy_number, policy_name, policy_description, po
 
 
 --
--- TOC entry 3521 (class 0 OID 17015)
+-- TOC entry 3521 (class 0 OID 18715)
 -- Dependencies: 224
 -- Data for Name: issue_report; Type: TABLE DATA; Schema: public; Owner: crs_user
 --
@@ -1093,7 +1093,7 @@ INSERT INTO public.issue_report (issue_report_id, rental_id, issue_type, title, 
 
 
 --
--- TOC entry 3523 (class 0 OID 17021)
+-- TOC entry 3523 (class 0 OID 18721)
 -- Dependencies: 226
 -- Data for Name: item; Type: TABLE DATA; Schema: public; Owner: crs_user
 --
@@ -1109,7 +1109,7 @@ INSERT INTO public.item (item_id, price, name, description, item_status) VALUES 
 
 
 --
--- TOC entry 3525 (class 0 OID 17027)
+-- TOC entry 3525 (class 0 OID 18727)
 -- Dependencies: 228
 -- Data for Name: item_rental; Type: TABLE DATA; Schema: public; Owner: crs_user
 --
@@ -1120,7 +1120,7 @@ INSERT INTO public.item_rental (item_id, rental_id) VALUES (8, 2);
 
 
 --
--- TOC entry 3526 (class 0 OID 17030)
+-- TOC entry 3526 (class 0 OID 18730)
 -- Dependencies: 229
 -- Data for Name: login_history; Type: TABLE DATA; Schema: public; Owner: crs_user
 --
@@ -1128,7 +1128,7 @@ INSERT INTO public.item_rental (item_id, rental_id) VALUES (8, 2);
 
 
 --
--- TOC entry 3528 (class 0 OID 17034)
+-- TOC entry 3528 (class 0 OID 18734)
 -- Dependencies: 231
 -- Data for Name: policy_price_list; Type: TABLE DATA; Schema: public; Owner: crs_user
 --
@@ -1140,7 +1140,7 @@ INSERT INTO public.policy_price_list (policy_type, price) VALUES ('extended_rent
 
 
 --
--- TOC entry 3529 (class 0 OID 17037)
+-- TOC entry 3529 (class 0 OID 18737)
 -- Dependencies: 232
 -- Data for Name: price_list; Type: TABLE DATA; Schema: public; Owner: crs_user
 --
@@ -1158,7 +1158,7 @@ INSERT INTO public.price_list (vehicle_class, price, interior_cleanness_penalty,
 
 
 --
--- TOC entry 3530 (class 0 OID 17040)
+-- TOC entry 3530 (class 0 OID 18740)
 -- Dependencies: 233
 -- Data for Name: rental; Type: TABLE DATA; Schema: public; Owner: crs_user
 --
@@ -1176,21 +1176,22 @@ INSERT INTO public.rental (rental_id, vehicle_id, start_time, end_time, discount
 
 
 --
--- TOC entry 3532 (class 0 OID 17044)
+-- TOC entry 3532 (class 0 OID 18744)
 -- Dependencies: 235
 -- Data for Name: task; Type: TABLE DATA; Schema: public; Owner: crs_user
 --
 
-INSERT INTO public.task (task_id, description, name, rental_id, task_status, staff_id) VALUES (6, 'Recieve and check the vehicle for damages', 'Pick up the vehicle and check status', 3, 'completed', 9);
-INSERT INTO public.task (task_id, description, name, rental_id, task_status, staff_id) VALUES (5, 'Prepare vehicle for the client', 'Prepare vehicle', 3, 'completed', 3);
-INSERT INTO public.task (task_id, description, name, rental_id, task_status, staff_id) VALUES (4, 'Recieve and check the vehicle for damages', 'Pick up the vehicle and check status', 2, 'completed', 7);
-INSERT INTO public.task (task_id, description, name, rental_id, task_status, staff_id) VALUES (3, 'Prepare vehicle for the client', 'Prepare vehicle', 2, 'completed', 3);
-INSERT INTO public.task (task_id, description, name, rental_id, task_status, staff_id) VALUES (2, 'Recieve and check the vehicle for damages', 'Pick up the vehicle and check status', 1, 'completed', 7);
-INSERT INTO public.task (task_id, description, name, rental_id, task_status, staff_id) VALUES (1, 'Prepare vehicle for the client', 'Prepare vehicle', 1, 'completed', 3);
+INSERT INTO public.task (task_id, task_description, task_name, rental_id, task_status, staff_id) VALUES (1, 'Prepare vehicle for the client', 'Prepare vehicle', 1, 'completed', 3);
+INSERT INTO public.task (task_id, task_description, task_name, rental_id, task_status, staff_id) VALUES (3, 'Prepare vehicle for the client', 'Prepare vehicle', 2, 'active', 3);
+INSERT INTO public.task (task_id, task_description, task_name, rental_id, task_status, staff_id) VALUES (2, 'Recieve and check the vehicle for damages', 'Pick up the vehicle and check status', 1, 'active', 7);
+INSERT INTO public.task (task_id, task_description, task_name, rental_id, task_status, staff_id) VALUES (5, 'Prepare vehicle for the client', 'Prepare vehicle', 3, 'in_progress', 3);
+INSERT INTO public.task (task_id, task_description, task_name, rental_id, task_status, staff_id) VALUES (7, 'Prepare vehicle for the client', 'Prepare vehicle', 4, 'active', NULL);
+INSERT INTO public.task (task_id, task_description, task_name, rental_id, task_status, staff_id) VALUES (4, 'Recieve and check the vehicle for damages', 'Pick up the vehicle and check status', 2, 'completed', 9);
+INSERT INTO public.task (task_id, task_description, task_name, rental_id, task_status, staff_id) VALUES (6, 'Recieve and check the vehicle for damages', 'Pick up the vehicle and check status', 3, 'active', NULL);
 
 
 --
--- TOC entry 3534 (class 0 OID 17050)
+-- TOC entry 3534 (class 0 OID 18750)
 -- Dependencies: 237
 -- Data for Name: user; Type: TABLE DATA; Schema: public; Owner: crs_user
 --
@@ -1208,7 +1209,7 @@ INSERT INTO public."user" (user_id, user_email_address, name, surname, permissio
 
 
 --
--- TOC entry 3536 (class 0 OID 17056)
+-- TOC entry 3536 (class 0 OID 18756)
 -- Dependencies: 239
 -- Data for Name: vehicle; Type: TABLE DATA; Schema: public; Owner: crs_user
 --
@@ -1230,7 +1231,7 @@ INSERT INTO public.vehicle (vehicle_id, brand, model, year_of_production, body_t
 
 
 --
--- TOC entry 3537 (class 0 OID 17061)
+-- TOC entry 3537 (class 0 OID 18761)
 -- Dependencies: 240
 -- Data for Name: vehicle_review; Type: TABLE DATA; Schema: public; Owner: crs_user
 --
@@ -1358,7 +1359,7 @@ SELECT pg_catalog.setval('public.vehicle_vehicle_id_seq', 11, false);
 
 
 --
--- TOC entry 3315 (class 2606 OID 17094)
+-- TOC entry 3315 (class 2606 OID 18794)
 -- Name: complaint complaint_pkey; Type: CONSTRAINT; Schema: public; Owner: crs_user
 --
 
@@ -1367,7 +1368,7 @@ ALTER TABLE ONLY public.complaint
 
 
 --
--- TOC entry 3317 (class 2606 OID 17096)
+-- TOC entry 3317 (class 2606 OID 18796)
 -- Name: cost_distribution cost_distribution_pkey; Type: CONSTRAINT; Schema: public; Owner: crs_user
 --
 
@@ -1376,7 +1377,7 @@ ALTER TABLE ONLY public.cost_distribution
 
 
 --
--- TOC entry 3319 (class 2606 OID 17098)
+-- TOC entry 3319 (class 2606 OID 18798)
 -- Name: discount_code discount_code_code_key; Type: CONSTRAINT; Schema: public; Owner: crs_user
 --
 
@@ -1385,7 +1386,7 @@ ALTER TABLE ONLY public.discount_code
 
 
 --
--- TOC entry 3321 (class 2606 OID 17100)
+-- TOC entry 3321 (class 2606 OID 18800)
 -- Name: discount_code discount_code_pkey; Type: CONSTRAINT; Schema: public; Owner: crs_user
 --
 
@@ -1394,7 +1395,7 @@ ALTER TABLE ONLY public.discount_code
 
 
 --
--- TOC entry 3323 (class 2606 OID 17102)
+-- TOC entry 3323 (class 2606 OID 18802)
 -- Name: feedback feedback_id; Type: CONSTRAINT; Schema: public; Owner: crs_user
 --
 
@@ -1403,7 +1404,7 @@ ALTER TABLE ONLY public.feedback
 
 
 --
--- TOC entry 3325 (class 2606 OID 17104)
+-- TOC entry 3325 (class 2606 OID 18804)
 -- Name: insurance insurance_pkey; Type: CONSTRAINT; Schema: public; Owner: crs_user
 --
 
@@ -1412,7 +1413,7 @@ ALTER TABLE ONLY public.insurance
 
 
 --
--- TOC entry 3327 (class 2606 OID 17106)
+-- TOC entry 3327 (class 2606 OID 18806)
 -- Name: issue_report issue_report_pkey; Type: CONSTRAINT; Schema: public; Owner: crs_user
 --
 
@@ -1421,7 +1422,7 @@ ALTER TABLE ONLY public.issue_report
 
 
 --
--- TOC entry 3329 (class 2606 OID 17108)
+-- TOC entry 3329 (class 2606 OID 18808)
 -- Name: item item_pkey; Type: CONSTRAINT; Schema: public; Owner: crs_user
 --
 
@@ -1430,7 +1431,7 @@ ALTER TABLE ONLY public.item
 
 
 --
--- TOC entry 3331 (class 2606 OID 17110)
+-- TOC entry 3331 (class 2606 OID 18810)
 -- Name: item_rental item_rental_pkey; Type: CONSTRAINT; Schema: public; Owner: crs_user
 --
 
@@ -1439,7 +1440,7 @@ ALTER TABLE ONLY public.item_rental
 
 
 --
--- TOC entry 3333 (class 2606 OID 17112)
+-- TOC entry 3333 (class 2606 OID 18812)
 -- Name: login_history login_history_pkey; Type: CONSTRAINT; Schema: public; Owner: crs_user
 --
 
@@ -1448,7 +1449,7 @@ ALTER TABLE ONLY public.login_history
 
 
 --
--- TOC entry 3335 (class 2606 OID 17114)
+-- TOC entry 3335 (class 2606 OID 18814)
 -- Name: policy_price_list policy_price_list_pkey; Type: CONSTRAINT; Schema: public; Owner: crs_user
 --
 
@@ -1457,7 +1458,7 @@ ALTER TABLE ONLY public.policy_price_list
 
 
 --
--- TOC entry 3337 (class 2606 OID 17116)
+-- TOC entry 3337 (class 2606 OID 18816)
 -- Name: price_list price_list_pkey; Type: CONSTRAINT; Schema: public; Owner: crs_user
 --
 
@@ -1466,7 +1467,7 @@ ALTER TABLE ONLY public.price_list
 
 
 --
--- TOC entry 3339 (class 2606 OID 17118)
+-- TOC entry 3339 (class 2606 OID 18818)
 -- Name: rental rental_pkey; Type: CONSTRAINT; Schema: public; Owner: crs_user
 --
 
@@ -1475,7 +1476,7 @@ ALTER TABLE ONLY public.rental
 
 
 --
--- TOC entry 3341 (class 2606 OID 17120)
+-- TOC entry 3341 (class 2606 OID 18820)
 -- Name: task task_pkey; Type: CONSTRAINT; Schema: public; Owner: crs_user
 --
 
@@ -1484,7 +1485,7 @@ ALTER TABLE ONLY public.task
 
 
 --
--- TOC entry 3343 (class 2606 OID 17122)
+-- TOC entry 3343 (class 2606 OID 18822)
 -- Name: user user_pkey; Type: CONSTRAINT; Schema: public; Owner: crs_user
 --
 
@@ -1493,7 +1494,7 @@ ALTER TABLE ONLY public."user"
 
 
 --
--- TOC entry 3345 (class 2606 OID 17124)
+-- TOC entry 3345 (class 2606 OID 18824)
 -- Name: user user_user_email_address_key; Type: CONSTRAINT; Schema: public; Owner: crs_user
 --
 
@@ -1502,7 +1503,7 @@ ALTER TABLE ONLY public."user"
 
 
 --
--- TOC entry 3347 (class 2606 OID 17126)
+-- TOC entry 3347 (class 2606 OID 18826)
 -- Name: vehicle vehicle_pkey; Type: CONSTRAINT; Schema: public; Owner: crs_user
 --
 
@@ -1511,7 +1512,7 @@ ALTER TABLE ONLY public.vehicle
 
 
 --
--- TOC entry 3349 (class 2606 OID 17128)
+-- TOC entry 3349 (class 2606 OID 18828)
 -- Name: vehicle_review vehicle_review_pkey; Type: CONSTRAINT; Schema: public; Owner: crs_user
 --
 
@@ -1520,7 +1521,7 @@ ALTER TABLE ONLY public.vehicle_review
 
 
 --
--- TOC entry 3350 (class 2606 OID 17129)
+-- TOC entry 3350 (class 2606 OID 18829)
 -- Name: complaint fkcomplaint283872; Type: FK CONSTRAINT; Schema: public; Owner: crs_user
 --
 
@@ -1529,7 +1530,7 @@ ALTER TABLE ONLY public.complaint
 
 
 --
--- TOC entry 3351 (class 2606 OID 17134)
+-- TOC entry 3351 (class 2606 OID 18834)
 -- Name: complaint fkcomplaint297298; Type: FK CONSTRAINT; Schema: public; Owner: crs_user
 --
 
@@ -1538,7 +1539,7 @@ ALTER TABLE ONLY public.complaint
 
 
 --
--- TOC entry 3352 (class 2606 OID 17139)
+-- TOC entry 3352 (class 2606 OID 18839)
 -- Name: cost_distribution fkcost_distr595954; Type: FK CONSTRAINT; Schema: public; Owner: crs_user
 --
 
@@ -1547,7 +1548,7 @@ ALTER TABLE ONLY public.cost_distribution
 
 
 --
--- TOC entry 3353 (class 2606 OID 17144)
+-- TOC entry 3353 (class 2606 OID 18844)
 -- Name: feedback fkfeedback369708; Type: FK CONSTRAINT; Schema: public; Owner: crs_user
 --
 
@@ -1556,7 +1557,7 @@ ALTER TABLE ONLY public.feedback
 
 
 --
--- TOC entry 3354 (class 2606 OID 17149)
+-- TOC entry 3354 (class 2606 OID 18849)
 -- Name: feedback fkfeedback844725; Type: FK CONSTRAINT; Schema: public; Owner: crs_user
 --
 
@@ -1565,7 +1566,7 @@ ALTER TABLE ONLY public.feedback
 
 
 --
--- TOC entry 3355 (class 2606 OID 17154)
+-- TOC entry 3355 (class 2606 OID 18854)
 -- Name: insurance fkinsurance151954; Type: FK CONSTRAINT; Schema: public; Owner: crs_user
 --
 
@@ -1574,7 +1575,7 @@ ALTER TABLE ONLY public.insurance
 
 
 --
--- TOC entry 3356 (class 2606 OID 17159)
+-- TOC entry 3356 (class 2606 OID 18859)
 -- Name: issue_report fkissue_repo917852; Type: FK CONSTRAINT; Schema: public; Owner: crs_user
 --
 
@@ -1583,7 +1584,7 @@ ALTER TABLE ONLY public.issue_report
 
 
 --
--- TOC entry 3357 (class 2606 OID 17164)
+-- TOC entry 3357 (class 2606 OID 18864)
 -- Name: item_rental fkitem_renta544906; Type: FK CONSTRAINT; Schema: public; Owner: crs_user
 --
 
@@ -1592,7 +1593,7 @@ ALTER TABLE ONLY public.item_rental
 
 
 --
--- TOC entry 3358 (class 2606 OID 17169)
+-- TOC entry 3358 (class 2606 OID 18869)
 -- Name: item_rental fkitem_renta991410; Type: FK CONSTRAINT; Schema: public; Owner: crs_user
 --
 
@@ -1601,7 +1602,7 @@ ALTER TABLE ONLY public.item_rental
 
 
 --
--- TOC entry 3359 (class 2606 OID 17174)
+-- TOC entry 3359 (class 2606 OID 18874)
 -- Name: login_history fklogin_hist47353; Type: FK CONSTRAINT; Schema: public; Owner: crs_user
 --
 
@@ -1610,7 +1611,7 @@ ALTER TABLE ONLY public.login_history
 
 
 --
--- TOC entry 3360 (class 2606 OID 17179)
+-- TOC entry 3360 (class 2606 OID 18879)
 -- Name: rental fkrental165853; Type: FK CONSTRAINT; Schema: public; Owner: crs_user
 --
 
@@ -1619,7 +1620,7 @@ ALTER TABLE ONLY public.rental
 
 
 --
--- TOC entry 3361 (class 2606 OID 17184)
+-- TOC entry 3361 (class 2606 OID 18884)
 -- Name: rental fkrental477366; Type: FK CONSTRAINT; Schema: public; Owner: crs_user
 --
 
@@ -1628,7 +1629,7 @@ ALTER TABLE ONLY public.rental
 
 
 --
--- TOC entry 3362 (class 2606 OID 17189)
+-- TOC entry 3362 (class 2606 OID 18889)
 -- Name: rental fkrental768557; Type: FK CONSTRAINT; Schema: public; Owner: crs_user
 --
 
@@ -1637,7 +1638,7 @@ ALTER TABLE ONLY public.rental
 
 
 --
--- TOC entry 3363 (class 2606 OID 17194)
+-- TOC entry 3363 (class 2606 OID 18894)
 -- Name: rental fkrental848806; Type: FK CONSTRAINT; Schema: public; Owner: crs_user
 --
 
@@ -1646,7 +1647,7 @@ ALTER TABLE ONLY public.rental
 
 
 --
--- TOC entry 3364 (class 2606 OID 17199)
+-- TOC entry 3364 (class 2606 OID 18899)
 -- Name: task fktask315433; Type: FK CONSTRAINT; Schema: public; Owner: crs_user
 --
 
@@ -1655,7 +1656,7 @@ ALTER TABLE ONLY public.task
 
 
 --
--- TOC entry 3365 (class 2606 OID 17204)
+-- TOC entry 3365 (class 2606 OID 18904)
 -- Name: task fktask317830; Type: FK CONSTRAINT; Schema: public; Owner: crs_user
 --
 
@@ -1664,7 +1665,7 @@ ALTER TABLE ONLY public.task
 
 
 --
--- TOC entry 3366 (class 2606 OID 17209)
+-- TOC entry 3366 (class 2606 OID 18909)
 -- Name: vehicle fkvehicle395012; Type: FK CONSTRAINT; Schema: public; Owner: crs_user
 --
 
@@ -1673,7 +1674,7 @@ ALTER TABLE ONLY public.vehicle
 
 
 --
--- TOC entry 3367 (class 2606 OID 17214)
+-- TOC entry 3367 (class 2606 OID 18914)
 -- Name: vehicle_review fkvehicle_re22558; Type: FK CONSTRAINT; Schema: public; Owner: crs_user
 --
 
@@ -1682,7 +1683,7 @@ ALTER TABLE ONLY public.vehicle_review
 
 
 --
--- TOC entry 3368 (class 2606 OID 17219)
+-- TOC entry 3368 (class 2606 OID 18919)
 -- Name: vehicle_review fkvehicle_re610705; Type: FK CONSTRAINT; Schema: public; Owner: crs_user
 --
 
@@ -1690,8 +1691,10 @@ ALTER TABLE ONLY public.vehicle_review
     ADD CONSTRAINT fkvehicle_re610705 FOREIGN KEY (staff_id) REFERENCES public."user"(user_id);
 
 
--- Completed on 2023-04-28 15:42:30
+-- Completed on 2023-05-02 16:33:46
 
 --
 -- PostgreSQL database dump complete
 --
+
+ALTER DATABASE car_rental_service OWNER TO crs_user;
