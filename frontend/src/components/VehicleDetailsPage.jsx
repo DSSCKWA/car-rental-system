@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom';
 import '../styles/vehiclesPage.css'
 import { VehicleCard, VehicleCardLine } from './VehicleCard';
-import { VehicleCardForm, VehicleCardLineForm } from './VehicleCardForm';
+import { VehicleCardCool, VehicleCardLineForm } from './VehicleCardCool';
 
 
 export function VehicleDetailsPage(props) {
@@ -190,7 +190,7 @@ export function VehicleDetailsPage(props) {
 
 
             <div className='vehicle'>
-                <VehicleCardForm vehicle={vehicle} />
+                <VehicleCardCool vehicle={vehicle} extra={false} />
             </div>
         )
     } else if (user.permissions == "client") {

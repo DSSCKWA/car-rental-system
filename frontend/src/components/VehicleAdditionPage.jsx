@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom';
 import '../styles/vehiclesPage.css'
-import { VehicleCardFormFull, VehicleCardLineForm } from './VehicleCardFormFull';
+import { VehicleCardCool, VehicleCardLineForm } from './VehicleCardCool';
 
 
 export function VehicleAdditionPage(props) {
@@ -144,7 +144,7 @@ export function VehicleAdditionPage(props) {
     return (
 
         <div className='vehicle'>
-            <VehicleCardFormFull vehicle={vehicle} />
+            <VehicleCardCool vehicle={vehicle} extra={true} />
         </div>
     )
 

@@ -71,21 +71,21 @@ def validate_password_change(user, currentPassword, new_password, confirm_new_pa
 def validate_addition_request_body(vehicle_body):
     if not is_valid_review_date(vehicle_body["technical_review_date"]):
         abort(400, description="Invalid date")
-    if not (registration_number_avaliable(vehicle_body["registration_number"])):
+    if not (registration_number_available(vehicle_body["registration_number"])):
         abort(409, description="Registration number taken")
 
 def validate_edition_request_body(vehicle_body,old_reg_number):
     if not is_valid_review_date(vehicle_body["technical_review_date"]):
         abort(400, description="Invalid date")
-    if not (registration_number_avaliable_edit(vehicle_body["registration_number"],old_reg_number)):
+    if not (registration_number_available_edit(vehicle_body["registration_number"],old_reg_number)):
         abort(409, description="Registration number taken")
 
 
-def registration_number_avaliable(reg_number):
+def registration_number_available(reg_number):
     vehicle = Vehicle.query.filter_by(registration_number=reg_number).first()
     return vehicle is None
 
-def registration_number_avaliable_edit(reg_number,old_reg_number):
+def registration_number_available_edit(reg_number,old_reg_number):
     vehicle = Vehicle.query.filter_by(registration_number=reg_number).first()
     if(reg_number!=old_reg_number):
         return vehicle is None
