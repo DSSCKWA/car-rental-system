@@ -27,6 +27,7 @@ export function PageContainer(props) {
                 <Route path='/manager' element={<ManagerPage/>}/>
                 <Route path='/manager/*' element={<ManagerPage/>}/>
                 <Route path='/client' element={<ClientPage/>}/>
+                <Route path='/client/*' element={<ClientPage/>}/>
                 <Route path='/vehicles' element={<VehiclesBasePage />} />
                 <Route path='/profile' element={<ProfilePage user={user} />} />
                 <Route path='/profile/change-password' element={<ChangePasswordPage />} />

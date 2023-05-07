@@ -6,16 +6,18 @@ from ..models.user import User
 from ..models.vehicle import Vehicle
 from ..models.insurance import Insurance
 
-rental = Blueprint('rental', __name__, url_prefix='/rental')
+rentals = Blueprint('rentals', __name__, url_prefix='/rentals')
 response_class = Blueprint('response_class', __name__)
 
 
-@rental.route('/', methods=['GET'])
+@rentals.route('/', methods=['GET'])
 @login_required
 def get_all():
     user_permissions = current_user.permissions
     if user_permissions in ["manager", "worker"]:
-        rentals = Rental.query.join(User, Rental.client_id == User.user_id).join(Vehicle, Rental.vehicle_id == Vehicle.vehicle_id).join(Insurance, Rental.policy_number == Insurance.policy_number).all()
+        rentals = Rental.query.join(User, Rental.client_id == User.user_id).join(Vehicle, Rental.vehicle_id == Vehicle.vehicle_id).outerjoin(Insurance, Rental.policy_number == Insurance.policy_number).all()
         return [rental.serialize() for rental in rentals]
     else:
-        abort(403, description="Invalid permissions")
+        rentals = Rental.query.join(User, Rental.client_id == User.user_id).join(Vehicle,Rental.vehicle_id == Vehicle.vehicle_id).outerjoin(Insurance, Rental.policy_number == Insurance.policy_number).filter(Rental.client_id == current_user.user_id).all()
+        return [rental.serialize() for rental in rentals]
+
