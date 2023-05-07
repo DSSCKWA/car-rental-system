@@ -61,7 +61,7 @@ export function VehicleCardFormFull(props) {
     async function handleSubmit(e) {
         e.preventDefault()
         const techDateTime = new Date(`${techDate}T${"12:00:00"}`)
-        const additionalEquipmentSend = additionalEquipmentString.split(',')
+        const additionalEquipmentList = additionalEquipmentString.split(',')
         console.log('submitting form', { yearOfProduction, bodyType, numberOfSeats, vehicleClass, numberOfDoors, driveType, enginePower, engineCapacity, fuelType, tankCapacity, additionalEquipment, description, registrationNumber, status, techDate, color, image, gearboxType })
         const response = await fetch('/api/vehicles/', {
             method: 'POST',
@@ -81,7 +81,7 @@ export function VehicleCardFormFull(props) {
                 'engine_capacity': engineCapacity,
                 'fuel_type': fuelType,
                 'tank_capacity': tankCapacity,
-                'additional_equipment': additionalEquipmentSend,
+                'additional_equipment': additionalEquipmentList,
                 description,
                 'registration_number': registrationNumber,
                 status,

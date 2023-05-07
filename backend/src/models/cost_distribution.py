@@ -25,12 +25,12 @@ class Cost_distribution(db.Model):
         self.total = self.calculate_total()
 
     def calculate_total(self):
-        return change(self.vehicle_cost)+change(self.item_cost)+change(self.insurance_cost)+change(self.penalty_charges)
+        return outplayNull(self.vehicle_cost)+outplayNull(self.item_cost)+outplayNull(self.insurance_cost)+outplayNull(self.penalty_charges)
     
     def serialize(self):
         return {"cost_distribution_id": self.cost_distribution_id, "rental_id": self.rental_id, "vehicle_cost": self.vehicle_cost,"item_cost": self.item_cost,"insurance_cost": self.insurance_cost, "penalty_charges": self.penalty_charges, "total": self.total}
     
-def change(smthing):
-    if(smthing is None):
-        smthing=0
-    return float(smthing)
+def outplayNull(theValueToOutplay):
+    if(theValueToOutplay is None):
+        theValueToOutplay=0
+    return float(theValueToOutplay)
