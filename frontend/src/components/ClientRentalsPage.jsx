@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 
-export function WorkerRentalsPage() {
+export function ClientRentalsPage() {
 
     const navigate = useNavigate()
     const [rentals, setRentals] = useState(null)
@@ -39,7 +39,7 @@ export function WorkerRentalsPage() {
     }
 
     return (
-        <div className='worker_rentals_page page_content'>
+        <div className='client_rentals_page page_content'>
             <h2>Rentals</h2>
             <table>
                 <thead>

@@ -1,7 +1,13 @@
+import { SidebarLayout } from './SidebarLayout.jsx'
+import { ClientRentalsPage } from './ClientRentalsPage.jsx'
+
 export function ClientPage() {
     return (
-        <div className='client_page'>
-            <h1>Client</h1>
-        </div>
+        <SidebarLayout className='client_page' navItems={[
+            { name: 'Rentals', path: '/client/rentals' },
+        ]}
+        routes={[
+            { path: '/rentals', element: <ClientRentalsPage/> },
+        ]}/>
     )
 }

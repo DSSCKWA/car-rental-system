@@ -4,7 +4,7 @@ from .controllers.auth import auth
 from .controllers.users import users
 from .controllers.worker import worker
 from .controllers.vehicles import vehicles
-from .controllers.rentals import rental
+from .controllers.rentals import rentals
 from .controllers.files import files
 from .controllers.tasks import task
 from .controllers.price_lists import price_lists
@@ -33,7 +33,7 @@ def create_app(config_class=Config):
     app.register_blueprint(vehicles)
     app.register_blueprint(files)
     app.register_blueprint(price_lists)
-    app.register_blueprint(rental)
+    app.register_blueprint(rentals)
     app.register_blueprint(task)
 
     for code in [400, 401, 403, 404, 409, 500]:
