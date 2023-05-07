@@ -6,13 +6,13 @@ from ..config.extensions import db
 class User(db.Model, UserMixin):
     user_id = db.Column(db.Integer, primary_key=True)
     user_email_address = db.Column(db.String(255), nullable=False, unique=True)
-    name = db.Column(db.String(30), nullable=True)
-    surname = db.Column(db.String(100), nullable=True)
-    permissions = db.Column(db.String(30), nullable=True)
+    name = db.Column(db.String(30), nullable=False)
+    surname = db.Column(db.String(100), nullable=False)
+    permissions = db.Column(db.String(30), nullable=False)
     password = db.Column(db.String(255), nullable=False)
-    account_status = db.Column(db.String(30), nullable=True)
-    phone_number = db.Column(db.Integer, nullable=True)
-    date_of_birth = db.Column(db.Date, nullable=True)
+    account_status = db.Column(db.String(30), nullable=False)
+    phone_number = db.Column(db.Integer, nullable=False)
+    date_of_birth = db.Column(db.Date, nullable=False)
 
     def get_id(self):
         return self.user_id

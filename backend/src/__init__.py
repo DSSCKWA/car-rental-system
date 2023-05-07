@@ -4,10 +4,11 @@ from .controllers.auth import auth
 from .controllers.users import users
 from .controllers.worker import worker
 from .controllers.vehicles import vehicles
+from .controllers.rentals import rentals
 from .controllers.files import files
 from .controllers.price_lists import price_lists
 from .config.extensions import bcrypt, db, login_manager
-from .controllers.rentals import rentals
+
 from .controllers.insurances import insurances
 from .controllers.costs import costs
 from .controllers.tasks import tasks
