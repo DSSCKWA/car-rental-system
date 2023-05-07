@@ -27,6 +27,11 @@ class Rental(db.Model):
         self.policy_name = rental_dict['policy_name']
 
     def serialize(self):
+        policy_name = "-"
+        policy_number = -1
+        if self.insurance:
+            policy_name = self.insurance.policy_name
+            policy_number = self.insurance.policy_number
         return {
             'rental_id': self.rental_id,
             'vehicle_id': self.vehicle_id,
@@ -34,7 +39,7 @@ class Rental(db.Model):
             'end_time': self.end_time,
             'discount_code_id': self.discount_code_id,
             'client_id': self.client_id,
-            'policy_number': self.policy_number,
+            'policy_number': policy_number,
             'name': self.client.name,
             'surname': self.client.surname,
             'user_email_address': self.client.user_email_address,
@@ -42,5 +47,5 @@ class Rental(db.Model):
             'registration_number': self.vehicle.registration_number,
             'brand': self.vehicle.brand,
             'model': self.vehicle.model,
-            'policy_name': self.insurance.policy_name
+            'policy_name': policy_name
         }
