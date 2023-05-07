@@ -18,13 +18,12 @@ class Rental(db.Model):
         return self.rental_id
 
     def __init__(self, rental_dict):
-        self.rental_id = rental_dict['rental_id']
         self.vehicle_id = rental_dict['vehicle_id']
         self.start_time = rental_dict['start_time']
         self.end_time = rental_dict['end_time']
         self.discount_code_id = rental_dict['discount_code_id']
         self.client_id = rental_dict['client_id']
-        self.policy_name = rental_dict['policy_name']
+        self.policy_number = rental_dict['policy_number']
 
     def serialize(self):
         policy_name = "-"
@@ -47,5 +46,5 @@ class Rental(db.Model):
             'registration_number': self.vehicle.registration_number,
             'brand': self.vehicle.brand,
             'model': self.vehicle.model,
-            'policy_name': policy_name
+            'policy_number': self.insurance.policy_number
         }

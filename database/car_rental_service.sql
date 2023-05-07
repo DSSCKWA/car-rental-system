@@ -208,7 +208,7 @@ ALTER TYPE public.issue_type OWNER TO crs_user;
 --
 
 CREATE TYPE public.item_status AS ENUM (
-    'avaliable',
+    'available',
     'rented',
     'out_of_comission',
     'in_service',
@@ -303,7 +303,7 @@ ALTER TYPE public.vehicle_class OWNER TO crs_user;
 --
 
 CREATE TYPE public.vehicle_status AS ENUM (
-    'avaliable',
+    'available',
     'rented',
     'out_of_comission',
     'in_service',

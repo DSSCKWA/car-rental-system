@@ -5,10 +5,11 @@ class Task(db.Model):
     task_id = db.Column(db.Integer, primary_key=True)
     task_description = db.Column(db.String(3000), nullable=False)
     task_name = db.Column(db.String(300), nullable=False)
-    rental_id = db.Column(db.Integer, nullable=False)
+    rental_id = db.Column(db.Integer, db.ForeignKey('rental.rental_id'), nullable=False)
     task_status = db.Column(db.String(30), nullable=False)
     staff_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), nullable=True)
 
+    rental = db.relationship('Rental', backref='tasks')
     worker = db.relationship('User', backref='tasks')
 
     def get_id(self):

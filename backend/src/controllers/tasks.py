@@ -1,16 +1,16 @@
-from flask import Blueprint, request, abort
+from flask import Blueprint, request, abort, Response, flash, jsonify
 from flask_login import login_required, current_user
 
+from ..config.extensions import bcrypt, db, login_manager
 from ..models.task import Task
 from ..models.user import User
-from ..config.extensions import db
 from ..utils.validator import user_exists
 
-task = Blueprint('task', __name__, url_prefix='/task')
+tasks = Blueprint('task', __name__, url_prefix='/tasks')
 response_class = Blueprint('response_class', __name__)
 
 
-@task.route('/', methods=['GET'])
+@tasks.route('/', methods=['GET'])
 @login_required
 def get_all():
     user_permissions = current_user.permissions
@@ -21,7 +21,7 @@ def get_all():
         abort(403, description="Invalid permissions")
 
 
-@task.route('/<int:id>', methods=['PUT'])
+@tasks.route('/<int:id>', methods=['PUT'])
 @login_required
 def change_task_status(id):
     user_permissions = current_user.permissions
@@ -47,7 +47,7 @@ def get_user_from_id(id):
     return user
 
 
-@task.route('/<int:task_id>/assign', methods=['PUT'])
+@tasks.route('/<int:task_id>/assign', methods=['PUT'])
 @login_required
 def assign_worker_to_task(task_id):
     user_permissions = current_user.permissions
@@ -63,3 +63,14 @@ def assign_worker_to_task(task_id):
             return task.serialize()
     else:
         abort(403, description="Invalid permissions")
+
+
+@tasks.route('/', methods=['POST'])
+@login_required
+def add():
+    new_task_body = request.json
+    new_task_body["task_status"] = "active"
+    new_task = Task(new_task_body)
+    db.session.add(new_task)
+    db.session.commit()
+    return new_task.serialize()

@@ -6,9 +6,12 @@ from .controllers.worker import worker
 from .controllers.vehicles import vehicles
 from .controllers.rentals import rentals
 from .controllers.files import files
-from .controllers.tasks import task
 from .controllers.price_lists import price_lists
 from .config.extensions import bcrypt, db, login_manager
+
+from .controllers.insurances import insurances
+from .controllers.costs import costs
+from .controllers.tasks import tasks
 
 
 def handle_error(e):
@@ -34,7 +37,9 @@ def create_app(config_class=Config):
     app.register_blueprint(files)
     app.register_blueprint(price_lists)
     app.register_blueprint(rentals)
-    app.register_blueprint(task)
+    app.register_blueprint(insurances)
+    app.register_blueprint(costs)
+    app.register_blueprint(tasks)
 
     for code in [400, 401, 403, 404, 409, 500]:
         app.register_error_handler(code, handle_error)

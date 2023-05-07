@@ -16,19 +16,19 @@ export function PageContainer(props) {
     return (
         <section className={'page_container'}>
             <Routes>
-                <Route path='/' element={<MainPage user={user}/>}/>
-                <Route path='/about' element={<AboutPage/>}/>
-                <Route path='/register' element={<RegisterPage/>}/>
-                <Route path='/login' element={<LoginPage user={user} setUser={setUser}/>}/>
-                <Route path='/admin' element={<AdminPage/>}/>
-                <Route path='/admin/*' element={<AdminPage/>} />
-                <Route path='/worker' element={<WorkerPage/>}/>
-                <Route path='/worker/*' element={<WorkerPage/>}/>
-                <Route path='/manager' element={<ManagerPage/>}/>
-                <Route path='/manager/*' element={<ManagerPage/>}/>
-                <Route path='/client' element={<ClientPage/>}/>
-                <Route path='/client/*' element={<ClientPage/>}/>
-                <Route path='/vehicles' element={<VehiclesBasePage />} />
+                <Route path='/' element={<MainPage user={user} />} />
+                <Route path='/about' element={<AboutPage />} />
+                <Route path='/register' element={<RegisterPage />} />
+                <Route path='/login' element={<LoginPage user={user} setUser={setUser} />} />
+                <Route path='/admin' element={<AdminPage />} />
+                <Route path='/admin/*' element={<AdminPage />} />
+                <Route path='/worker' element={<WorkerPage />} />
+                <Route path='/worker/*' element={<WorkerPage />} />
+                <Route path='/manager' element={<ManagerPage />} />
+                <Route path='/manager/*' element={<ManagerPage />} />
+                <Route path='/client' element={<ClientPage />} />
+                <Route path='/client/*' element={<ClientPage />} />
+                <Route path='/vehicles/*' element={<VehiclesBasePage user={user} />} />
                 <Route path='/profile' element={<ProfilePage user={user} />} />
                 <Route path='/profile/change-password' element={<ChangePasswordPage />} />
             </Routes>

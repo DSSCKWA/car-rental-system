@@ -58,10 +58,10 @@ export function AboutPage() {
                 <h2>Location</h2>
                 <div className='location'>
                     <p>
-                    Our company is located in Krakow, Poland.
-                    The address is: <br/>
-                    ul. Warszawska 24 <br/>
-                    31-155 Kraków
+                        Our company is located in Krakow, Poland.
+                        The address is: <br />
+                        ul. Warszawska 24 <br />
+                        31-155 Kraków
                     </p>
                     <div className='map'>
                         <iframe
