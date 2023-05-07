@@ -21,13 +21,3 @@ def get_all():
         rentals = Rental.query.join(User, Rental.client_id == User.user_id).join(Vehicle,Rental.vehicle_id == Vehicle.vehicle_id).outerjoin(Insurance, Rental.policy_number == Insurance.policy_number).filter(Rental.client_id == current_user.user_id).all()
         return [rental.serialize() for rental in rentals]
 
-
-# @rental.route('/<int:id>', methods=['GET'])
-# @login_required
-# def get_by_user_id(id):
-#     user_id = current_user.user_id
-#     if user_id == id:
-#         rentals = Rental.query.join(User, Rental.client_id == User.user_id).join(Vehicle, Rental.vehicle_id == Vehicle.vehicle_id).join(Insurance, Rental.policy_number == Insurance.policy_number).filter(Rental.client_id == id).all()
-#         return [rental.serialize() for rental in rentals]
-#     else:
-#         abort(401, description="Unauthorized")
