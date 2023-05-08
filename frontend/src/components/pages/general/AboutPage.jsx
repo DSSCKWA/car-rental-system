@@ -1,5 +1,5 @@
-import Achievement from '../assets/achievement.png'
-import CarsImage from '../assets/cars.jpg'
+import Achievement from '../../../assets/achievement.png'
+import CarsImage from '../../../assets/cars.jpg'
 export function ContactInfoLine({ name, value }) {
     return (
         <>

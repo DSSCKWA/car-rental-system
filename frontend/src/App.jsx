@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import reactLogo from './assets/logo.svg'
 import './App.css'
-import { Menu } from './components/Menu'
-import { PageContainer } from './components/PageContainer.jsx'
-import { Footer } from './components/Footer'
+import { Menu } from './components/page_elements/Menu.jsx'
+import { PageContainer } from './components/page_elements/PageContainer.jsx'
+import { Footer } from './components/page_elements/Footer.jsx'
 
 function App() {
     const [user, setUser] = useState(null)

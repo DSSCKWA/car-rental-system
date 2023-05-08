@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import '../styles/ProfileStyles.css'
+import './ProfileStyles.css'
 
 export function ProfilePage(props) {
     const { user } = props

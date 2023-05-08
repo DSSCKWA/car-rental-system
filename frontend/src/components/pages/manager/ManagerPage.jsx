@@ -1,7 +1,7 @@
 import { Link, Route, Routes } from 'react-router-dom'
-import '../styles/ManagerStyles.css'
-import { MainPage } from './MainPage.jsx'
-import { AboutPage } from './AboutPage.jsx'
+import './ManagerStyles.css'
+import { MainPage } from '../general/MainPage.jsx'
+import { AboutPage } from '../general/AboutPage.jsx'
 import { ManagerWorkersPage } from './ManagerWorkersPage.jsx'
 import { AddWorkerPage } from './AddWorkerPage.jsx'
 

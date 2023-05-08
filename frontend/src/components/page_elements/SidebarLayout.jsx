@@ -1,6 +1,6 @@
 import { NavigationPanel } from './NavigationPanel.jsx'
 import { RoutingPanel } from './RoutingPanel.jsx'
-import '../styles/SidebarLayoutStyles.css'
+import '../pages/general/SidebarLayoutStyles.css'
 
 export function SidebarLayout(props) {
     return (
