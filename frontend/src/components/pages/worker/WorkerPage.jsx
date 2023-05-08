@@ -1,4 +1,4 @@
-import { SidebarLayout } from './SidebarLayout.jsx'
+import { SidebarLayout } from '../../page_elements/SidebarLayout.jsx'
 import { WorkerTasksPage } from './WorkerTasksPage.jsx'
 import { WorkerRentalsPage } from './WorkerRentalsPage.jsx'
 import { WorkerCarsPage } from './WorkerCarsPage.jsx'

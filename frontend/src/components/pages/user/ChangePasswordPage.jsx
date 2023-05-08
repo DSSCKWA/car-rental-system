@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import '../styles/ChangePasswordStyles.css'
+import './ChangePasswordStyles.css'
 
 export function ChangePasswordPage() {
     const [currentPassword, setCurrentPassword] = useState('')
