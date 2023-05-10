@@ -6,7 +6,7 @@ export function Table({ columns, data, keys }) {
         for (const column of columns) {
             switch (column.type) {
                 case 'text':
-                    tableCells.push(<td key={column.key}>{row[column.key]}</td>)
+                    tableCells.push(<td key={column.key}>{String(row[column.key]).replace(/_/g, ' ')}</td>)
                     break
                 case 'select':
                     tableCells.push(<td key={column.key}>
@@ -20,6 +20,9 @@ export function Table({ columns, data, keys }) {
                     break
                 case 'button':
                     tableCells.push(<td key={column.key}><button onClick={column.onClick.bind(null, row)}>{column.label}</button></td>)
+                    break
+                case 'raw':
+                    tableCells.push(column.getRow(row))
                     break
                 default:
                     tableCells.push(<td key={column.key}>{row[column.key]}</td>)

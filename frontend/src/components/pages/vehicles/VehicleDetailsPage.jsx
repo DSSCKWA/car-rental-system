@@ -151,10 +151,11 @@ export function VehicleDetailsPage(props) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                'description': 'Prepare vehicle for the client',
-                'name': 'Prepare vehicle',
+                'task_description': 'Prepare vehicle for the client',
+                'task_name': 'Prepare vehicle',
                 'rental_id': rentalBody.rental_id,
                 'task_status': 'active',
+                'task_type': 'prepare_vehicle',
                 'staff_id': null,
             }),
         })
@@ -185,10 +186,7 @@ export function VehicleDetailsPage(props) {
     }
 
     if (user.permissions == 'worker') {
-
         return (
-
-
             <div className='vehicle'>
                 <VehicleCardCool vehicle={vehicle} extra={false} />
             </div>
