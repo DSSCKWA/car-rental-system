@@ -1,5 +1,5 @@
-import {useEffect, useState} from 'react'
-import {useNavigate} from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export function ClientRentalsPage() {
 
@@ -43,12 +43,13 @@ export function ClientRentalsPage() {
             <h2>Rentals</h2>
             <table>
                 <thead>
-                <th>Brand</th>
-                <th>Model</th>
-                <th>Registration number</th>
-                <th>Start time</th>
-                <th>End time</th>
-                <th>Policy</th>
+                    <th>Brand</th>
+                    <th>Model</th>
+                    <th>Registration number</th>
+                    <th>Start time</th>
+                    <th>End time</th>
+                    <th>Status</th>
+                    <th>Policy</th>
                 </thead>
                 <tbody>{rentals?.map(rental => <tr>
                     <td>{rental.brand}</td>
@@ -56,6 +57,7 @@ export function ClientRentalsPage() {
                     <td>{rental.registration_number}</td>
                     <td>{formatDate(rental.start_time)}</td>
                     <td>{formatDate(rental.end_time)}</td>
+                    <td>{rental.rental_status.replace(/_/g, ' ')}</td>
                     <td>{rental.policy_name}</td>
                 </tr>)}</tbody>
             </table>

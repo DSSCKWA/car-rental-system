@@ -28,6 +28,38 @@ export function WorkerRentalsPage() {
             })
     }
 
+    async function changeStatus(id, status) {
+        await fetch(`/api/rentals/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                rental_status: status
+            })
+        })
+            .catch(error => {
+                console.log('Error getting rental info', error)
+            })
+        get_rentals()
+    }
+
+    function getRow(row) {
+        const status = row.rental_status
+        const rental_id = row.rental_id
+        return <>
+            {['upcoming', 'ongoing'].includes(status) &&
+                <td key="action">
+                    <button onClick={(e) => {
+                        { status === "ongoing" ? changeStatus(rental_id, "in_review") : changeStatus(rental_id, "canceled") }
+                    }}>
+                        {status === "ongoing" ? "End" : "Cancel"}
+                    </button>
+                </td>
+            }
+        </>
+    }
+
     function formatDate(dateString) {
         const date = new Date(dateString)
         const options = {
@@ -56,8 +88,10 @@ export function WorkerRentalsPage() {
                 { label: 'Registration number', key: 'registration_number', type: 'text' },
                 { label: 'Start time', key: 'start_time', type: 'text' },
                 { label: 'End time', key: 'end_time', type: 'text' },
+                { label: 'Status', key: 'rental_status', type: 'text' },
                 { label: 'Policy', key: 'policy_name', type: 'text' },
+                { label: 'Action', type: 'raw', getRow: (row) => getRow(row) }
             ]} />
-        </div>
+        </div >
     )
 }
