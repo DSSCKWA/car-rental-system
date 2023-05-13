@@ -2,7 +2,7 @@ from ..config.extensions import db
 
 
 class Policy_price_list(db.Model):
-    policy_type = db.Column(db.String, primary_key=True)
+    policy_type = db.Column(db.String(30), primary_key=True)
     price = db.Column(db.Float(30), nullable=False)
 
     def get_id(self):

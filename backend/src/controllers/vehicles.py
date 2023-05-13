@@ -6,6 +6,7 @@ from ..models.vehicle import Vehicle
 from ..models.rental import Rental
 from ..utils.validator import validate_addition_request_body
 from ..models.price_list import Price_list
+from ..utils.validator import validate_edition_request_body
 import base64
 
 vehicles = Blueprint('vehicles', __name__, url_prefix='/vehicles')
@@ -121,10 +122,12 @@ def edit(id):
     vehicle.image = base64.b64decode(vehicle_body["image"])
     vehicle.description = vehicle_body["description"]
     vehicle.additional_equipment = vehicle_body["additional_equipment"]
+    old_reg=vehicle.registration_number
     vehicle.registration_number = vehicle_body["registration_number"]
     vehicle.color = vehicle_body["color"]
     validate_addition_request_body(vehicle_body)
 
+    validate_edition_request_body(vehicle_body,old_reg)
     db.session.commit()
     return vehicle.serialize()
 

@@ -69,15 +69,28 @@ def validate_password_change(user, currentPassword, new_password, confirm_new_pa
         abort(400, description="Password is too short")
 
 def validate_addition_request_body(vehicle_body):
-    if (not is_valid_review_date(vehicle_body["technical_review_date"])):
+    if not is_valid_review_date(vehicle_body["technical_review_date"]):
         abort(400, description="Invalid date")
-    if (registration_number_avaliable(vehicle_body["registration_number"])):
+    if not (registration_number_available(vehicle_body["registration_number"])):
+        abort(409, description="Registration number taken")
+
+def validate_edition_request_body(vehicle_body,old_reg_number):
+    if not is_valid_review_date(vehicle_body["technical_review_date"]):
+        abort(400, description="Invalid date")
+    if not (registration_number_available_edit(vehicle_body["registration_number"],old_reg_number)):
         abort(409, description="Registration number taken")
 
 
-def registration_number_avaliable(reg_number):
+def registration_number_available(reg_number):
     vehicle = Vehicle.query.filter_by(registration_number=reg_number).first()
-    return not vehicle is None
+    return vehicle is None
+
+def registration_number_available_edit(reg_number,old_reg_number):
+    vehicle = Vehicle.query.filter_by(registration_number=reg_number).first()
+    if(reg_number!=old_reg_number):
+        return vehicle is None
+    else:
+        return not (vehicle is None)
 
 def is_valid_review_date(date):
     current_date = datetime.datetime.now().date()
@@ -87,9 +100,15 @@ def is_valid_review_date(date):
     regex = re.compile(r'^\d{4}-\d{2}-\d{2}$')
     if regex.match(date):
         date_formated = datetime.datetime.strptime(date, '%Y-%m-%d').date()
-        if date_formated > current_date_formated:
+        if date_formated >= current_date_formated:
             return True
     return False
+
+def validate_permissions_change(permissions):
+    if permissions not in ["admin", "client", "worker", "manager"]:
+        abort(400, description="Invalid permissions")
+        return False
+    return True
 
 
 
