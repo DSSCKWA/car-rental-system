@@ -28,15 +28,16 @@ export function ClientRentalsPage() {
             })
     }
 
-    async function changeStatus(id, status, client_id) {
-        await fetch(`/api/rentals/${id}`, {
+    async function changeStatus(rental_id, status, client_id, start_time) {
+        await fetch(`/api/rentals/${rental_id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
                 client_id: client_id,
-                rental_status: status
+                rental_status: status,
+                start_time: formatDate(start_time)
             })
         })
             .catch(error => {
@@ -89,14 +90,14 @@ export function ClientRentalsPage() {
                             <td>{formatDate(rental.end_time)}</td>
                             <td>{rental.rental_status.replace(/_/g, ' ')}</td>
                             <td>{rental.policy_name}</td>
-                            {isMoreThan24Hours(rental.start_time) && rental.rental_status !== "canceled" ?
+                            {isMoreThan24Hours(rental.start_time) && rental.rental_status !== "canceled" && (
                                 <td>
                                     <button onClick={() => {
-                                        changeStatus(rental.rental_id, "canceled", rental.client_id);
+                                        changeStatus(rental.rental_id, "canceled", rental.client_id, rental.start_time);
                                     }}>Cancel
                                     </button>
                                 </td>
-                                : null}
+                            )}
                         </tr>
                     );
                 })}
