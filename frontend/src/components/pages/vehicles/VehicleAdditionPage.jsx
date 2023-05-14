@@ -1,34 +1,34 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom';
-import '../styles/vehiclesPage.css'
-import { VehicleCardCool, VehicleCardLineForm } from './VehicleCardCool';
+import { Link, useLocation } from 'react-router-dom'
+import './VehiclesPage.css'
+import { VehicleCardCool, VehicleCardLineForm } from './VehicleCardCool.jsx'
 
 
 export function VehicleAdditionPage(props) {
     const [rentalCost, setRentalCost] = useState(0)
     const [policyCost, setPolicyCost] = useState(0)
-    const [policyType, setPolicyType] = useState("")
+    const [policyType, setPolicyType] = useState('')
     const [submitSuccess, setSubmitSuccess] = useState(false)
     const [error, setError] = useState('')
-    const location = useLocation();
+    const location = useLocation()
 
 
-    const currency = "¥"
-    const vehicle = location.state?.vehicle;
+    const currency = '¥'
+    const vehicle = location.state?.vehicle
 
     const { user } = props
-    const vehicles = location.state?.vehicles;
-    const startDate = location.state?.startDate;
-    const startTime = location.state?.startTime;
-    const endDate = location.state?.endDate;
-    const endTime = location.state?.endTime;
+    const vehicles = location.state?.vehicles
+    const startDate = location.state?.startDate
+    const startTime = location.state?.startTime
+    const endDate = location.state?.endDate
+    const endTime = location.state?.endTime
     history.pushState({ startDate, startTime, endDate, endTime, vehicles }, '', '/vehicles')
 
-    const startDateTime = new Date(`${startDate}T${startTime}`);
-    const endDateTime = new Date(`${endDate}T${endTime}`);
-    const timeDifferenceMs = endDateTime - startDateTime;
-    const totalHours = timeDifferenceMs / (1000 * 60 * 60);
-    const totalDays = Math.ceil(totalHours / 24);
+    const startDateTime = new Date(`${startDate}T${startTime}`)
+    const endDateTime = new Date(`${endDate}T${endTime}`)
+    const timeDifferenceMs = endDateTime - startDateTime
+    const totalHours = timeDifferenceMs / (1000 * 60 * 60)
+    const totalDays = Math.ceil(totalHours / 24)
 
     const fetchPolicy = async () => {
         try {
@@ -38,13 +38,13 @@ export function VehicleAdditionPage(props) {
                     startDate: `${startDate}`,
                     startTime: `${startTime}`,
                     endDate: `${endDate}`,
-                    endTime: `${endTime}`
+                    endTime: `${endTime}`,
                 })
             }
 
             const response = await fetch(
-                `/api/vehicles/` + params
-                , { method: 'GET' }
+                '/api/vehicles/' + params
+                , { method: 'GET' },
             )
 
             if (!response.ok) {
@@ -59,20 +59,20 @@ export function VehicleAdditionPage(props) {
     }
 
     function formatCost(cost) {
-        let costStr = cost.toString();
-        costStr = costStr.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-        return costStr + currency;
+        let costStr = cost.toString()
+        costStr = costStr.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+        return costStr + currency
     }
 
     function capitalizeFirstLetter(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
+        return string.charAt(0).toUpperCase() + string.slice(1)
     }
 
 
     async function handleSubmit(e) {
         e.preventDefault()
         let policy_number = null
-        if (!(policyType == null) && !(policyType == "none")) {
+        if (!(policyType == null) && !(policyType == 'none')) {
             const policyResponse = await fetch('/api/insurances/' + policyType, {
                 method: 'GET',
                 headers: {

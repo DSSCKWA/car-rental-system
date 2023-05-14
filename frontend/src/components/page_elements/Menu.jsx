@@ -3,14 +3,13 @@ import { useNavigate } from 'react-router-dom'
 
 export function Menu(props) {
     const { user } = props
-    console.log(user)
 
     const navigate = useNavigate()
 
     const menuItems = [
         { name: 'Home', path: '/' },
         { name: 'About', path: '/about' },
-        { name: 'Vehicles', path: '/vehicles' }
+        { name: 'Vehicles', path: '/vehicles' },
     ]
 
     if (props.user) {

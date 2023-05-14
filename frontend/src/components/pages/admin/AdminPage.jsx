@@ -1,4 +1,4 @@
-import { SidebarLayout } from './SidebarLayout.jsx'
+import { SidebarLayout } from '../../page_elements/SidebarLayout.jsx'
 import { AdminEditUsersPage } from './AdminEditUsersPage.jsx'
 
 export function AdminPage() {

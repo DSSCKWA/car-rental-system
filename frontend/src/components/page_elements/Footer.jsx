@@ -1,7 +1,7 @@
-import Logo from '../assets/logo.svg'
-import FB from '../assets/fb.png'
-import IG from '../assets/ig.webp'
-import YT from '../assets/yt.png'
+import Logo from '../../assets/logo.svg'
+import FB from '../../assets/fb.png'
+import IG from '../../assets/ig.webp'
+import YT from '../../assets/yt.png'
 
 export function Footer() {
     return (

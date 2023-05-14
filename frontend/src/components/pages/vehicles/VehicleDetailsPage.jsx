@@ -1,36 +1,36 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom';
-import '../styles/vehiclesPage.css'
-import { VehicleCard, VehicleCardLine } from './VehicleCard';
-import { VehicleCardCool, VehicleCardLineForm } from './VehicleCardCool';
+import { Link, useLocation } from 'react-router-dom'
+import './VehiclesPage.css'
+import { VehicleCard, VehicleCardLine } from './VehicleCard.jsx'
+import { VehicleCardCool, VehicleCardLineForm } from './VehicleCardCool.jsx'
 
 
 export function VehicleDetailsPage(props) {
     const [rentalCost, setRentalCost] = useState(0)
     const [policies, setPolicies] = useState([])
     const [policyCost, setPolicyCost] = useState(0)
-    const [policyType, setPolicyType] = useState("")
+    const [policyType, setPolicyType] = useState('')
     const [submitSuccess, setSubmitSuccess] = useState(false)
     const [error, setError] = useState('')
-    const location = useLocation();
+    const location = useLocation()
 
 
-    const currency = "¥"
-    const vehicle = location.state?.vehicle;
+    const currency = '¥'
+    const vehicle = location.state?.vehicle
 
     const { user } = props
-    const vehicles = location.state?.vehicles;
-    const startDate = location.state?.startDate;
-    const startTime = location.state?.startTime;
-    const endDate = location.state?.endDate;
-    const endTime = location.state?.endTime;
+    const vehicles = location.state?.vehicles
+    const startDate = location.state?.startDate
+    const startTime = location.state?.startTime
+    const endDate = location.state?.endDate
+    const endTime = location.state?.endTime
     history.pushState({ startDate, startTime, endDate, endTime, vehicles }, '', '/vehicles')
 
-    const startDateTime = new Date(`${startDate}T${startTime}`);
-    const endDateTime = new Date(`${endDate}T${endTime}`);
-    const timeDifferenceMs = endDateTime - startDateTime;
-    const totalHours = timeDifferenceMs / (1000 * 60 * 60);
-    const totalDays = Math.ceil(totalHours / 24);
+    const startDateTime = new Date(`${startDate}T${startTime}`)
+    const endDateTime = new Date(`${endDate}T${endTime}`)
+    const timeDifferenceMs = endDateTime - startDateTime
+    const totalHours = timeDifferenceMs / (1000 * 60 * 60)
+    const totalDays = Math.ceil(totalHours / 24)
 
     const fetchPolicy = async () => {
         try {
@@ -40,13 +40,13 @@ export function VehicleDetailsPage(props) {
                     startDate: `${startDate}`,
                     startTime: `${startTime}`,
                     endDate: `${endDate}`,
-                    endTime: `${endTime}`
+                    endTime: `${endTime}`,
                 })
             }
 
             const response = await fetch(
-                `/api/vehicles/` + params
-                , { method: 'GET' }
+                '/api/vehicles/' + params
+                , { method: 'GET' },
             )
 
             if (!response.ok) {
@@ -61,28 +61,28 @@ export function VehicleDetailsPage(props) {
     }
 
     function formatCost(cost) {
-        let costStr = cost.toString();
-        costStr = costStr.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-        return costStr + currency;
+        let costStr = cost.toString()
+        costStr = costStr.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+        return costStr + currency
     }
 
     function capitalizeFirstLetter(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
+        return string.charAt(0).toUpperCase() + string.slice(1)
     }
 
     useEffect(() => {
         fetch(
-            `/api/price-lists/?` + new URLSearchParams({
+            '/api/price-lists/?' + new URLSearchParams({
                 vehicleClass: `${vehicle.vehicle_class}`,
             })
-            , { method: 'GET' }
+            , { method: 'GET' },
         )
             .then(response => response.json())
             .then(data => setRentalCost(data[0].price))
     }, [])
 
     useEffect(() => {
-        fetch(`/api/price-lists/policies`, { method: 'GET' })
+        fetch('/api/price-lists/policies', { method: 'GET' })
             .then(response => response.json())
             .then(data => setPolicies(data))
     }, [])
@@ -93,7 +93,7 @@ export function VehicleDetailsPage(props) {
         console.log(startDateTime)
         e.preventDefault()
         let policy_number = null
-        if (!(policyType == null) && !(policyType == "none")) {
+        if (!(policyType == null) && !(policyType == 'none')) {
             const policyResponse = await fetch('/api/insurances/' + policyType, {
                 method: 'GET',
                 headers: {
@@ -151,11 +151,12 @@ export function VehicleDetailsPage(props) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                'description': "Prepare vehicle for the client",
-                'name': "Prepare vehicle",
+                'task_description': 'Prepare vehicle for the client',
+                'task_name': 'Prepare vehicle',
                 'rental_id': rentalBody.rental_id,
-                'task_status': "active",
-                'staff_id': null
+                'task_status': 'active',
+                'task_type': 'prepare_vehicle',
+                'staff_id': null,
             }),
         })
         const tasksBody = await tasksResponse.json()
@@ -184,36 +185,33 @@ export function VehicleDetailsPage(props) {
         )
     }
 
-    if (user.permissions == "worker") {
-
+    if (user.permissions == 'worker') {
         return (
-
-
             <div className='vehicle'>
                 <VehicleCardCool vehicle={vehicle} extra={false} />
             </div>
         )
-    } else if (user.permissions == "client") {
+    } else if (user.permissions == 'client') {
         return (
 
 
             <div className='vehicle'>
                 <VehicleCard vehicle={vehicle} extra={true} />
-                <label htmlFor="insurance_policy_select" className='insurance_policy_select_label'>Insurance: </label>
+                <label htmlFor='insurance_policy_select' className='insurance_policy_select_label'>Insurance: </label>
                 <select className='insurance_policy_select' value={policyCost} onChange={e => { setPolicyCost(e.target.value); setPolicyType(e.target.options[e.target.options.selectedIndex].innerHTML.toLowerCase().replace(/ /g, '_')) }}>
-                    <option value={0} key="None">
+                    <option value={0} key='None'>
                         None
                     </option>
-                    {policies.map(policy => (
+                    {policies.map(policy =>
                         <option value={policy.price * totalDays} key={policy.policy_type}>
                             {capitalizeFirstLetter(policy.policy_type).replace(/_/g, ' ')}
-                        </option>
-                    ))}
+                        </option>,
+                    )}
                 </select>
                 <div className='rental_cost'>
-                    <VehicleCardLine name={"Rental cost"} value={`${rentalCost}${currency}/h`} />
-                    {policyCost != 0 ? <VehicleCardLine name={"Insurance policy cost"} value={`${policyCost}${currency}`} /> : null}
-                    <VehicleCardLine name={"Total cost"} value={formatCost(parseInt(rentalCost * totalHours) + parseInt(policyCost))} />
+                    <VehicleCardLine name={'Rental cost'} value={`${rentalCost}${currency}/h`} />
+                    {policyCost != 0 ? <VehicleCardLine name={'Insurance policy cost'} value={`${policyCost}${currency}`} /> : null}
+                    <VehicleCardLine name={'Total cost'} value={formatCost(parseInt(rentalCost * totalHours) + parseInt(policyCost))} />
                 </div>
                 <form className='log_form' onSubmit={handleSubmit}>
                     <p className='errorMessage'>{error}</p>
@@ -227,21 +225,21 @@ export function VehicleDetailsPage(props) {
         return (
             <div className='vehicle'>
                 <VehicleCard vehicle={vehicle} extra={true} />
-                <label htmlFor="insurance_policy_select" className='insurance_policy_select_label'>Insurance: </label>
+                <label htmlFor='insurance_policy_select' className='insurance_policy_select_label'>Insurance: </label>
                 <select className='insurance_policy_select' value={policyCost} onChange={e => { setPolicyCost(e.target.value); setPolicyType(e.target.options[e.target.options.selectedIndex].innerHTML.toLowerCase().replace(/ /g, '_')) }}>
-                    <option value={0} key="None">
+                    <option value={0} key='None'>
                         None
                     </option>
-                    {policies.map(policy => (
+                    {policies.map(policy =>
                         <option value={policy.price * totalDays} key={policy.policy_type}>
                             {capitalizeFirstLetter(policy.policy_type).replace(/_/g, ' ')}
-                        </option>
-                    ))}
+                        </option>,
+                    )}
                 </select>
                 <div className='rental_cost'>
-                    <VehicleCardLine name={"Rental cost"} value={`${rentalCost}${currency}/h`} />
-                    {policyCost != 0 ? <VehicleCardLine name={"Insurance policy cost"} value={`${policyCost}${currency}`} /> : null}
-                    <VehicleCardLine name={"Total cost"} value={formatCost(parseInt(rentalCost * totalHours) + parseInt(policyCost))} />
+                    <VehicleCardLine name={'Rental cost'} value={`${rentalCost}${currency}/h`} />
+                    {policyCost != 0 ? <VehicleCardLine name={'Insurance policy cost'} value={`${policyCost}${currency}`} /> : null}
+                    <VehicleCardLine name={'Total cost'} value={formatCost(parseInt(rentalCost * totalHours) + parseInt(policyCost))} />
                 </div>
             </div>
         )

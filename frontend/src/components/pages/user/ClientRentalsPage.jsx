@@ -1,7 +1,7 @@
-import {useEffect, useState} from 'react'
-import {useNavigate} from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-export function WorkerRentalsPage() {
+export function ClientRentalsPage() {
 
     const navigate = useNavigate()
     const [rentals, setRentals] = useState(null)
@@ -39,33 +39,25 @@ export function WorkerRentalsPage() {
     }
 
     return (
-        <div className='worker_rentals_page page_content'>
+        <div className='client_rentals_page page_content'>
             <h2>Rentals</h2>
             <table>
                 <thead>
-                <th>Rental ID</th>
-                <th>Name</th>
-                <th>Surname</th>
-                <th>Email</th>
-                <th>Phone number</th>
-                <th>Brand</th>
-                <th>Model</th>
-                <th>Registration number</th>
-                <th>Start time</th>
-                <th>End time</th>
-                <th>Policy</th>
+                    <th>Brand</th>
+                    <th>Model</th>
+                    <th>Registration number</th>
+                    <th>Start time</th>
+                    <th>End time</th>
+                    <th>Status</th>
+                    <th>Policy</th>
                 </thead>
                 <tbody>{rentals?.map(rental => <tr>
-                    <td>{rental.rental_id}</td>
-                    <td>{rental.name}</td>
-                    <td>{rental.surname}</td>
-                    <td>{rental.user_email_address}</td>
-                    <td>{rental.phone_number}</td>
                     <td>{rental.brand}</td>
                     <td>{rental.model}</td>
                     <td>{rental.registration_number}</td>
                     <td>{formatDate(rental.start_time)}</td>
                     <td>{formatDate(rental.end_time)}</td>
+                    <td>{rental.rental_status.replace(/_/g, ' ')}</td>
                     <td>{rental.policy_name}</td>
                 </tr>)}</tbody>
             </table>
