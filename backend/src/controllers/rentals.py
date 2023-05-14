@@ -85,6 +85,10 @@ def review(id):
         abort(403, description="Invalid permissions")
 
 
+def get_task_by_rental_id(id):
+    return Task.query.filter_by(rental_id=id).first()
+
+
 @rentals.route('/<int:id>', methods=['PUT'])
 @login_required
 def update(id):
@@ -108,6 +112,12 @@ def update(id):
             for task in tasks:
                 if task.task_status != "completed":
                     task.task_status = "canceled"
+        db.session.commit()
+    elif user_permissions == "client" and current_user.user_id == request.json["client_id"]:
+        rental = Rental.query.filter_by(rental_id=id).first()
+        rental.rental_status = request.json["rental_status"]
+        task = get_task_by_rental_id(rental.rental_id)
+        task.task_status = "canceled"
         db.session.commit()
     else:
         abort(403, description="Invalid permissions")
