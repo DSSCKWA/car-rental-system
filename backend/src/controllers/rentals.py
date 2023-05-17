@@ -1,5 +1,6 @@
 from flask import Blueprint, Response, abort, flash, jsonify, request, session
 from flask_login import login_required, current_user
+import datetime
 
 from ..config.extensions import bcrypt, db, login_manager
 from ..models.rental import Rental
@@ -85,6 +86,10 @@ def review(id):
         abort(403, description="Invalid permissions")
 
 
+def get_task_by_rental_id(id):
+    return Task.query.filter_by(rental_id=id).first()
+
+
 @rentals.route('/<int:id>', methods=['PUT'])
 @login_required
 def update(id):
@@ -109,9 +114,30 @@ def update(id):
                 if task.task_status != "completed":
                     task.task_status = "canceled"
         db.session.commit()
+    elif user_permissions == "client" and current_user.user_id == request.json["client_id"] and rental_belongs_to_client(current_user.user_id, id):
+        if is_more_than_24_hours(request.json["start_time"]):
+            rental = Rental.query.filter_by(rental_id=id).first()
+            rental.rental_status = request.json["rental_status"]
+            task = get_task_by_rental_id(rental.rental_id)
+            task.task_status = "canceled"
+            db.session.commit()
+        else:
+            abort(403, description="Cannot cancel the rental in less than 24 hours to the start date")
     else:
         abort(403, description="Invalid permissions")
     return rental.serialize()
+
+
+def is_more_than_24_hours(start_time):
+    current_time = datetime.datetime.utcnow()
+    rental_time = datetime.datetime.strptime(start_time, "%d/%m/%Y, %H:%M")
+    time_difference = rental_time - current_time
+    return time_difference.total_seconds() > 24 * 60 * 60
+
+
+def rental_belongs_to_client(client_id, id):
+    rental = Rental.query.filter_by(rental_id=id).first()
+    return rental.client_id == client_id
 
 
 def calculate_penalties(review, price_list):

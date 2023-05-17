@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
-import { VehicleCard } from './VehicleCard.jsx'
+import React, {useState, useEffect} from 'react'
+import {useLocation, useNavigate} from 'react-router-dom'
+import {VehicleCard} from './VehicleCard.jsx'
 import './VehiclesPage.css'
-import { VehicleAdditionPage } from './VehicleAdditionPage.jsx'
-import { Link } from 'react-router-dom'
+import {VehicleAdditionPage} from './VehicleAdditionPage.jsx'
+import {Link} from 'react-router-dom'
 
 
 export function VehiclesListPage(props) {
-    const { user } = props
+    const {user} = props
     const startDateState = history.state?.startDate
     const startTimeState = history.state?.startTime
     const endDateState = history.state?.endDate
@@ -23,7 +23,9 @@ export function VehiclesListPage(props) {
     const [endTime, setEndTime] = useState(endTimeState ? endTimeState : '00:00:00')
     const navigate = useNavigate()
     const getMinDate = () => {
-        return new Date().toISOString().substring(0, 10)
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        return tomorrow.toISOString().substring(0, 10);
     }
 
     const fetchVehicles = async () => {
@@ -40,7 +42,7 @@ export function VehiclesListPage(props) {
 
             const response = await fetch(
                 '/api/vehicles/' + params
-                , { method: 'GET' },
+                , {method: 'GET'},
             )
 
 
@@ -57,7 +59,7 @@ export function VehiclesListPage(props) {
 
     const goToDetailsPage = async vehicle => {
         if (startDate && startTime && endDate && endTime || user?.permissions == 'worker') {
-            navigate('/vehicles/details', { state: { vehicle, vehicles, startDate, startTime, endDate, endTime } })
+            navigate('/vehicles/details', {state: {vehicle, vehicles, startDate, startTime, endDate, endTime}})
         } else {
             alert('Pick a date range first!')
         }
@@ -108,8 +110,10 @@ export function VehiclesListPage(props) {
                     <div className='vehicle-list'>
                         {filteredVehicles.map(vehicle =>
                             vehicle.status === 'available' ?
-                                <div key={vehicle.vehicle_id} className='vehicle-card' onClick={() => { goToDetailsPage(vehicle) }}>
-                                    <VehicleCard vehicle={vehicle} extra={false} />
+                                <div key={vehicle.vehicle_id} className='vehicle-card' onClick={() => {
+                                    goToDetailsPage(vehicle)
+                                }}>
+                                    <VehicleCard vehicle={vehicle} extra={false}/>
                                 </div>
                                 : null,
                         )}
@@ -131,19 +135,29 @@ export function VehiclesListPage(props) {
                 }}>
                     <div className='form_group'>
                         <label htmlFor='start_date'>Start date</label>
-                        <input type='date' id='start_date' name='start_date' value={startDate} min={getMinDate()} onChange={e => { setStartDate(e.target.value); location.startDate = e.target.value }} />
+                        <input type='date' id='start_date' name='start_date' value={startDate} min={getMinDate()}
+                               onChange={e => {
+                                   setStartDate(e.target.value);
+                                   location.startDate = e.target.value
+                               }}/>
                     </div>
                     <div className='form_group'>
                         <label htmlFor='start_time'>Start time</label>
-                        <input type='time' id='start_time' name='start_time' step='3600' value={startTime} onChange={e => { setStartTime(`${e.target.value.split(':')[0]}:00:00`) }} />
+                        <input type='time' id='start_time' name='start_time' step='3600' value={startTime}
+                               onChange={e => {
+                                   setStartTime(`${e.target.value.split(':')[0]}:00:00`)
+                               }}/>
                     </div>
                     <div className='form_group'>
                         <label htmlFor='end_date'>End date</label>
-                        <input type='date' id='end_date' name='end_date' value={endDate} min={startDate ? startDate : getMinDate()} onChange={e => setEndDate(e.target.value)} />
+                        <input type='date' id='end_date' name='end_date' value={endDate}
+                               min={startDate ? startDate : getMinDate()} onChange={e => setEndDate(e.target.value)}/>
                     </div>
                     <div className='form_group'>
                         <label htmlFor='end_time'>End time</label>
-                        <input type='time' id='end_time' name='end_time' step='3600' value={endTime} onChange={e => { setEndTime(`${e.target.value.split(':')[0]}:00:00`) }} />
+                        <input type='time' id='end_time' name='end_time' step='3600' value={endTime} onChange={e => {
+                            setEndTime(`${e.target.value.split(':')[0]}:00:00`)
+                        }}/>
                     </div>
                     <div className='form_group'>
                         <button type='submit'>Search</button>
@@ -167,8 +181,10 @@ export function VehiclesListPage(props) {
                     <div className='vehicle-list'>
                         {filteredVehicles.map(vehicle =>
                             vehicle.status === 'available' ?
-                                <div key={vehicle.vehicle_id} className='vehicle-card' onClick={() => { goToDetailsPage(vehicle) }}>
-                                    <VehicleCard vehicle={vehicle} extra={false} />
+                                <div key={vehicle.vehicle_id} className='vehicle-card' onClick={() => {
+                                    goToDetailsPage(vehicle)
+                                }}>
+                                    <VehicleCard vehicle={vehicle} extra={false}/>
                                 </div>
                                 : null,
                         )}
