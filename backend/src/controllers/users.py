@@ -5,6 +5,8 @@ from ..config.extensions import db, bcrypt, login_manager
 from ..utils.validator import validate_password_change
 from ..utils.validator import validate_permissions_change
 from ..models.user import User
+from ..utils.emails import send_password_change_confirmation
+import threading
 
 users = Blueprint('users', __name__, url_prefix='/users')
 response_class = Blueprint('response_class', __name__)
@@ -45,6 +47,9 @@ def change_password():
 
     user.password = bcrypt.generate_password_hash(new_password).decode("utf-8")
     db.session.commit()
+    thread = threading.Thread(
+        target=send_password_change_confirmation, args=(user.user_email_address,))
+    thread.start()
 
     return user.serialize()
 

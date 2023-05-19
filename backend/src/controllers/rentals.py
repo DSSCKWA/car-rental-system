@@ -11,7 +11,8 @@ from ..models.user import User
 from ..models.task import Task
 from ..models.vehicle import Vehicle
 from ..models.insurance import Insurance
-import base64
+from ..utils.emails import send_rental_confirmation
+import threading
 
 rentals = Blueprint('rentals', __name__, url_prefix='/rentals')
 rentals = Blueprint('rentals', __name__, url_prefix='/rentals')
@@ -45,6 +46,9 @@ def add():
     new_rental = Rental(new_rental_body)
     db.session.add(new_rental)
     db.session.commit()
+    thread = threading.Thread(target=send_rental_confirmation, args=(
+        new_rental.client.user_email_address, new_rental.start_time, new_rental.end_time, new_rental.vehicle.brand, new_rental.vehicle.model))
+    thread.start()
     return new_rental.serialize()
 
 
@@ -122,7 +126,8 @@ def update(id):
             task.task_status = "canceled"
             db.session.commit()
         else:
-            abort(403, description="Cannot cancel the rental in less than 24 hours to the start date")
+            abort(
+                403, description="Cannot cancel the rental in less than 24 hours to the start date")
     else:
         abort(403, description="Invalid permissions")
     return rental.serialize()

@@ -4,6 +4,8 @@ from flask_login import login_required, logout_user, login_user
 from ..config.extensions import db, bcrypt, login_manager
 from ..models.user import User
 from ..utils.validator import validate_registration_request_body
+from ..utils.emails import send_registration_confirmation
+import threading
 
 auth = Blueprint('auth', __name__, url_prefix='/auth')
 response_class = Blueprint('response_class', __name__)
@@ -39,12 +41,17 @@ def register():
     new_user_body = request.json
     validate_registration_request_body(new_user_body)
 
-    new_user_body["password"] = bcrypt.generate_password_hash(new_user_body["password"]).decode("utf-8")
+    new_user_body["password"] = bcrypt.generate_password_hash(
+        new_user_body["password"]).decode("utf-8")
     new_user_body["permissions"] = "client"
     new_user_body["account_status"] = "active"
     new_user = User(new_user_body)
     db.session.add(new_user)
     db.session.commit()
+    thread = threading.Thread(target=send_registration_confirmation, args=(
+        new_user.user_email_address, new_user.name))
+    thread.start()
+
     return new_user.serialize()
 
 
