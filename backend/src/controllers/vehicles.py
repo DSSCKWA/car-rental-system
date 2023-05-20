@@ -25,14 +25,14 @@ def get_available_vehicle_ids(start_time, end_time):
             )
             .subquery()
         )
-        available_vehicles = (
+        return (
             Vehicle.query.join(Price_list,Vehicle.vehicle_class == Price_list.vehicle_class).filter(~Vehicle.vehicle_id.in_(rentals_in_range))
             .with_entities(Vehicle, Price_list.price).all())
    else:
-       available_vehicles = (
+       return  (
            Vehicle.query.join(Price_list,Vehicle.vehicle_class == Price_list.vehicle_class)
            .with_entities(Vehicle, Price_list.price).all())
-   return available_vehicles
+
 
 @vehicles.route('/', methods=['GET'])
 def get_all():
@@ -46,48 +46,12 @@ def get_all():
         except ValueError:
             return jsonify({'error': 'Invalid datetime format. Use format: YYYY-MM-DDTHH:MM:SS'}), 400
 
-        available_vehicles = get_available_vehicle_ids(start_time, end_time)
-        return [
-            {**vehicle.serialize(), 'price': price}
-            for vehicle, price in available_vehicles
-        ], 200
-    else:
-        return jsonify({'error': 'start_time and end_time parameters are required'}), 400
-    # start_date = request.args.get('startDate', default=None, type=str)
-    # start_time = request.args.get('startTime', default=None, type=str)
-    # end_date = request.args.get('endDate', default=None, type=str)
-    # end_time = request.args.get('endTime', default=None, type=str)
-    #
-    # vehicles = []
-    # start_datetime = None
-    # end_datetime = None
-    # if start_date and start_time and end_date and end_time:
-    #     start_datetime = datetime.strptime(f"{start_date} {start_time}",
-    #                                        "%Y-%m-%d %H:%M:%S")
-    #     end_datetime = datetime.strptime(f"{end_date} {end_time}",
-    #                                      "%Y-%m-%d %H:%M:%S")
-    #
-    # if start_datetime and end_datetime:
-    #     vehicles_unavailable = Vehicle.query.join(
-    #         Rental,
-    #         Vehicle.vehicle_id == Rental.vehicle_id,
-    #     ).where(
-    #         not_(
-    #             or_(
-    #                 and_(Rental.start_time >= start_datetime,
-    #                      Rental.start_time >= end_datetime),
-    #                 and_(Rental.end_time <= start_datetime,
-    #                      Rental.end_time <= end_datetime),
-    #             ))).all()
-    #
-    #     vehicles = [
-    #         vehicle for vehicle in Vehicle.query.join(Price_list,Vehicle.vehicle_class == Price_list.vehicle_class).all()
-    #         if vehicle not in vehicles_unavailable
-    #     ]
-    # else:
-    #     vehicles = Vehicle.query.all()
-    #
-    # return [vehicle.serialize() for vehicle in vehicles]
+    available_vehicles = get_available_vehicle_ids(start_time, end_time)
+    return [
+        {**vehicle.serialize(), 'price': price}
+        for vehicle, price in available_vehicles
+    ], 200
+
 
 
 @vehicles.route('/<int:id>', methods=['GET'])
