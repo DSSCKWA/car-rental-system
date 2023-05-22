@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
-import { VehicleCard } from './VehicleCard.jsx'
+import React, {useState, useEffect} from 'react'
+import {useLocation, useNavigate} from 'react-router-dom'
+import {VehicleCard} from './VehicleCard.jsx'
 import './VehiclesPage.css'
 import { VehicleAdditionPage } from './VehicleAdditionPage.jsx'
 import { Link } from 'react-router-dom'
@@ -51,7 +51,7 @@ const sortOptions = [
 ]
 
 export function VehiclesListPage(props) {
-    const { user } = props
+    const {user} = props
     const startDateState = history.state?.startDate
     const startTimeState = history.state?.startTime
     const endDateState = history.state?.endDate
@@ -79,7 +79,9 @@ export function VehiclesListPage(props) {
     const [marks, setMarks] = useState()
     const navigate = useNavigate()
     const getMinDate = () => {
-        return new Date().toISOString().substring(0, 10)
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        return tomorrow.toISOString().substring(0, 10);
     }
 
     const handleBrandChange = event => {
@@ -141,7 +143,7 @@ export function VehiclesListPage(props) {
 
             const response = await fetch(
                 '/api/vehicles/' + params
-                , { method: 'GET' },
+                , {method: 'GET'},
             )
 
 
@@ -163,7 +165,7 @@ export function VehiclesListPage(props) {
 
     const goToDetailsPage = async vehicle => {
         if (startDate && startTime && endDate && endTime || user?.permissions == 'worker') {
-            navigate('/vehicles/details', { state: { vehicle, vehicles, startDate, startTime, endDate, endTime } })
+            navigate('/vehicles/details', {state: {vehicle, vehicles, startDate, startTime, endDate, endTime}})
         } else {
             alert('Pick a date range first!')
         }
