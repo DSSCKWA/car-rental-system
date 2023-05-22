@@ -19,10 +19,7 @@ response_class = Blueprint('response_class', __name__)
 
 
 def check_if_feedback_exist(rental):
-    if Feedback.query.filter_by(rental_id=rental.rental_id).first():
-        return True
-    else:
-        return False
+    return Feedback.query.filter_by(rental_id=rental.rental_id).first() is not None
 
 
 @rentals.route('/', methods=['GET'])
