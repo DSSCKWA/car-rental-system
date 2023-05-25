@@ -7,7 +7,7 @@ export function Form({ formName, className, onSubmit, inputs, error, submitText 
                 {inputs.map(input => {
                     {
                         switch (input.type) {
-                            case "select": {
+                            case 'select': {
                                 return (
                                     <div key={input.name} className='form_group'>
                                         <label htmlFor={input.name}>{input.label}</label>
@@ -23,7 +23,7 @@ export function Form({ formName, className, onSubmit, inputs, error, submitText 
                                 return (
                                     <div key={input.name} className='form_group'>
                                         <label htmlFor={input.name}>{input.label}</label>
-                                        <input type={input.type} name={input.name} id={input.name} onChange={input.onChange} />
+                                        <input type={input.type} name={input.name} id={input.name} onChange={input.onChange} defaultValue={input.default} value={input.value} />
                                     </div>
                                 )
                         }

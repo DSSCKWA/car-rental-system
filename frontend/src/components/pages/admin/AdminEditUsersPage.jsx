@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Table } from '../../page_elements/Table.jsx'
+import { useNavigate } from 'react-router-dom'
 
 export function AdminEditUsersPage() {
 
     const [users, setUsers] = useState(null)
+    const navigate = useNavigate()
 
     useEffect(() => {
         get_users()
@@ -50,7 +52,7 @@ export function AdminEditUsersPage() {
     }
 
     function onClickEditUser(row) {
-        console.log('Edit user', row.user_id)
+        navigate(`/admin/edit-users/${row.user_id}`)
     }
 
     if (!users) return <div>Loading...</div>
