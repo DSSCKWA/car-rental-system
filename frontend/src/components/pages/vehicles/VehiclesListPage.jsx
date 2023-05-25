@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react'
-import {useLocation, useNavigate} from 'react-router-dom'
-import {VehicleCard} from './VehicleCard.jsx'
+import React, { useState, useEffect } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { VehicleCard } from './VehicleCard.jsx'
 import './VehiclesPage.css'
 import { VehicleAdditionPage } from './VehicleAdditionPage.jsx'
 import { Link } from 'react-router-dom'
@@ -16,6 +16,7 @@ import ListItemText from '@mui/material/ListItemText'
 import Checkbox from '@mui/material/Checkbox'
 import Slider from '@mui/material/Slider'
 import Typography from '@mui/material/Typography'
+import { vehicleListPageStyle } from '../../../styles.jsx'
 
 const ITEM_HEIGHT = 48
 const ITEM_PADDING_TOP = 8
@@ -51,7 +52,7 @@ const sortOptions = [
 ]
 
 export function VehiclesListPage(props) {
-    const {user} = props
+    const { user } = props
     const startDateState = history.state?.startDate
     const startTimeState = history.state?.startTime
     const endDateState = history.state?.endDate
@@ -79,9 +80,9 @@ export function VehiclesListPage(props) {
     const [marks, setMarks] = useState()
     const navigate = useNavigate()
     const getMinDate = () => {
-        const tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        return tomorrow.toISOString().substring(0, 10);
+        const tomorrow = new Date()
+        tomorrow.setDate(tomorrow.getDate() + 1)
+        return tomorrow.toISOString().substring(0, 10)
     }
 
     const handleBrandChange = event => {
@@ -143,7 +144,7 @@ export function VehiclesListPage(props) {
 
             const response = await fetch(
                 '/api/vehicles/' + params
-                , {method: 'GET'},
+                , { method: 'GET' },
             )
 
 
@@ -165,7 +166,7 @@ export function VehiclesListPage(props) {
 
     const goToDetailsPage = async vehicle => {
         if (startDate && startTime && endDate && endTime || user?.permissions == 'worker') {
-            navigate('/vehicles/details', {state: {vehicle, vehicles, startDate, startTime, endDate, endTime}})
+            navigate('/vehicles/details', { state: { vehicle, vehicles, startDate, startTime, endDate, endTime } })
         } else {
             alert('Pick a date range first!')
         }
@@ -418,38 +419,7 @@ export function VehiclesListPage(props) {
                                 Price range
                             </Typography>
                             <Slider
-                                sx={{
-                                    color: '#09195b', // Kolor suwaka
-                                    '& .MuiSlider-thumb': {
-                                        height: 24,
-                                        width: 24,
-                                        backgroundColor: '#09195b', // Kolor kropki
-                                        border: '2px solid #1d1d1d', // Kolor obramowania kropki
-                                        '&:hover': {
-                                            boxShadow: '0 0 0 8px rgba(78, 170, 232, 0.16)', // Cień przy najechaniu
-                                        },
-                                        '& .MuiSlider-valueLabel': {
-                                            color: '#252525', // Kolor etykiety wartości
-                                        },
-                                    },
-                                    '& .MuiSlider-markLabel': {
-                                        color: '#fff', // Kolor etykiety znacznika
-                                    },
-                                    '& .MuiSlider-track': {
-                                        height: 8, // Wysokość suwaka
-                                    },
-                                    '& .MuiSlider-rail': {
-                                        height: 8, // Wysokość tła suwaka
-                                        opacity: 0.3, // Przezroczystość tła suwaka
-                                        color: '#888', // Kolor tła suwaka
-                                    },
-                                    '& .MuiSlider-mark': {
-                                        backgroundColor: '#252525', // Kolor znacznika
-                                    },
-                                    '& .MuiSlider-markActive': {
-                                        backgroundColor: '#252525', // Kolor aktywnego znacznika
-                                    },
-                                }}
+                                sx={vehicleListPageStyle}
                                 min={Math.min(...vehicles.map(vehicle => vehicle.price)) - 50}
                                 max={Math.max(...vehicles.map(vehicle => vehicle.price)) + 50}
                                 aria-labelledby='price-slider'

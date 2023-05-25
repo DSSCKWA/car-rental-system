@@ -7,23 +7,8 @@ import TextField from '@mui/material/TextField'
 import React from 'react'
 import Rating from '@mui/material/Rating'
 import Button from '@mui/material/Button'
+import {modalStyle} from "../../../styles.jsx";
 
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-    color: 'black',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    gap: '1rem',
-}
 
 export function ClientRentalsPage() {
 
@@ -34,7 +19,7 @@ export function ClientRentalsPage() {
     const [experienceValue, setExperienceValue] = React.useState(2)
     const navigate = useNavigate()
     const [rentals, setRentals] = useState(null)
-    const [currentDate, setCurrentDate] = useState(new Date().toLocaleDateString());
+    const [currentDate, setCurrentDate] = useState(new Date().toLocaleDateString())
 
     useEffect(() => {
         get_rentals()
@@ -67,8 +52,8 @@ export function ClientRentalsPage() {
             body: JSON.stringify({
                 client_id: client_id,
                 rental_status: status,
-                start_time: formatDate(start_time)
-            })
+                start_time: formatDate(start_time),
+            }),
         })
             .catch(error => {
                 console.log('Error changing rental status', error)
@@ -128,9 +113,9 @@ export function ClientRentalsPage() {
     }
 
     function isMoreThan24Hours(startTime) {
-        const currentTime = new Date().getTime();
-        const rentalTime = new Date(startTime).getTime();
-        return (rentalTime - currentTime) > (24 * 60 * 60 * 1000);
+        const currentTime = new Date().getTime()
+        const rentalTime = new Date(startTime).getTime()
+        return rentalTime - currentTime > 24 * 60 * 60 * 1000
     }
 
     return (
@@ -149,31 +134,31 @@ export function ClientRentalsPage() {
                     <th>Actions</th>
                 </thead>
                 <tbody>
-                {rentals?.map(rental => {
-                    return (
-                        <tr key={rental.rental_id}>
-                            <td>{rental.brand}</td>
-                            <td>{rental.model}</td>
-                            <td>{rental.registration_number}</td>
-                            <td>{formatDate(rental.start_time)}</td>
-                            <td>{formatDate(rental.end_time)}</td>
-                            <td>{rental.rental_status.replace(/_/g, ' ')}</td>
-                            <td>{rental.policy_name}</td>
-                            <td>{rental?.rental_status !== 'completed' ? 'you can rate when your rental ends' :
-                                rental?.rental_status === 'completed' && !rental.feedback_status ?
-                                    <button onClick={() => {openRatingModal(rental.rental_id)}}> Rate </button>
-                                    : 'Rental already rated'}</td>
-                            {isMoreThan24Hours(rental.start_time) && rental.rental_status !== "canceled" && (
+                    {rentals?.map(rental => {
+                        return (
+                            <tr key={rental.rental_id}>
+                                <td>{rental.brand}</td>
+                                <td>{rental.model}</td>
+                                <td>{rental.registration_number}</td>
+                                <td>{formatDate(rental.start_time)}</td>
+                                <td>{formatDate(rental.end_time)}</td>
+                                <td>{rental.rental_status.replace(/_/g, ' ')}</td>
+                                <td>{rental.policy_name}</td>
+                                <td>{rental?.rental_status !== 'completed' ? 'you can rate when your rental ends' :
+                                    rental?.rental_status === 'completed' && !rental.feedback_status ?
+                                        <button onClick={() => {openRatingModal(rental.rental_id)}}> Rate </button>
+                                        : 'Rental already rated'}</td>
+                                {isMoreThan24Hours(rental.start_time) && rental.rental_status !== 'canceled' &&
                                 <td>
                                     <button onClick={() => {
-                                        changeStatus(rental.rental_id, "canceled", rental.client_id, rental.start_time);
+                                        changeStatus(rental.rental_id, 'canceled', rental.client_id, rental.start_time)
                                     }}>Cancel
                                     </button>
                                 </td>
-                            )}
-                        </tr>
-                    );
-                })}
+                                }
+                            </tr>
+                        )
+                    })}
                 </tbody>
             </table>
             <Modal
@@ -183,22 +168,7 @@ export function ClientRentalsPage() {
                 aria-describedby='modal-modal-description'
             >
                 <Box
-                    sx={{
-                        backgroundColor: '#252525',
-                        borderRadius: '5px',
-                        color: '#888',
-                        padding: '2em',
-                        margin: 'auto',
-                        width: '50%',
-                        top: '50%',
-                        left: '50%',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        transform: 'translate(-50%, -50%)',
-                        position: 'absolute',
-                    }}
+                    sx={modalStyle}
                 >
                     <Typography
                         id='modal-modal-title'
@@ -256,9 +226,9 @@ export function ClientRentalsPage() {
                             setComment(event.target.value)
                         }}
                         sx={{
-                            "& .MuiInputBase-root": {
-                                color: '#fff'
-                            }
+                            '& .MuiInputBase-root': {
+                                color: '#fff',
+                            },
                         }}
                     />
                     <Button

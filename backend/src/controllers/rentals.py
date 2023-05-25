@@ -12,7 +12,7 @@ from ..models.task import Task
 from ..models.vehicle import Vehicle
 from ..models.insurance import Insurance
 from ..models.feedback import Feedback
-import base64
+
 
 rentals = Blueprint('rentals', __name__, url_prefix='/rentals')
 response_class = Blueprint('response_class', __name__)

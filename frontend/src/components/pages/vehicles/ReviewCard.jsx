@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography'
 import Rating from '@mui/material/Rating'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
+import { reviewCardStyle } from '../../../styles.jsx'
 
 export function ReviewCard({ review }) {
     console.log(review)
@@ -13,15 +14,7 @@ export function ReviewCard({ review }) {
 
     return (
         <Card
-            sx={{
-                margin: '20px',
-                backgroundColor: '#252525',
-                borderRadius: '5px',
-                color: '#888',
-                padding: '2em',
-                marginBottom: '2em',
-                '&:hover': { boxShadow: '0 0 10px #299bbe' }
-            }}
+            sx={reviewCardStyle}
         >
             <CardContent>
                 <Typography
