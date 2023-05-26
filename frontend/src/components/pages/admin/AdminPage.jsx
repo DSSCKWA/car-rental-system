@@ -1,5 +1,6 @@
 import { SidebarLayout } from '../../page_elements/SidebarLayout.jsx'
 import { AdminEditUsersPage } from './AdminEditUsersPage.jsx'
+import { AdminEditUserForm } from './AdminEditUserForm.jsx'
 
 export function AdminPage() {
     return (
@@ -8,6 +9,7 @@ export function AdminPage() {
         ]}
         routes={[
             { path: '/edit-users', element: <AdminEditUsersPage/> },
+            { path: '/edit-users/:id', element: <AdminEditUserForm/> },
         ]}/>
     )
 }

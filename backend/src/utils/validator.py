@@ -107,8 +107,27 @@ def is_valid_review_date(date):
 def validate_permissions_change(permissions):
     if permissions not in ["admin", "client", "worker", "manager"]:
         abort(400, description="Invalid permissions")
-        return False
     return True
+
+def validate_edit_user(new_user, old_user):
+    if new_user['user_email_address'] != old_user.user_email_address:
+        if email_taken(new_user['user_email_address']):
+            abort(409, description="Email already taken")
+        if not is_valid_email(new_user['user_email_address']):
+            abort(400, description="Invalid email")
+    if new_user['phone_number'] != old_user.phone_number:
+        if not is_valid_phone_number(new_user['phone_number']):
+            abort(400, description="Invalid phone number")
+    return True
+
+
+def validate_admin_permissions(user):
+    if user is None:
+        abort(401, description='User is not logged in')
+    if user.permissions != 'admin':
+        abort(403, description='Permission denied')
+    return True
+
 
 
 

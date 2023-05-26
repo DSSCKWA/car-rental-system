@@ -837,7 +837,7 @@ ALTER TABLE public."user" OWNER TO crs_user;
 
 CREATE SEQUENCE public.user_user_id_seq
     AS integer
-    START WITH 14
+    START WITH 15
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
@@ -1094,7 +1094,7 @@ INSERT INTO public.discount_code (discount_code_id, code, discount_type, discoun
 -- Data for Name: feedback; Type: TABLE DATA; Schema: public; Owner: crs_user
 --
 
-INSERT INTO public.feedback (feedback_id, vehicle_rating, comment, client_id, service_rating, rental_id) VALUES (6, 5, NULL, 2, 4, 9);
+INSERT INTO public.feedback (feedback_id, vehicle_rating, comment, client_id, service_rating, rental_id) VALUES (6, 5, NULL, 2, 4, 8);
 INSERT INTO public.feedback (feedback_id, vehicle_rating, comment, client_id, service_rating, rental_id) VALUES (5, 5, 'Cool car, came dirty tho.', 2, 3, 7);
 INSERT INTO public.feedback (feedback_id, vehicle_rating, comment, client_id, service_rating, rental_id) VALUES (4, 4, NULL, 1, 5, 5);
 INSERT INTO public.feedback (feedback_id, vehicle_rating, comment, client_id, service_rating, rental_id) VALUES (3, 3, 'Lost a wheel, dunno where it went.', 1, 4, 3);
@@ -1215,6 +1215,7 @@ INSERT INTO public."user" (user_id, user_email_address, name, surname, permissio
 INSERT INTO public."user" (user_id, user_email_address, name, surname, permissions, password, account_status, phone_number, date_of_birth) VALUES (11, 'admin@admin.pl', 'Admin', 'Admin', 'admin', '$2b$12$Rh/yfXZSk6vSL/MOvcjjjO7uP6OmSovtqrGvOH9gkceyXCjdy7g6S', 'active', '111111111', '2000-01-01');
 INSERT INTO public."user" (user_id, user_email_address, name, surname, permissions, password, account_status, phone_number, date_of_birth) VALUES (12, 'client@client.pl', 'Client', 'Client', 'client', '$2b$12$8x4W9tBPCKwKLn2UpM4eC.e.VumzMaa2NXeXNGGOs1Bj7GEHBcdRK', 'active', '222222222', '2000-01-01');
 INSERT INTO public."user" (user_id, user_email_address, name, surname, permissions, password, account_status, phone_number, date_of_birth) VALUES (13, 'worker@worker.pl', 'Worker', 'Worker', 'worker', '$2b$12$mNErNkJ/dF.g/eZbQsJA/.naoGmiYGAZiSL0veONKPDs8lZEJfw4e', 'active', '333333333', '2000-01-01');
+INSERT INTO public."user" (user_id, user_email_address, name, surname, permissions, password, account_status, phone_number, date_of_birth) VALUES (14, 'manager@manager.pl', 'Manager', 'Manager', 'manager', '$2b$12$axHGNbc9XbXff1QS9NURrOE/IoXW0lDPMD7nZ2H8WJSQY/rxKOg6e', 'active', '444444444', '2000-01-01');
 
 
 --
@@ -1292,7 +1293,7 @@ SELECT pg_catalog.setval('public.complaint_complaint_id_seq', 3, false);
 -- Name: cost_distribution_cost_distribution_id_seq; Type: SEQUENCE SET; Schema: public; Owner: crs_user
 --
 
-SELECT pg_catalog.setval('public.cost_distribution_cost_distribution_id_seq', 1, false);
+SELECT pg_catalog.setval('public.cost_distribution_cost_distribution_id_seq', 9, false);
 
 
 --
@@ -1355,7 +1356,7 @@ SELECT pg_catalog.setval('public.login_history_log_id_seq', 1, false);
 -- Name: rental_rental_id_seq; Type: SEQUENCE SET; Schema: public; Owner: crs_user
 --
 
-SELECT pg_catalog.setval('public.rental_rental_id_seq', 11, false);
+SELECT pg_catalog.setval('public.rental_rental_id_seq', 9, false);
 
 
 --
@@ -1364,7 +1365,7 @@ SELECT pg_catalog.setval('public.rental_rental_id_seq', 11, false);
 -- Name: task_task_id_seq; Type: SEQUENCE SET; Schema: public; Owner: crs_user
 --
 
-SELECT pg_catalog.setval('public.task_task_id_seq', 7, false);
+SELECT pg_catalog.setval('public.task_task_id_seq', 9, false);
 
 
 --
@@ -1373,7 +1374,7 @@ SELECT pg_catalog.setval('public.task_task_id_seq', 7, false);
 -- Name: user_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: crs_user
 --
 
-SELECT pg_catalog.setval('public.user_user_id_seq', 11, false);
+SELECT pg_catalog.setval('public.user_user_id_seq', 15, false);
 
 
 --
@@ -1382,7 +1383,7 @@ SELECT pg_catalog.setval('public.user_user_id_seq', 11, false);
 -- Name: vehicle_review_vehicle_review_id_seq; Type: SEQUENCE SET; Schema: public; Owner: crs_user
 --
 
-SELECT pg_catalog.setval('public.vehicle_review_vehicle_review_id_seq', 4, false);
+SELECT pg_catalog.setval('public.vehicle_review_vehicle_review_id_seq', 1, false);
 
 
 --
@@ -1391,7 +1392,7 @@ SELECT pg_catalog.setval('public.vehicle_review_vehicle_review_id_seq', 4, false
 -- Name: vehicle_vehicle_id_seq; Type: SEQUENCE SET; Schema: public; Owner: crs_user
 --
 
-SELECT pg_catalog.setval('public.vehicle_vehicle_id_seq', 11, false);
+SELECT pg_catalog.setval('public.vehicle_vehicle_id_seq', 14, false);
 
 
 --

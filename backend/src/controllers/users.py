@@ -4,6 +4,8 @@ from flask_login import login_required, current_user
 from ..config.extensions import db, bcrypt, login_manager
 from ..utils.validator import validate_password_change
 from ..utils.validator import validate_permissions_change
+from ..utils.validator import validate_edit_user
+from ..utils.validator import validate_admin_permissions
 from ..models.user import User
 from ..utils.emails import send_password_change_confirmation
 import threading
@@ -58,10 +60,8 @@ def change_password():
 @login_required
 def change_permissions(id):
     user = User.query.get(int(session['_user_id']))
-    if user is None:
-        abort(401, description='User is not logged in')
-    if user.permissions != 'admin':
-        abort(403, description='Permission denied')
+    validate_admin_permissions(user)
+
     if id == int(session['_user_id']):
         abort(403, description='Permission denied')
 
@@ -77,6 +77,31 @@ def change_permissions(id):
     validate_permissions_change(body['permissions'])
 
     user.permissions = body['permissions']
+    db.session.commit()
+
+    return user.serialize()
+
+
+# endpoint for modifying user
+@users.route('/<int:id>', methods=['PUT'])
+@login_required
+def edit_user(id):
+    user = User.query.get(int(session['_user_id']))
+    validate_admin_permissions(user)
+
+    user = User.query.get(id)
+    if user is None:
+        abort(404, description='User does not exist')
+
+    body = request.json
+
+    validate_edit_user(body, user)
+
+    user.user_email_address = body['user_email_address']
+    user.name = body['name']
+    user.surname = body['surname']
+    user.phone_number = body['phone_number']
+    user.date_of_birth = body['date_of_birth']
     db.session.commit()
 
     return user.serialize()

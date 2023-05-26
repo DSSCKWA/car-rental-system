@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 import './VehiclesPage.css'
 import { VehicleCard, VehicleCardLine } from './VehicleCard.jsx'
 import { VehicleCardCool, VehicleCardLineForm } from './VehicleCardCool.jsx'
+import { ReviewCard } from './ReviewCard.jsx'
 
 
 export function VehicleDetailsPage(props) {
@@ -12,6 +13,9 @@ export function VehicleDetailsPage(props) {
     const [policyType, setPolicyType] = useState('')
     const [submitSuccess, setSubmitSuccess] = useState(false)
     const [error, setError] = useState('')
+    const [reviews, setReviews] = useState([])
+    const [serviceAvg, setServiceAvg] = useState(0)
+    const [vehicleAvg, setVehicleAvg] = useState(0)
     const location = useLocation()
 
 
@@ -87,6 +91,11 @@ export function VehicleDetailsPage(props) {
             .then(data => setPolicies(data))
     }, [])
 
+    useEffect(() => {
+        fetch('/api/feedback/' + vehicle.vehicle_id, { method: 'GET' })
+            .then(response => response.json())
+            .then(data => setReviews(data))
+    }, [vehicle.vehicle_id])
 
     async function handleSubmit(e) {
         console.log(startDate)
@@ -219,6 +228,14 @@ export function VehicleDetailsPage(props) {
                         <button type='submit'>Rent</button>
                     </div>
                 </form>
+                <div>
+                    {reviews && reviews.map(review =>
+                        <ReviewCard
+                            key={review.comment}
+                            review={review}
+                        />,
+                    )}
+                </div>
             </div>
         )
     } else {
@@ -241,6 +258,7 @@ export function VehicleDetailsPage(props) {
                     {policyCost != 0 ? <VehicleCardLine name={'Insurance policy cost'} value={`${policyCost}${currency}`} /> : null}
                     <VehicleCardLine name={'Total cost'} value={formatCost(parseInt(rentalCost * totalHours) + parseInt(policyCost))} />
                 </div>
+
             </div>
         )
     }
