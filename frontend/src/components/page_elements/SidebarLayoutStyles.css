@@ -1,6 +1,6 @@
 .sidebar_layout {
     display: grid;
-    grid-template-columns: 1fr 4fr;
+    grid-template-columns: 1fr 6fr;
     grid-template-rows: 1fr;
     grid-template-areas: "sidebar main";
     gap: 1em;

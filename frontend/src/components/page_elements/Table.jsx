@@ -1,3 +1,4 @@
+import './TableStyles.css'
 export function Table({ columns, data, keys }) {
     const tableRows = []
 

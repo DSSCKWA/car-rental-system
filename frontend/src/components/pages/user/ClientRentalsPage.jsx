@@ -7,7 +7,7 @@ import TextField from '@mui/material/TextField'
 import React from 'react'
 import Rating from '@mui/material/Rating'
 import Button from '@mui/material/Button'
-import {modalStyle} from "../../../styles.jsx";
+import { modalStyle } from '../../../styles.jsx'
 
 
 export function ClientRentalsPage() {
@@ -148,14 +148,14 @@ export function ClientRentalsPage() {
                                     rental?.rental_status === 'completed' && !rental.feedback_status ?
                                         <button onClick={() => {openRatingModal(rental.rental_id)}}> Rate </button>
                                         : 'Rental already rated'}</td>
-                                {isMoreThan24Hours(rental.start_time) && rental.rental_status !== 'canceled' &&
                                 <td>
+                                    {isMoreThan24Hours(rental.start_time) && rental.rental_status !== 'canceled' &&
                                     <button onClick={() => {
                                         changeStatus(rental.rental_id, 'canceled', rental.client_id, rental.start_time)
                                     }}>Cancel
                                     </button>
+                                    }
                                 </td>
-                                }
                             </tr>
                         )
                     })}

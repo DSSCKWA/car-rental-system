@@ -129,8 +129,7 @@ body {
 
 /* PageContainer */
 .page_container {
-  width: 80em;
-  max-width: 90vw;
+  width: 90%;
   padding: 2em;
 }
 
