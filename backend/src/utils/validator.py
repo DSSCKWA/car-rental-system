@@ -9,6 +9,8 @@ from ..config.extensions import  bcrypt
 import re, datetime
 
 def is_valid_email(email):
+    if len(email.split("@")[0]) > 64:
+        return None
     regex = re.compile(
         r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
     return re.fullmatch(regex, email)
@@ -52,7 +54,10 @@ def is_valid_date(date):
 
 def is_valid_phone_number(phone_number):
     regex = "^\\d+$"
-    return len(phone_number) == 9 and re.match(regex, phone_number)
+    if len(phone_number) != 9:
+        return False
+    if not re.match(regex, phone_number):
+        return False
 
 
 def is_valid_password(password):
