@@ -203,7 +203,7 @@ export function VehiclesListPage(props) {
         return (
             <div className='Vehicles'>
                 <div className='vehicle_add'>
-                    <Link to={'/vehicles/new'}> Add new </Link>
+                    <Link to={'/vehicles/new'} className='link_button_style'> Add new </Link>
                 </div>
 
                 {vehicles.length != 0 ? <>
@@ -238,8 +238,8 @@ export function VehiclesListPage(props) {
         )
     } else {
         return (
-            <div className='Vehicles'>
-                <form className='vehicle_time_search_from' onSubmit={e => {
+            <div className='Vehicles page_content'>
+                <form className='vehicle_time_search_from big' onSubmit={e => {
                     e.preventDefault()
                     if (startDate && startTime && endDate && endTime) {
                         fetchVehicles()
