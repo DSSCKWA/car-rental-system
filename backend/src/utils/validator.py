@@ -4,7 +4,7 @@ import re
 from flask import abort
 
 from ..models.user import User
-from ..models.vehicle import Vehicle
+from ..models.rental import Rental
 from ..config.extensions import  bcrypt
 import re, datetime
 
@@ -82,11 +82,11 @@ def validate_edition_request_body(vehicle_body,old_reg_number):
 
 
 def registration_number_available(reg_number):
-    vehicle = Vehicle.query.filter_by(registration_number=reg_number).first()
+    vehicle = Rental.query.filter_by(registration_number=reg_number).first()
     return vehicle is None
 
 def registration_number_available_edit(reg_number,old_reg_number):
-    vehicle = Vehicle.query.filter_by(registration_number=reg_number).first()
+    vehicle = Rental.query.filter_by(registration_number=reg_number).first()
     if(reg_number!=old_reg_number):
         return vehicle is None
     else:

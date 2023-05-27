@@ -29,9 +29,9 @@ def get_all():
                                          "%Y-%m-%d %H:%M:%S")
 
     if start_datetime and end_datetime:
-        vehicles_unavailable = Vehicle.query.join(
+        vehicles_unavailable = Rental.query.join(
             Rental,
-            Vehicle.vehicle_id == Rental.vehicle_id,
+            Rental.vehicle_id == Rental.vehicle_id,
         ).where(
             not_(
                 or_(
@@ -42,18 +42,18 @@ def get_all():
                 ))).all()
 
         vehicles = [
-            vehicle for vehicle in Vehicle.query.all()
+            vehicle for vehicle in Rental.query.all()
             if vehicle not in vehicles_unavailable
         ]
     else:
-        vehicles = Vehicle.query.all()
+        vehicles = Rental.query.all()
 
     return [vehicle.serialize() for vehicle in vehicles]
 
 
 @vehicles.route('/<int:id>', methods=['GET'])
 def get_by_id(id):
-    vehicle = Vehicle.query.get(id)
+    vehicle = Rental.query.get(id)
     if vehicle is None:
         abort(404, description="Vehicle not found")
     return vehicle.serialize()
@@ -66,7 +66,7 @@ def add():
 
     new_vehicle_body["status"] = "available"
     new_vehicle_body["image"] = base64.b64decode(new_vehicle_body["image"])
-    new_vehicle = Vehicle(new_vehicle_body)
+    new_vehicle = Rental(new_vehicle_body)
     db.session.add(new_vehicle)
     db.session.commit()
     return new_vehicle.serialize()
@@ -74,7 +74,7 @@ def add():
 
 @vehicles.route('/<int:id>', methods=['PUT'])
 def edit(id):
-    vehicle = Vehicle.query.get(id)
+    vehicle = Rental.query.get(id)
     if vehicle is None:
         abort(404, description="Vehicle not found")
     vehicle_body = request.json
@@ -94,7 +94,7 @@ def edit(id):
 
 @vehicles.route('/<int:id>', methods=['PATCH'])
 def delete(id):
-    vehicle = Vehicle.query.get(id)
+    vehicle = Rental.query.get(id)
     if vehicle is None:
         abort(404, description="Vehicle not found")
     vehicle_body = request.json
