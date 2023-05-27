@@ -138,6 +138,13 @@ body {
   background-color: #252525;
   width: 100%;
   border-radius: 5px;
+  padding: 2em;
+}
+
+.page_content p {
+  text-align: justify;
+  font-size: 1.2em;
+  margin: 1em;
 }
 
 /* AboutPage */
@@ -223,8 +230,9 @@ body {
 
 .contact_info {
   display: grid;
-  gap: 20px;
+  gap: 15px;
   grid-template-columns: repeat(2, 1fr);
+  font-size: 1.2em;
 }
 
 .contact_info .contact_name {
