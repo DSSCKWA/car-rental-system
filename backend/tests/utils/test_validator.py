@@ -94,6 +94,15 @@ class TestValidator(unittest.TestCase):
         self.assertTrue(is_valid_password('abc'), 'Password is valid')
         self.assertFalse(is_valid_password('12'), 'Password is too short')
 
+    def test_is_valid_review_date(self):
+        self.assertFalse(is_valid_review_date('2023-01-01'), 'Date is too far in the past')
+        current_date = datetime.datetime.now().date()
+        date_string = current_date.strftime('%Y-%m-%d')
+        self.assertTrue(is_valid_review_date(date_string), 'Date is valid')
+        future_date = current_date + datetime.timedelta(days=1)
+        date_string = future_date.strftime('%Y-%m-%d')
+        self.assertTrue(is_valid_review_date(date_string), 'Date is valid')
+
 
 if __name__ == '__main__':
     pytest.main()
