@@ -11,6 +11,27 @@ import base64
 vehicles = Blueprint('vehicles', __name__, url_prefix='/vehicles')
 response_class = Blueprint('response_class', __name__)
 
+def get_available_vehicle_ids(start_time, end_time):
+   print(start_time, end_time)
+   if start_time != None and end_time != None:
+        rentals_in_range = (
+            Rental.query.with_entities(Rental.vehicle_id)
+            .filter(
+                and_(
+                    Rental.start_time < end_time,
+                    Rental.end_time > start_time
+                )
+            )
+            .subquery()
+        )
+        return (
+            Vehicle.query.join(Price_list,Vehicle.vehicle_class == Price_list.vehicle_class).filter(~Vehicle.vehicle_id.in_(rentals_in_range))
+            .with_entities(Vehicle, Price_list.price).all())
+   else:
+       return  (
+           Vehicle.query.join(Price_list,Vehicle.vehicle_class == Price_list.vehicle_class)
+           .with_entities(Vehicle, Price_list.price).all())
+
 
 @vehicles.route('/', methods=['GET'])
 def get_all():
@@ -27,6 +48,9 @@ def get_all():
                                            "%Y-%m-%d %H:%M:%S")
         end_datetime = datetime.strptime(f"{end_date} {end_time}",
                                          "%Y-%m-%d %H:%M:%S")
+        
+    available_vehicles = get_available_vehicle_ids(start_time, end_time)
+
 
     if start_datetime and end_datetime:
         vehicles_unavailable = Rental.query.join(
@@ -48,7 +72,7 @@ def get_all():
     else:
         vehicles = Rental.query.all()
 
-    return [vehicle.serialize() for vehicle in vehicles]
+    return [{**vehicle.serialize(), 'price': price}for vehicle, price in available_vehicles]
 
 
 @vehicles.route('/<int:id>', methods=['GET'])

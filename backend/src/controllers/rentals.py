@@ -12,10 +12,15 @@ from ..models.task import Task
 from datetime import datetime
 from ..models.vehicle import Vehicle
 from ..models.insurance import Insurance
-import base64
+from ..models.feedback import Feedback
+
 
 rentals = Blueprint('rentals', __name__, url_prefix='/rentals')
 response_class = Blueprint('response_class', __name__)
+
+
+def check_if_feedback_exist(rental):
+    return Feedback.query.filter_by(rental_id=rental.rental_id).first() is not None
 
 
 @rentals.route('/', methods=['GET'])
@@ -78,9 +83,9 @@ def get_all():
         if user_permissions in ["worker"]:
             rentals = Rental.query.join(
             User, Rental.client_id == User.user_id).join(
-                Vehicle, Rental.vehicle_id == Vehicle.vehicle_id).outerjoin(
-                    Insurance,
-                    Rental.policy_number == Insurance.policy_number).all()
+            Vehicle, Rental.vehicle_id == Vehicle.vehicle_id).outerjoin(
+            Insurance,
+            Rental.policy_number == Insurance.policy_number).all()
         else:
             rentals = Rental.query.join(
             User, Rental.client_id == User.user_id).join(
@@ -92,7 +97,7 @@ def get_all():
     better_rental = []
     for rental in rentals:
         costs = Cost_distribution.query.where(rental.rental_id == Cost_distribution.rental_id).first()
-        better_rental.append(rental.serialize(costs.total))
+        better_rental.append({**rental.serialize(costs.total), 'feedback_status': check_if_feedback_exist(rental)})
 
     return better_rental
 
@@ -120,7 +125,7 @@ def review(id):
 
         vehicle = Vehicle.query.join(
             Rental, Rental.vehicle_id == Vehicle.vehicle_id).filter(
-                Rental.rental_id == id).first()
+            Rental.rental_id == id).first()
 
         price_list = Price_list.query.filter_by(
             vehicle_class=vehicle.vehicle_class).first()
@@ -160,7 +165,7 @@ def update(id):
             new_task = Task({
                 "task_name": "Pick up the vehicle and check status",
                 "task_description":
-                "Recieve and check the vehicle for damages",
+                    "Recieve and check the vehicle for damages",
                 "rental_id": rental.rental_id,
                 "task_status": "to_do",
                 "staff_id": None,
