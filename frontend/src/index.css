@@ -28,7 +28,6 @@ a:hover {
 body {
   margin: 0;
   display: flex;
-  /*place-items: center;*/
   min-width: 320px;
   min-height: 100vh;
 }
@@ -70,7 +69,6 @@ button:focus-visible {
   display: flex;
   flex-direction: row;
   padding: 1em;
-  color: #ffffff;
   width: 100%;
   height: 100px;
   background-color: #1a1a1a;
@@ -80,7 +78,6 @@ button:focus-visible {
 .App-header > img {
   width: 50%;
   max-width: 400px;
-  /*margin: 0 auto;*/
   padding: 0 1em;
   margin: 0;
 }
@@ -107,7 +104,6 @@ button:focus-visible {
     align-items: center;
     width: 10%;
     height: 100%;
-    color: #ffffff;
     text-decoration: none;
     font-size: 1em;
     font-weight: 500;
@@ -121,7 +117,7 @@ button:focus-visible {
     align-items: center;
     width: 100%;
     height: 100%;
-    color: #ffffff;
+    color: rgba(255, 255, 255, 0.87);
     text-decoration: none;
     font-size: 1em;
     font-weight: bold;
@@ -238,7 +234,7 @@ button:focus-visible {
 .link_button_style {
     display: block;
     background-color: #1a1a1a;
-    color: #ffffff;
+    color: rgba(255, 255, 255, 0.87);
     height: 3em;
     font-size: 1.2em;
     width: 50%;
@@ -250,5 +246,21 @@ button:focus-visible {
 
 .link_button_style:hover {
     border-color: #4eaae8;
+    color: #4eaae8;
+}
+
+ul {
+   list-style-position: inside;
+    font-size: 1.2em;
+    text-align: left;
+    margin: 1em 2em;
+}
+
+h2, h3 {
+    color: #4eaae8;
+    margin-top: 1em;
+}
+
+.link_text {
     color: #4eaae8;
 }

@@ -20,7 +20,7 @@
 
 .manager_menu_item {
     width: 100%;
-    color: #ffffff;
+    color: rgba(255, 255, 255, 0.87);
     text-decoration: none;
     font-size: 1em;
     font-weight: 500;
