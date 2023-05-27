@@ -132,7 +132,7 @@ export function VehicleAdditionPage(props) {
     if (submitSuccess) {
         return (
             <div className='register_success'>
-                <h1>Rental Success</h1>
+                <h2>Rental Success</h2>
                 <p>You can track your rental in the
                     <Link to={'/client'}> History </Link> tab
                 </p>

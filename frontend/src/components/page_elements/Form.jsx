@@ -1,9 +1,9 @@
+import './FormStyles.css'
 export function Form({ formName, className, onSubmit, inputs, error, submitText }) {
     return (
-        <div className='form'>
+        <div className='form page_content'>
             <h2>{formName}</h2>
             <form onSubmit={onSubmit} className={className}>
-                <p className='errorMessage'>{error}</p>
                 {inputs.map(input => {
                     {
                         switch (input.type) {
@@ -29,6 +29,7 @@ export function Form({ formName, className, onSubmit, inputs, error, submitText 
                         }
                     }
                 })}
+                <p className='errorMessage'>{error}</p>
                 <button type='submit'>{submitText}</button>
             </form>
         </div>

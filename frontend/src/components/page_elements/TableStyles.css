@@ -2,7 +2,7 @@ table {
     max-width: 100%;
     border-collapse: collapse;
     border-spacing: 0;
-    margin: 2em 0;
+    margin: 2em auto;
     min-width: 1000px;
 }
 

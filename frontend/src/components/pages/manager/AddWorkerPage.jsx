@@ -48,7 +48,7 @@ export function AddWorkerPage() {
         return <div><h2>Worker added successfully</h2><p><Link to='/manager/workers'>Go back</Link></p></div>
     }
 
-    return <div className='add_worker_page'>
+    return <div className='add_worker_page page_content'>
         <Form formName='Add worker' className='big' submitText='Add worker' onSubmit={handleSubmit} error={error} inputs={[
             { name: 'email', label: 'Email', type: 'email', onChange: e => setEmail(e.target.value) },
             { name: 'password', label: 'Password', type: 'password', onChange: e => setPassword(e.target.value) },

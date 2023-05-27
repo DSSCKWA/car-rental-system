@@ -1,4 +1,6 @@
 import './VehiclesPage.css'
+import '../../page_elements/FormStyles.css'
+
 
 import React, { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
@@ -121,7 +123,7 @@ export function VehicleCardCool(props) {
     if (addSuccess) {
         return (
             <div className='add_success'>
-                <h1>Addition Success</h1>
+                <h2>Addition Success</h2>
                 <p>You can now
                     <Link to={'/vehicles'}> go here </Link>
                 </p>
@@ -229,9 +231,9 @@ export function VehicleCardCool(props) {
                         </div>
                     </form>
                 </div> :
-                <div className='vehicle_add_page'>
-                    <h1>Add</h1>
-                    <form className='reg_form' onSubmit={handleSubmitFull}>
+                <div className='vehicle_add_page page_content'>
+                    <h2>Add</h2>
+                    <form className='big' onSubmit={handleSubmitFull}>
                         <div className='form_group'>
                             <p className='errorMessage'>{error}</p>
                         </div>
