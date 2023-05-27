@@ -215,16 +215,40 @@ button:focus-visible {
     margin: 0 auto;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.column_layout {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    height: 100%;
+    padding: 2em;
 }
 
+.column_layout > div {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 100%;
+    padding: 1em;
+}
+
+.column_layout > div > h2 {
+    margin-bottom: 2em;
+}
+
+.link_button_style {
+    display: block;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    height: 3em;
+    font-size: 1.2em;
+    width: 50%;
+    margin: 0 auto;
+    line-height: 3em;
+    border-radius: 8px;
+    border: 1px solid transparent;
+}
+
+.link_button_style:hover {
+    border-color: #4eaae8;
+    color: #4eaae8;
+}
