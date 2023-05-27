@@ -3,6 +3,7 @@ from sqlalchemy import and_, not_, or_
 from datetime import datetime
 from ..config.extensions import bcrypt, db, login_manager
 from ..models.vehicle import Vehicle
+from ..models.price_list import Price_list
 from ..models.rental import Rental
 from ..utils.validator import validate_addition_request_body
 from ..utils.validator import validate_edition_request_body
