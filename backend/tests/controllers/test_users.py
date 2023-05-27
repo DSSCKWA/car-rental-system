@@ -1,35 +1,53 @@
 import unittest
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask.testing import FlaskClient
+from base64 import b64encode
 
-from backend.src.config.config import Config
+from backend.src import create_app
+from backend.src.config.extensions import db
 from backend.src.models.user import User
-from backend.src.controllers.users import users
-from backend.src.config.extensions import db, bcrypt, login_manager
 
 
 class UsersBlueprintTestCase(unittest.TestCase):
     def setUp(self):
-        # Create a Flask app and configure it for testing
-        self.app = Flask(__name__)
-        self.app.config.from_object(Config)
+        self.app = create_app()
+        self.app.config.update(
+            {
+                "TESTING": True,
+            }
+        )
 
-        # Initialize database, bcrypt, and login_manager
-        db.init_app(self.app)
-        bcrypt.init_app(self.app)
-        login_manager.init_app(self.app)
+        with self.app.app_context():
+            user_data = {
+                'user_email_address': 'taa@ete.com',
+                'name': 'John',
+                'surname': 'Doe',
+                'permissions': 'admin',
+                'password': '$2b$12$PilCu1V2lCMG7JsVvYFiquOEhG2GU2CBLLFkMdlbSM.E8azCUj/kS',
+                'account_status': 'active',
+                'phone_number': '123456789',
+                'date_of_birth': '1990-01-01'
+            }
+            self.new_user = User(user_data)
 
-        # Register the users blueprint
-        self.app.register_blueprint(users)
+            db.session.add(self.new_user)
+            db.session.commit()
 
-    def test_get_all_without_login(self):
+    def tearDown(self):
+        with self.app.app_context():
+            db.session.delete(self.new_user)
+            db.session.commit()
+
+    def test_get_all(self):
         with self.app.test_client() as client:
-            # Make a GET request to the 'get_all' route
+            responsee = client.post('/auth/login', headers={
+                'Authorization': 'Basic ' + b64encode('taa@ete.com:spirol123'.encode("utf-8")).decode("ascii")})
             response = client.get('/users/', headers={'Content-Type': 'application/json'})
 
-            # Verify the response
-            self.assertEqual(response.status_code, 401)
+            self.assertEqual(responsee.status_code, 200)
+            self.assertEqual(response.status_code, 200)
+
+            res = client.post('/auth/logout')
+            self.assertEqual(res.status_code, 200)
+
             # users_data = response.get_json()
             # self.assertIsInstance(users_data, list)
             # TO DO: Add assertions to verify the user data returned
