@@ -41,7 +41,8 @@ def change_password():
 
     body = request.json
     current_password, new_password, confirm_new_password = body[
-        'currentPassword'], body['newPassword'], body['confirmNewPassword']
+                                                               'currentPassword'], body['newPassword'], body[
+                                                               'confirmNewPassword']
     validate_password_change(user, current_password, new_password,
                              confirm_new_password)
 

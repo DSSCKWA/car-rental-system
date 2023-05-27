@@ -5,8 +5,9 @@ from flask import abort
 
 from ..models.user import User
 from ..models.vehicle import Vehicle
-from ..config.extensions import  bcrypt
+from ..config.extensions import bcrypt
 import re, datetime
+
 
 def is_valid_email(email):
     regex = re.compile(
@@ -58,6 +59,7 @@ def is_valid_phone_number(phone_number):
 def is_valid_password(password):
     return not len(password) < 3
 
+
 def validate_password_change(user, currentPassword, new_password, confirm_new_password):
     if not bcrypt.check_password_hash(user.password, currentPassword):
         abort(400, description="Current password is not correct")
@@ -68,16 +70,18 @@ def validate_password_change(user, currentPassword, new_password, confirm_new_pa
     if not is_valid_password(new_password):
         abort(400, description="Password is too short")
 
+
 def validate_addition_request_body(vehicle_body):
     if not is_valid_review_date(vehicle_body["technical_review_date"]):
         abort(400, description="Invalid date")
     if not (registration_number_available(vehicle_body["registration_number"])):
         abort(409, description="Registration number taken")
 
-def validate_edition_request_body(vehicle_body,old_reg_number):
+
+def validate_edition_request_body(vehicle_body, old_reg_number):
     if not is_valid_review_date(vehicle_body["technical_review_date"]):
         abort(400, description="Invalid date")
-    if not (registration_number_available_edit(vehicle_body["registration_number"],old_reg_number)):
+    if not (registration_number_available_edit(vehicle_body["registration_number"], old_reg_number)):
         abort(409, description="Registration number taken")
 
 
@@ -85,12 +89,14 @@ def registration_number_available(reg_number):
     vehicle = Vehicle.query.filter_by(registration_number=reg_number).first()
     return vehicle is None
 
-def registration_number_available_edit(reg_number,old_reg_number):
+
+def registration_number_available_edit(reg_number, old_reg_number):
     vehicle = Vehicle.query.filter_by(registration_number=reg_number).first()
-    if(reg_number!=old_reg_number):
+    if (reg_number != old_reg_number):
         return vehicle is None
     else:
         return not (vehicle is None)
+
 
 def is_valid_review_date(date):
     current_date = datetime.datetime.now().date()
@@ -104,10 +110,12 @@ def is_valid_review_date(date):
             return True
     return False
 
+
 def validate_permissions_change(permissions):
     if permissions not in ["admin", "client", "worker", "manager"]:
-        abort(400, description="Invalid permissions")
+        abort(400, description="Invalid permissions provided")
     return True
+
 
 def validate_edit_user(new_user, old_user):
     if new_user['user_email_address'] != old_user.user_email_address:
@@ -127,7 +135,3 @@ def validate_admin_permissions(user):
     if user.permissions != 'admin':
         abort(403, description='Permission denied')
     return True
-
-
-
-
