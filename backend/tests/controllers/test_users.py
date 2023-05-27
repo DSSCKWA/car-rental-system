@@ -104,36 +104,48 @@ class UsersBlueprintTestCase(unittest.TestCase):
 
     def test_change_permissions(self):
         with self.app.test_client() as client:
-
             # check permissions - not logged
-            response = client.put(f'/users/change-permissions/{self.test_client.user_id}', data=json.dumps({'permissions': 'manager'}), headers={'Content-Type': 'application/json'})
+            response = client.put(f'/users/change-permissions/{self.test_client.user_id}',
+                                  data=json.dumps({'permissions': 'manager'}),
+                                  headers={'Content-Type': 'application/json'})
             self.assertEqual(response.status_code, 401)
 
             self.login_with_check(client, 'admin@test.com:spirol123')
 
             # permissions not provided
-            response = client.put(f'/users/change-permissions/{self.test_client.user_id}', data=json.dumps({}),
+            response = client.put(f'/users/change-permissions/{self.test_client.user_id}',
+                                  data=json.dumps({}),
                                   headers={'Content-Type': 'application/json'})
             self.assertEqual(response.status_code, 400)
 
             # user does not exist
-            response = client.put('/users/change-permissions/999999999', data=json.dumps({}),
+            response = client.put('/users/change-permissions/999999999',
+                                  data=json.dumps({'permissions': 'manager'}),
+                                  headers={'Content-Type': 'application/json'})
+            self.assertEqual(response.status_code, 404)
+
+            # invalid path
+            response = client.put('/users/change-permissions/abc',
+                                  data=json.dumps({'permissions': 'manager'}),
                                   headers={'Content-Type': 'application/json'})
             self.assertEqual(response.status_code, 404)
 
             # invalid permissions provided
-            response = client.put(f'/users/change-permissions/{self.test_client.user_id}', data=json.dumps({'permissions': 'employee'}),
+            response = client.put(f'/users/change-permissions/{self.test_client.user_id}',
+                                  data=json.dumps({'permissions': 'employee'}),
                                   headers={'Content-Type': 'application/json'})
             self.assertEqual(response.status_code, 400)
 
-            user_permissions = self.test_client.permissions
-
             # valid change
-            response = client.put(f'/users/change-permissions/{self.test_client.user_id}', data=json.dumps({'permissions': 'manager'}),
+            user_permissions = self.test_client.permissions
+            response = client.put(f'/users/change-permissions/{self.test_client.user_id}',
+                                  data=json.dumps({'permissions': 'manager'}),
                                   headers={'Content-Type': 'application/json'})
             self.assertEqual(response.status_code, 200)
 
-            response = client.put(f'/users/change-permissions/{self.test_client.user_id}', data=json.dumps({'permissions': user_permissions}),
+            # revert change
+            response = client.put(f'/users/change-permissions/{self.test_client.user_id}',
+                                  data=json.dumps({'permissions': user_permissions}),
                                   headers={'Content-Type': 'application/json'})
             self.assertEqual(response.status_code, 200)
 
