@@ -5,50 +5,53 @@ from ..config.extensions import bcrypt, db, login_manager
 from ..models.vehicle import Vehicle
 from ..models.rental import Rental
 from ..utils.validator import validate_addition_request_body
+from ..models.price_list import Price_list
 from ..utils.validator import validate_edition_request_body
 import base64
 
 vehicles = Blueprint('vehicles', __name__, url_prefix='/vehicles')
 response_class = Blueprint('response_class', __name__)
 
+def get_available_vehicle_ids(start_time, end_time):
+   print(start_time, end_time)
+   if start_time != None and end_time != None:
+        rentals_in_range = (
+            Rental.query.with_entities(Rental.vehicle_id)
+            .filter(
+                and_(
+                    Rental.start_time < end_time,
+                    Rental.end_time > start_time
+                )
+            )
+            .subquery()
+        )
+        return (
+            Vehicle.query.join(Price_list,Vehicle.vehicle_class == Price_list.vehicle_class).filter(~Vehicle.vehicle_id.in_(rentals_in_range))
+            .with_entities(Vehicle, Price_list.price).all())
+   else:
+       return  (
+           Vehicle.query.join(Price_list,Vehicle.vehicle_class == Price_list.vehicle_class)
+           .with_entities(Vehicle, Price_list.price).all())
+
 
 @vehicles.route('/', methods=['GET'])
 def get_all():
-    start_date = request.args.get('startDate', default=None, type=str)
-    start_time = request.args.get('startTime', default=None, type=str)
-    end_date = request.args.get('endDate', default=None, type=str)
-    end_time = request.args.get('endTime', default=None, type=str)
+    start_time = request.args.get('start_time', type=str)
+    end_time = request.args.get('end_time', type=str)
 
-    vehicles = []
-    start_datetime = None
-    end_datetime = None
-    if start_date and start_time and end_date and end_time:
-        start_datetime = datetime.strptime(f"{start_date} {start_time}",
-                                           "%Y-%m-%d %H:%M:%S")
-        end_datetime = datetime.strptime(f"{end_date} {end_time}",
-                                         "%Y-%m-%d %H:%M:%S")
+    if start_time and end_time:
+        try:
+            start_time = datetime.strptime(start_time, '%Y-%m-%dT%H:%M:%S')
+            end_time = datetime.strptime(end_time, '%Y-%m-%dT%H:%M:%S')
+        except ValueError:
+            return jsonify({'error': 'Invalid datetime format. Use format: YYYY-MM-DDTHH:MM:SS'}), 400
 
-    if start_datetime and end_datetime:
-        vehicles_unavailable = Vehicle.query.join(
-            Rental,
-            Vehicle.vehicle_id == Rental.vehicle_id,
-        ).where(
-            not_(
-                or_(
-                    and_(Rental.start_time >= start_datetime,
-                         Rental.start_time >= end_datetime),
-                    and_(Rental.end_time <= start_datetime,
-                         Rental.end_time <= end_datetime),
-                ))).all()
+    available_vehicles = get_available_vehicle_ids(start_time, end_time)
+    return [
+        {**vehicle.serialize(), 'price': price}
+        for vehicle, price in available_vehicles
+    ], 200
 
-        vehicles = [
-            vehicle for vehicle in Vehicle.query.all()
-            if vehicle not in vehicles_unavailable
-        ]
-    else:
-        vehicles = Vehicle.query.all()
-
-    return [vehicle.serialize() for vehicle in vehicles]
 
 
 @vehicles.route('/<int:id>', methods=['GET'])
@@ -86,6 +89,7 @@ def edit(id):
     old_reg=vehicle.registration_number
     vehicle.registration_number = vehicle_body["registration_number"]
     vehicle.color = vehicle_body["color"]
+    validate_addition_request_body(vehicle_body)
 
     validate_edition_request_body(vehicle_body,old_reg)
     db.session.commit()

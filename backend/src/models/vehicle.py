@@ -73,5 +73,5 @@ class Vehicle(db.Model):
             'additional_equipment': self.additional_equipment,
             'description': self.description,
             'color': self.color,
-            'gearbox_type': self.gearbox_type
+            'gearbox_type': self.gearbox_type,
         }
