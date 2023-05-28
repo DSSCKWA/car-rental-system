@@ -37,3 +37,17 @@ body {
   font-size: 1.2em;
   margin: 1em;
 }
+
+@media screen and (max-width: 768px) {
+  .page_content p {
+    margin: 0.2em;
+  }
+
+  .page_content {
+    padding: 0.5em;
+  }
+
+  .page_container {
+    padding: 0.5em 0;
+  }
+}
