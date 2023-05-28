@@ -33,7 +33,7 @@ class Rental(db.Model):
         self.policy_number = rental_dict['policy_number']
         self.rental_status = "upcoming"
 
-    def serialize(self):
+    def serialize(self,total_cost=0):
         policy_name = "-"
         policy_number = -1
         if self.insurance:
@@ -55,5 +55,6 @@ class Rental(db.Model):
             'brand': self.vehicle.brand,
             'model': self.vehicle.model,
             'policy_name': policy_name,
-            "rental_status": self.rental_status
+            "rental_status": self.rental_status,
+            "total_cost": total_cost
         }

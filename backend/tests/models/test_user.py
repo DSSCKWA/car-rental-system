@@ -3,7 +3,7 @@ import unittest
 from backend.src.models.user import User
 
 
-class MyTestCase(unittest.TestCase):
+class UserTestCase(unittest.TestCase):
     def setUp(self):
         self.user_data = {
             'user_email_address': 'test@example.com',
