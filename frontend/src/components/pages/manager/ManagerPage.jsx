@@ -1,5 +1,4 @@
 import { Link, Route, Routes } from 'react-router-dom'
-//import './ManagerStyles.css'
 import { SidebarLayout } from '../../page_elements/SidebarLayout.jsx'
 import { MainPage } from '../general/MainPage.jsx'
 import { AboutPage } from '../general/AboutPage.jsx'
