@@ -18,12 +18,11 @@ export const modalStyle = {
 
 export const reviewCardStyle = {
     margin: '20px',
-    backgroundColor: 'var(--content-bg-color)',
+    backgroundColor: 'var(--main-bg-color)',
     borderRadius: '5px',
     color: 'var(--medium-gray)',
     padding: '2em',
     marginBottom: '2em',
-    '&:hover': { boxShadow: '0 0 10px #299bbe' },
 }
 
 export const vehicleListPageStyle = {
