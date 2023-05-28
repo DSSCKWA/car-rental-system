@@ -19,7 +19,6 @@ export function ClientRentalsPage() {
     const [experienceValue, setExperienceValue] = React.useState(2)
     const navigate = useNavigate()
     const [rentals, setRentals] = useState(null)
-    const [currentDate, setCurrentDate] = useState(new Date().toLocaleDateString())
 
     useEffect(() => {
         get_rentals()

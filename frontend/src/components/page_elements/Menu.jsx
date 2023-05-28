@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import './MenuStyles.css'
 
 export function Menu(props) {
-    const { user } = props
 
     const navigate = useNavigate()
 
