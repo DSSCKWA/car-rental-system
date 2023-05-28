@@ -35,7 +35,7 @@ form {
     font-size: 1em;
     font-weight: 500;
     font-family: inherit;
-    background-color: #1a1a1a;
+    background-color: var(--dark-gray);
     cursor: pointer;
     transition: border-color 0.25s;
 }
@@ -60,13 +60,13 @@ form {
     font-size: 1em;
     font-weight: bold;
     font-family: inherit;
-    background-color: #1a1a1a;
+    background-color: var(--dark-gray);
     cursor: pointer;
     transition: border-color 0.25s;
 }
 
 .form_group button[type="submit"]:hover {
-    border-color: #9663fe;
+    border-color: var(--highlight-blue);
 }
 
 .errorMessage {

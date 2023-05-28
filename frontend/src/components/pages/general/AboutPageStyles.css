@@ -52,7 +52,7 @@
   font-size: 1.5em;
   font-weight: bold;
   margin: 0;
-  color: #4eaae8;
+  color: var(--highlight-blue);
 }
 
 .about_info h2 {

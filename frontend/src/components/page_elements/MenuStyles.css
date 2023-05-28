@@ -5,7 +5,7 @@
   align-items: center;
   width: 100%;
   height: 50px;
-  background-color: #202020;
+  background-color: var(--deep-gray);
 }
 
 .menu_item, .menu_btn {
@@ -28,7 +28,7 @@
     align-items: center;
     width: 100%;
     height: 100%;
-    color: rgba(255, 255, 255, 0.87);
+    color: var(--main-text-color);
     text-decoration: none;
     font-size: 1em;
     font-weight: bold;
@@ -36,20 +36,20 @@
 }
 
 .menu_item:hover .menu_btn:hover{
-    background-color: #1a1a1a;
+    background-color: var(--dark-gray);
     cursor: pointer;
 }
 
 .menu_item a:hover, .menu_btn:hover {
-    color: #4eaae8;
-    background-color: #1a1a1a;
+    color: var(--highlight-blue);
+    background-color: var(--dark-gray);
 }
 
 .menu_btn {
     width: 100%;
     border: none;
     border-radius: 0;
-    background-color: #202020;
+    background-color: var(--deep-gray);
     font-weight: bold;
 }
 

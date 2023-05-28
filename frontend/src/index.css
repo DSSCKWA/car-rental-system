@@ -1,11 +1,22 @@
 :root {
+    --main-bg-color: #343434;
+    --main-text-color: rgba(255, 255, 255, 0.87);
+    --highlight-violet: #646cff;
+    --highlight-blue: #4eaae8;
+    --light-gray: #ddd;
+    --medium-gray: #888;
+    --dark-gray: #1a1a1a;
+    --deep-gray: #202020;
+    --content-bg-color: #252525;
+    --shadow-black: rgba(0, 0, 0, 0.2);
+
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #343434;
+  color: var(--main-text-color);
+  background-color: var(--main-bg-color);
 
 
   font-synthesis: none;
@@ -17,13 +28,11 @@
 }
 
 a {
-  font-weight: 500;
-  color: #646cff;
   text-decoration: inherit;
 }
 
 a:hover {
-  color: #9663fe;
+  color: var(--highlight-violet);
 }
 
 body {
@@ -45,12 +54,12 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--dark-gray);
   cursor: pointer;
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: var(--highlight-violet);
 }
 button:focus,
 button:focus-visible {
@@ -72,7 +81,7 @@ button:focus-visible {
   padding: 1em;
   width: 100%;
   height: 100px;
-  background-color: #1a1a1a;
+  background-color: var(--dark-gray);
   justify-content: center;
 }
 
@@ -109,8 +118,8 @@ button:focus-visible {
 
 .link_button_style {
     display: block;
-    background-color: #1a1a1a;
-    color: rgba(255, 255, 255, 0.87);
+    background-color: var(--dark-gray);
+    color: var(--main-text-color);
     height: 3em;
     font-size: 1.2em;
     width: 50%;
@@ -122,8 +131,8 @@ button:focus-visible {
 }
 
 .link_button_style:hover {
-    border-color: #4eaae8;
-    color: #4eaae8;
+    border-color: var(--highlight-blue);
+    color: var(--highlight-blue);
 }
 
 ul {
@@ -134,12 +143,12 @@ ul {
 }
 
 h2, h3 {
-    color: #4eaae8;
+    color: var(--highlight-blue);
     margin-top: 1em;
 }
 
 .link_text {
-    color: #4eaae8;
+    color: var(--highlight-blue);
 }
 
 @media screen and (max-width: 1024px) {
