@@ -1,10 +1,8 @@
 import './VehiclesPage.css'
 import '../../page_elements/FormStyles.css'
 
-
-import React, { useState, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
-
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 
 export function VehicleCardLineForm({ name, value }) {
@@ -16,13 +14,9 @@ export function VehicleCardLineForm({ name, value }) {
     )
 }
 
-
-
 export function VehicleCardCool(props) {
     const vehicle = props.vehicle
     const extra = props.extra
-
-
 
     const [brand, setBrand] = useState(vehicle?.brand ? vehicle.brand : null)
     const [model, setModel] = useState(vehicle?.model ? vehicle.model : null)
@@ -48,9 +42,6 @@ export function VehicleCardCool(props) {
     const [image, setImage] = useState(vehicle?.image ? vehicle.image : null)
     const [addSuccess, setAddSuccess] = useState(false)
     const [editSuccess, setEditSuccess] = useState(false)
-
-
-
     const [error, setError] = useState('')
     const getMinDate = () => {
         return new Date().toISOString().substring(0, 10)
@@ -68,8 +59,6 @@ export function VehicleCardCool(props) {
         }
         reader.readAsDataURL(e.target.files[0])
     }
-
-
 
 
     async function handleSubmitFull(e) {
@@ -131,9 +120,6 @@ export function VehicleCardCool(props) {
         )
     }
 
-
-
-
     async function handleSubmit(e) {
         const techDateTime = new Date(`${techDate}T${'12:00:00'}`)
         const additionalEquipmentSend = additionalEquipmentString.split(',')
@@ -147,17 +133,13 @@ export function VehicleCardCool(props) {
             body: JSON.stringify({ 'additional_equipment': additionalEquipmentSend, description, 'registration_number': registrationNumber, status, 'technical_review_date': techDate, 'color': color.replace(/ /g, '_'), image }),
         })
         const body = await response.json()
-        console.log('response', body)
 
         if (!response.ok) {
-            console.log('Edition failed')
-            console.log(body)
             setError(body.description)
             return
         }
 
         if (body['vehicle_id']) {
-            console.log('Edition success', body)
             setEditSuccess(true)
         }
     }
