@@ -194,7 +194,7 @@ export function VehicleDetailsPage(props) {
         return (
 
 
-            <div className='vehicle'>
+            <div className='vehicle page_content'>
                 <VehicleCard vehicle={vehicle} extra={true} />
                 <label htmlFor='insurance_policy_select' className='insurance_policy_select_label'>Insurance: </label>
                 <select className='insurance_policy_select' value={policyCost} onChange={e => { setPolicyCost(e.target.value); setPolicyType(e.target.options[e.target.options.selectedIndex].innerHTML.toLowerCase().replace(/ /g, '_')) }}>
@@ -230,7 +230,7 @@ export function VehicleDetailsPage(props) {
         )
     } else {
         return (
-            <div className='vehicle'>
+            <div className='vehicle page_content'>
                 <VehicleCard vehicle={vehicle} extra={true} />
                 <label htmlFor='insurance_policy_select' className='insurance_policy_select_label'>Insurance: </label>
                 <select className='insurance_policy_select' value={policyCost} onChange={e => { setPolicyCost(e.target.value); setPolicyType(e.target.options[e.target.options.selectedIndex].innerHTML.toLowerCase().replace(/ /g, '_')) }}>

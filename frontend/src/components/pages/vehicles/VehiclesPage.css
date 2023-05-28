@@ -99,3 +99,13 @@
 .insurance_policy_select_label {
     font-weight: bold;
 }
+
+.insurance_policy_select {
+    width: 100%;
+    max-width: 300px;
+    padding: 0.5rem;
+    border: 1px solid var(--light-gray);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: box-shadow 0.3s, transform 0.3s;
+}
