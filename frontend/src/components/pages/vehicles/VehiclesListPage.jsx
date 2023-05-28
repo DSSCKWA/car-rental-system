@@ -200,26 +200,12 @@ export function VehiclesListPage(props) {
 
     if (user?.permissions == 'worker') {
         return (
-            <div className='Vehicles'>
+            <div className='Vehicles page_content'>
                 <div className='vehicle_add'>
                     <Link to={'/vehicles/new'} className='link_button_style'> Add new </Link>
                 </div>
 
                 {vehicles.length != 0 ? <>
-                    <div className='vehicle-filter-sort'>
-                        <input
-                            className='vehicle-filter'
-                            type='text'
-                            placeholder='Filter by brand or model'
-                            value={filter}
-                            onChange={e => setFilter(e.target.value)}
-                        />
-                        <select className='vehicle-sort' value={sortType} onChange={e => setSortType(e.target.value)}>
-                            <option value='none'>Sort by year of production</option>
-                            <option value='year_asc'>Oldest</option>
-                            <option value='year_desc'>Newest</option>
-                        </select>
-                    </div>
                     <div className='vehicle-list'>
                         {filteredVehicles.map(vehicle =>
                             vehicle.status === 'available' ?
@@ -278,8 +264,8 @@ export function VehiclesListPage(props) {
                 </form>
                 {vehicles.length != 0 ? <>
                     <div className='vehicle-filter-sort'>
-                        <FormControl className='form-control' sx={{ m: 1, width: 300, backgroundColor: 'var(--content-bg-color)', color: 'var(--medium-gray)' }}>
-                            <InputLabel className='input-label' id='filter-by-brand' sx={{ color: 'var(--medium-gray)' }}> Brand </InputLabel>
+                        <FormControl className='form-control' sx={{ m: 1, width: 300, color: 'var(--medium-gray)' }}>
+                            <InputLabel className='input-label' id='filter-by-brand' sx={{ color: 'var(--light-gray)' }}> Brand </InputLabel>
                             <Select
                                 className='select'
                                 labelId='filter-by-brand'
@@ -312,8 +298,8 @@ export function VehiclesListPage(props) {
                                 )}
                             </Select>
                         </FormControl>
-                        <FormControl className='form-control' sx={{ m: 1, width: 300, backgroundColor: 'var(--content-bg-color)', color: 'var(--medium-gray)' }}>
-                            <InputLabel className='input-label' id='filter-by-model' sx={{ color: 'var(--medium-gray)' }}> Model </InputLabel>
+                        <FormControl className='form-control' sx={{ m: 1, width: 300, color: 'var(--medium-gray)' }}>
+                            <InputLabel className='input-label' id='filter-by-model' sx={{ color: 'var(--light-gray)' }}> Model </InputLabel>
                             <Select
                                 className='select'
                                 labelId='filter-by-model'
@@ -345,8 +331,8 @@ export function VehiclesListPage(props) {
                                 )}
                             </Select>
                         </FormControl>
-                        <FormControl className='form-control' sx={{ m: 1, width: 300, backgroundColor: 'var(--content-bg-color)', color: 'var(--medium-gray)' }}>
-                            <InputLabel className='input-label' id='filter-by-gearbox' sx={{ color: 'var(--medium-gray)' }}> Gearbox </InputLabel>
+                        <FormControl className='form-control' sx={{ m: 1, width: 300, color: 'var(--medium-gray)' }}>
+                            <InputLabel className='input-label' id='filter-by-gearbox' sx={{ color: 'var(--light-gray)' }}> Gearbox </InputLabel>
                             <Select
                                 className='select'
                                 labelId='filter-by-gearbox'
@@ -379,8 +365,8 @@ export function VehiclesListPage(props) {
                                 )}
                             </Select>
                         </FormControl>
-                        <FormControl className='form-control' sx={{ m: 1, width: 300, backgroundColor: 'var(--content-bg-color)', color: 'var(--medium-gray)' }}>
-                            <InputLabel className='input-label' id='filter-by-color' sx={{ color: 'var(--medium-gray)' }}> Color </InputLabel>
+                        <FormControl className='form-control' sx={{ m: 1, width: 300, color: 'var(--medium-gray)' }}>
+                            <InputLabel className='input-label' id='filter-by-color' sx={{ color: 'var(--light-gray)' }}> Color </InputLabel>
                             <Select
                                 className='select'
                                 labelId='filter-by-color'
@@ -429,8 +415,8 @@ export function VehiclesListPage(props) {
                                 getAriaValueText={valuetext}
                             />
                         </Box>
-                        <FormControl className='vehicle-sort' sx={{ m: 1, width: 300, backgroundColor: 'var(--content-bg-color)', color: 'var(--medium-gray)' }}>
-                            <InputLabel className='input-label' id='sort-by-type' sx={{ color: 'var(--medium-gray)' }}>Sort by</InputLabel>
+                        <FormControl className='vehicle-sort form-control' sx={{ m: 1, width: 300, color: 'var(--medium-gray)' }}>
+                            <InputLabel className='input-label' id='sort-by-type' sx={{ color: 'var(--light-gray)' }}>Sort by</InputLabel>
                             <Select
                                 labelId='sort-by-type'
                                 id='sort-by-type'

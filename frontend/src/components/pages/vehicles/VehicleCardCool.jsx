@@ -161,7 +161,7 @@ export function VehicleCardCool(props) {
     return (
         <div>
             {!extra ?
-                <div className='vehicle_edit_page'>
+                <div className='vehicle_edit_page page_content'>
                     <h2>Edit</h2>
                     <form className='reg_form' onSubmit={handleSubmit}>
                         <div className='form_group'>
