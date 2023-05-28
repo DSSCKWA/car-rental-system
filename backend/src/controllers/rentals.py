@@ -1,18 +1,25 @@
-from flask import Blueprint, Response, abort, flash, jsonify, request, session
+from flask import Blueprint, Response, abort, flash, jsonify, request, session, send_file
 from flask_login import login_required, current_user
 import datetime
 
+from reportlab.lib import colors
+from reportlab.lib.pagesizes import letter, landscape
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.pdfgen import canvas
+from io import BytesIO
 from ..config.extensions import bcrypt, db, login_manager
 from ..models.rental import Rental
 from ..models.vehicle_review import Vehicle_review
-from ..models.cost_distribution import Cost_distribution
 from ..models.price_list import Price_list
 from ..models.user import User
 from ..models.task import Task
 from ..models.vehicle import Vehicle
 from ..models.insurance import Insurance
 from ..models.feedback import Feedback
-
+from ..models.cost_distribution import Cost_distribution
+from sqlalchemy import and_, not_, or_
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph
+from datetime import datetime
 
 rentals = Blueprint('rentals', __name__, url_prefix='/rentals')
 response_class = Blueprint('response_class', __name__)
@@ -20,6 +27,65 @@ response_class = Blueprint('response_class', __name__)
 
 def check_if_feedback_exist(rental):
     return Feedback.query.filter_by(rental_id=rental.rental_id).first() is not None
+
+@rentals.route('/report', methods=['GET'])
+def download_report():
+
+    start_date = request.args.get('start')
+    end_date = request.args.get('end')
+
+    data_query = db.session.query(
+        User.name, User.surname, Vehicle.brand, Vehicle.model, Vehicle.registration_number,
+        Rental.start_time, Rental.end_time, Cost_distribution.total
+    ).join(
+        Rental, User.user_id == Rental.client_id
+    ).join(
+        Vehicle, Rental.vehicle_id == Vehicle.vehicle_id
+    ).join(
+        Cost_distribution, Rental.rental_id == Cost_distribution.rental_id
+    ).filter(
+        and_(Rental.start_time >= start_date, Rental.end_time <= end_date)
+    )
+    data = [('Name', 'Surname', 'Brand', 'Model', 'Registration number', 'Start time', 'End time', 'Total cost')]
+    total_cost = 0
+    for row in data_query:
+        data.append(row)
+        total_cost += row[-1]  # assuming total cost is the last column
+
+    data.append(('Total', '', '', '', '', '', '', total_cost))
+
+    buffer = BytesIO()
+    doc = SimpleDocTemplate(buffer, pagesize=landscape(letter))
+    table = Table(data)
+
+    style = TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, 0), 14),
+
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -2), colors.beige),
+        ('GRID', (0,0), (-1,-1), 1, colors.black)
+    ])
+    table.setStyle(style)
+    styles = getSampleStyleSheet()
+    start_date_formatted = datetime.strptime(start_date, "%a, %d %b %Y %H:%M:%S %Z").strftime("%d/%m/%Y")
+    end_date_formatted = datetime.strptime(end_date, "%a, %d %b %Y %H:%M:%S %Z").strftime("%d/%m/%Y")
+    title = Paragraph(f"Report from {start_date_formatted} to {end_date_formatted}", styles['Title'])
+    elements = [title, table]
+    doc.build(elements)
+    pdf = buffer.getvalue()
+    buffer.close()
+
+    return send_file(
+        BytesIO(pdf),
+        mimetype='application/pdf',
+        as_attachment=True,
+        download_name='report.pdf'
+    )
 
 
 @rentals.route('/', methods=['GET'])
