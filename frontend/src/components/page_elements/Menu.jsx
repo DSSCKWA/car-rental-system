@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
+import './MenuStyles.css'
 
 export function Menu(props) {
     const { user } = props
@@ -12,7 +13,7 @@ export function Menu(props) {
         { name: 'Vehicles', path: '/vehicles' },
     ]
 
-    if (props.user) {
+    if (props.user?.permissions) {
         menuItems.push({ name: 'Profile', path: '/profile' })
     }
 
