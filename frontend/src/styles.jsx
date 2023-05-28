@@ -26,11 +26,11 @@ export const reviewCardStyle = {
 }
 
 export const vehicleListPageStyle = {
-    color: '#09195b', // Kolor suwaka
+    color: 'var(--highlight-blue)',
     '& .MuiSlider-thumb': {
         height: 24,
         width: 24,
-        backgroundColor: '#09195b', // Kolor kropki
+        backgroundColor: 'var(--highlight-blue)', // Kolor kropki
         border: '2px solid #1d1d1d', // Kolor obramowania kropki
         '&:hover': {
             boxShadow: '0 0 0 8px rgba(78, 170, 232, 0.16)', // Cień przy najechaniu

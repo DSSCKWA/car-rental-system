@@ -69,6 +69,15 @@ form {
     border-color: var(--highlight-blue);
 }
 
+.form_group input[type="checkbox"] {
+    width: 2em;
+    height: 2em;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    margin: 0.25em auto;
+}
+
 .errorMessage {
     display: flex;
     flex-direction: row;

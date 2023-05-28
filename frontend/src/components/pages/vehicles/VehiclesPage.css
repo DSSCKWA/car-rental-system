@@ -109,3 +109,7 @@
     cursor: pointer;
     transition: box-shadow 0.3s, transform 0.3s;
 }
+
+.form-control {
+    background-color: var(--dark-gray);
+}
