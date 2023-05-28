@@ -2,6 +2,7 @@ from ..config.extensions import db
 
 import base64
 
+
 class Vehicle(db.Model):
     vehicle_id = db.Column(db.Integer, primary_key=True)
     brand = db.Column(db.String(30), nullable=False)
@@ -13,8 +14,8 @@ class Vehicle(db.Model):
     vehicle_class = db.Column(db.String(10), nullable=False)
     technical_review_date = db.Column(db.Date, nullable=False)
     number_of_doors = db.Column(db.Integer, nullable=False)
-    image = db.Column(db.LargeBinary, nullable=False) 
-    drive_type = db.Column(db.String(30), nullable=False) 
+    image = db.Column(db.LargeBinary, nullable=False)
+    drive_type = db.Column(db.String(30), nullable=False)
     engine_power = db.Column(db.Integer, nullable=False)
     engine_capacity = db.Column(db.Float, nullable=False)
     fuel_type = db.Column(db.String(10), nullable=False)
@@ -27,7 +28,6 @@ class Vehicle(db.Model):
 
     def get_id(self):
         return self.vehicle_id
-    
 
     def __init__(self, vehicle_dict):
         self.brand = vehicle_dict['brand']
@@ -63,7 +63,7 @@ class Vehicle(db.Model):
             'vehicle_class': self.vehicle_class,
             'technical_review_date': self.technical_review_date,
             'number_of_doors': self.number_of_doors,
-            'image': str(base64.b64encode(self.image),"utf-8"),
+            'image': str(base64.b64encode(self.image), "utf-8"),
             'drive_type': self.drive_type,
             'engine_power': self.engine_power,
             'engine_capacity': self.engine_capacity,
