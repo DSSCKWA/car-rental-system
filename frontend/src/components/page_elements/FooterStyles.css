@@ -3,7 +3,7 @@
   justify-content: space-around;
   align-items: center;
   background-color: #242424;
-  border-top: 3px solid #4eaae8;
+  border-top: 3px solid var(--highlight-blue);
   width: 100%;
   flex-wrap: wrap;
   padding: 2em 1em 1em;
@@ -14,7 +14,7 @@
 .footer_container .footer_rights {
   width: 100%;
   padding: 2em;
-  color: #888;
+  color: var(--light-gray);
 }
 
 .footer_container .footer_links, .footer_container .footer_contact {
@@ -48,12 +48,12 @@
 }
 
 .footer_links .footer_link {
-  color: #888;
+  color: var(--medium-gray);
   margin-bottom: 0.5em;
 }
 
 .footer_links .footer_link:hover {
-  color: #299bbe;
+  color: var(--highlight-blue);
 }
 
 .footer_social {

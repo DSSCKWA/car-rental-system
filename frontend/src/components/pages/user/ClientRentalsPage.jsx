@@ -227,7 +227,7 @@ export function ClientRentalsPage() {
                         }}
                         sx={{
                             '& .MuiInputBase-root': {
-                                color: '#fff',
+                                color: 'var(--main-text-color)',
                             },
                         }}
                     />
@@ -235,7 +235,7 @@ export function ClientRentalsPage() {
                         onClick={saveRatingModal}
                         sx={{
                             backgroundColor: '#666',
-                            color: '#fff',
+                            color: 'var(--main-text-color)',
                             '&:hover': { backgroundColor: '#444' },
                             width: '100%',
                         }}

@@ -13,17 +13,17 @@
 }
 
 .sidebar_layout .navigation_panel .navigation_panel_item {
-    color: rgba(255, 255, 255, 0.87);
+    color: var(--main-text-color);
     text-decoration: none;
     font-size: 1em;
     font-weight: 500;
     padding: 1em;
-    background-color: #252525;
+    background-color: var(--content-bg-color);
 }
 
 .sidebar_layout .navigation_panel .navigation_panel_item:hover {
-    background-color: #202020;
-    color: #4eaae8;
+    background-color: var(--deep-gray);
+    color: var(--highlight-blue);
 }
 
 .sidebar_layout .page_content {
