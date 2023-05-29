@@ -1,5 +1,5 @@
 import { Form } from '../../page_elements/Form.jsx'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 
 
@@ -14,6 +14,7 @@ export function AdminEditUserForm() {
     const [date_of_birth, setDateOfBirth] = useState(user?.date_of_birth)
 
     const [error, setError] = useState('')
+    const [success, setSuccess] = useState('')
 
     async function get_user() {
         await fetch(`/api/users/${id}`, {
@@ -59,6 +60,7 @@ export function AdminEditUserForm() {
             setError(data.description ?? 'Server error')
         } else {
             setError('')
+            setSuccess(true)
         }
     }
 
@@ -77,6 +79,19 @@ export function AdminEditUserForm() {
     }
 
     if (!user) return <div>Loading...</div>
+
+    if (success) return (
+        <div>
+            <h2>
+                User edited successfully
+            </h2>
+            <p>
+                <Link to={'/admin/edit-users'}>
+                    Go back to users page
+                </Link>
+            </p>
+        </div>
+    )
 
     return (
         <Form className='admin_edit_user_form' formName={'Edit user'} submitText='Edit' error={error} onSubmit={handleSubmit} inputs={[
