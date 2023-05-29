@@ -48,15 +48,15 @@ export function WorkerRentalsPage() {
         const status = row.rental_status
         const rental_id = row.rental_id
         return <>
-            {['upcoming', 'ongoing'].includes(status) &&
-                <td key='action'>
+            <td key='action'>
+                {['upcoming', 'ongoing'].includes(status) &&
                     <button onClick={e => {
                         { status === 'ongoing' ? changeStatus(rental_id, 'in_review') : changeStatus(rental_id, 'canceled') }
                     }}>
                         {status === 'ongoing' ? 'End' : 'Cancel'}
                     </button>
-                </td>
-            }
+                }
+            </td>
         </>
     }
 
