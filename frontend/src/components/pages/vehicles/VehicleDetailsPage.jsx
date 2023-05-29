@@ -184,13 +184,13 @@ export function VehicleDetailsPage(props) {
         )
     }
 
-    if (user.permissions === 'worker') {
+    if (user?.permissions === 'worker') {
         return (
             <div className='vehicle'>
                 <VehicleCardCool vehicle={vehicle} extra={false} />
             </div>
         )
-    } else if (user.permissions === 'client') {
+    } else if (user?.permissions === 'client') {
         return (
 
 
