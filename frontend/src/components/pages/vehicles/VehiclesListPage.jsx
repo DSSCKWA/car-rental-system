@@ -208,13 +208,11 @@ export function VehiclesListPage(props) {
                 {vehicles.length != 0 ? <>
                     <div className='vehicle-list'>
                         {filteredVehicles.map(vehicle =>
-                            vehicle.status === 'available' ?
-                                <div key={vehicle.vehicle_id} className='vehicle-card' onClick={() => {
-                                    goToDetailsPage(vehicle)
-                                }}>
-                                    <VehicleCard vehicle={vehicle} extra={false}/>
-                                </div>
-                                : null,
+                            <div key={vehicle.vehicle_id} className='vehicle-card' onClick={() => {
+                                goToDetailsPage(vehicle)
+                            }}>
+                                <VehicleCard vehicle={vehicle} extra={false} />
+                            </div>
                         )}
                     </div>
                 </> : null}
@@ -238,25 +236,25 @@ export function VehiclesListPage(props) {
                             onChange={e => {
                                 setStartDate(e.target.value)
                                 location.startDate = e.target.value
-                            }}/>
+                            }} />
                     </div>
                     <div className='form_group'>
                         <label htmlFor='start_time'>Start time</label>
                         <input type='time' id='start_time' name='start_time' step='3600' value={startTime}
                             onChange={e => {
                                 setStartTime(`${e.target.value.split(':')[0]}:00:00`)
-                            }}/>
+                            }} />
                     </div>
                     <div className='form_group'>
                         <label htmlFor='end_date'>End date</label>
                         <input type='date' id='end_date' name='end_date' value={endDate}
-                            min={startDate ? startDate : getMinDate()} onChange={e => setEndDate(e.target.value)}/>
+                            min={startDate ? startDate : getMinDate()} onChange={e => setEndDate(e.target.value)} />
                     </div>
                     <div className='form_group'>
                         <label htmlFor='end_time'>End time</label>
                         <input type='time' id='end_time' name='end_time' step='3600' value={endTime} onChange={e => {
                             setEndTime(`${e.target.value.split(':')[0]}:00:00`)
-                        }}/>
+                        }} />
                     </div>
                     <div className='form_group'>
                         <button type='submit'>Search</button>
@@ -273,11 +271,11 @@ export function VehiclesListPage(props) {
                                 multiple
                                 value={selectedBrands}
                                 onChange={handleBrandChange}
-                                input={<OutlinedInput id='select-multiple-chip' label='Brand' sx={{ color: 'var(--medium-gray)' }}/>}
+                                input={<OutlinedInput id='select-multiple-chip' label='Brand' sx={{ color: 'var(--medium-gray)' }} />}
                                 renderValue={selected =>
                                     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                         {selected.map(value =>
-                                            <Chip key={value} label={value} sx={{ backgroundColor: 'var(--highlight-blue)', color: 'var(--content-bg-color)' }}/>,
+                                            <Chip key={value} label={value} sx={{ backgroundColor: 'var(--highlight-blue)', color: 'var(--content-bg-color)' }} />,
                                         )}
                                     </Box>
                                 }
@@ -292,8 +290,8 @@ export function VehiclesListPage(props) {
                                         style={getStyles(brand, brands, theme)}
                                         sx={{ color: 'var(--medium-gray)' }}
                                     >
-                                        <Checkbox checked={selectedBrands.indexOf(brand) > -1} sx={{ color: 'var(--highlight-blue)' }}/>
-                                        <ListItemText primary={brand} sx={{ color: 'var(--medium-gray)' }}/>
+                                        <Checkbox checked={selectedBrands.indexOf(brand) > -1} sx={{ color: 'var(--highlight-blue)' }} />
+                                        <ListItemText primary={brand} sx={{ color: 'var(--medium-gray)' }} />
                                     </MenuItem>,
                                 )}
                             </Select>
@@ -307,11 +305,11 @@ export function VehiclesListPage(props) {
                                 multiple
                                 value={selectedModels}
                                 onChange={handleModelChange}
-                                input={<OutlinedInput id='select-multiple-chip' label='Model' sx={{ color: 'var(--medium-gray)' }}/>}
+                                input={<OutlinedInput id='select-multiple-chip' label='Model' sx={{ color: 'var(--medium-gray)' }} />}
                                 renderValue={selected =>
                                     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                         {selected.map(value =>
-                                            <Chip key={value} label={value} sx={{ backgroundColor: 'var(--highlight-blue)', color: 'var(--content-bg-color)' }}/>,
+                                            <Chip key={value} label={value} sx={{ backgroundColor: 'var(--highlight-blue)', color: 'var(--content-bg-color)' }} />,
                                         )}
                                     </Box>
                                 }
@@ -325,8 +323,8 @@ export function VehiclesListPage(props) {
                                         value={model}
                                         style={getStyles(model, models, theme)}
                                     >
-                                        <Checkbox checked={selectedModels.indexOf(model) > -1} sx={{ color: 'var(--highlight-blue)' }}/>
-                                        <ListItemText primary={model} sx={{ color: 'var(--medium-gray)' }}/>
+                                        <Checkbox checked={selectedModels.indexOf(model) > -1} sx={{ color: 'var(--highlight-blue)' }} />
+                                        <ListItemText primary={model} sx={{ color: 'var(--medium-gray)' }} />
                                     </MenuItem>,
                                 )}
                             </Select>
@@ -340,11 +338,11 @@ export function VehiclesListPage(props) {
                                 multiple
                                 value={selectedGearboxes}
                                 onChange={handleGearboxChange}
-                                input={<OutlinedInput id='select-multiple-chip' label='Gearbox' sx={{ color: 'var(--medium-gray)' }}/>}
+                                input={<OutlinedInput id='select-multiple-chip' label='Gearbox' sx={{ color: 'var(--medium-gray)' }} />}
                                 renderValue={selected =>
                                     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                         {selected.map(value =>
-                                            <Chip key={value} label={value} sx={{ backgroundColor: 'var(--highlight-blue)', color: 'var(--content-bg-color)' }}/>,
+                                            <Chip key={value} label={value} sx={{ backgroundColor: 'var(--highlight-blue)', color: 'var(--content-bg-color)' }} />,
                                         )}
                                     </Box>
                                 }
@@ -359,8 +357,8 @@ export function VehiclesListPage(props) {
                                         style={getStyles(gearbox, gearboxes, theme)}
                                         sx={{ color: 'var(--medium-gray)' }}
                                     >
-                                        <Checkbox checked={selectedGearboxes.indexOf(gearbox) > -1} sx={{ color: 'var(--highlight-blue)' }}/>
-                                        <ListItemText primary={gearbox} sx={{ color: 'var(--medium-gray)' }}/>
+                                        <Checkbox checked={selectedGearboxes.indexOf(gearbox) > -1} sx={{ color: 'var(--highlight-blue)' }} />
+                                        <ListItemText primary={gearbox} sx={{ color: 'var(--medium-gray)' }} />
                                     </MenuItem>,
                                 )}
                             </Select>
@@ -374,11 +372,11 @@ export function VehiclesListPage(props) {
                                 multiple
                                 value={selectedColors}
                                 onChange={handleColorChange}
-                                input={<OutlinedInput id='select-multiple-chip' label='Color' sx={{ color: 'var(--medium-gray)' }}/>}
+                                input={<OutlinedInput id='select-multiple-chip' label='Color' sx={{ color: 'var(--medium-gray)' }} />}
                                 renderValue={selected =>
                                     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                         {selected.map(value =>
-                                            <Chip key={value} label={value} sx={{ backgroundColor: 'var(--highlight-blue)', color: 'var(--content-bg-color)' }}/>,
+                                            <Chip key={value} label={value} sx={{ backgroundColor: 'var(--highlight-blue)', color: 'var(--content-bg-color)' }} />,
                                         )}
                                     </Box>
                                 }
@@ -393,8 +391,8 @@ export function VehiclesListPage(props) {
                                         style={getStyles(color, colors, theme)}
                                         sx={{ color: 'var(--medium-gray)' }}
                                     >
-                                        <Checkbox checked={selectedColors.indexOf(color) > -1} sx={{ color: 'var(--highlight-blue)' }}/>
-                                        <ListItemText primary={color} sx={{ color: 'var(--medium-gray)' }}/>
+                                        <Checkbox checked={selectedColors.indexOf(color) > -1} sx={{ color: 'var(--highlight-blue)' }} />
+                                        <ListItemText primary={color} sx={{ color: 'var(--medium-gray)' }} />
                                     </MenuItem>,
                                 )}
                             </Select>
@@ -442,7 +440,7 @@ export function VehiclesListPage(props) {
                                 <div key={vehicle.vehicle_id} className='vehicle-card' onClick={() => {
                                     goToDetailsPage(vehicle)
                                 }}>
-                                    <VehicleCard vehicle={vehicle} extra={false}/>
+                                    <VehicleCard vehicle={vehicle} extra={false} />
                                 </div>
                                 : null,
                         )}
