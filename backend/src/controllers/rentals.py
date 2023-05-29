@@ -12,7 +12,7 @@ from ..models.task import Task
 from ..models.vehicle import Vehicle
 from ..models.insurance import Insurance
 from ..models.feedback import Feedback
-
+from ..utils.emails import send_rental_invoice
 from ..utils.emails import send_rental_confirmation
 import threading
 
@@ -88,7 +88,12 @@ def review(id):
 
         db.session.commit()
 
-        # TODO: send invoice to client here
+        client = User.query.filter_by(user_id=rental.client_id).first()
+
+        thread = threading.Thread(target=send_rental_invoice, args=(
+            client.user_email_address, client.name, client.surname, vehicle.brand, vehicle.model,
+            costs.vehicle_cost, costs.insurance_cost, costs.penalty_charges, rental.start_time, rental.end_time))
+        thread.start()
 
         return new_review.serialize()
     else:

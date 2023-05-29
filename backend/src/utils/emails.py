@@ -1,18 +1,36 @@
 import smtplib
-from email.mime.text import MIMEText
+import os
 from email.header import Header
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+from email import encoders
+from .invoice import generate_invoice
 
 
-def send_email(recipient_email, subject, body):
+def send_email(recipient_email, subject, body, attachment_path=""):
     sender_email = "dssckwabot@gmail.com"
     smtp_connection = smtplib.SMTP("smtp.gmail.com", 587)
     smtp_connection.starttls()
     smtp_connection.login(sender_email, "tgscgeeytaeegvvg")
 
-    email = MIMEText(body, 'plain', 'utf-8')
+    email = MIMEMultipart()
     email['From'] = "Delta Szwadron Super Cool Komando Wilków Alfa Bot"
     email['To'] = recipient_email
     email['Subject'] = Header(subject, 'utf-8')
+    email.attach(MIMEText(body, 'plain', 'utf-8'))
+    if attachment_path:
+        with open(attachment_path, "rb") as file:
+            attachment = MIMEBase("application", "octet-stream")
+            attachment.set_payload(file.read())
+
+        encoders.encode_base64(attachment)
+        attachment.add_header(
+            "Content-Disposition",
+            f"attachment; filename={attachment_path}",
+        )
+        email.attach(attachment)
+        os.remove(attachment_path)
 
     smtp_connection.sendmail(sender_email, recipient_email, email.as_string())
 
@@ -76,3 +94,27 @@ def send_rental_confirmation(recipient_email, start, end, brand, model):
     """
     send_email(recipient_email,
                "Vehicle rented successfully!", msg)
+
+
+def send_rental_invoice(recipient_email, name, surname, brand, model, vehicle_cost, insurance_cost, penalty_charges, start_date, end_date):
+    invoice_path = generate_invoice(
+        name, surname, brand, model, vehicle_cost, insurance_cost, penalty_charges)
+    msg = f"""
+    We would like to extend our gratitude for choosing Car Rental Service as your trusted car rental service provider.
+
+    As per our records, your car rental agreement with us commenced on {start_date} and concluded on {end_date}. 
+    We are pleased to attach your detailed invoice for the rental period.
+
+    To settle the payment, kindly remit the total amount as soon as possible. You can make the payment using the following methods:
+        1. Credit/Debit Card
+        2. Bank Transfer
+        3. Cash
+    Upon successful payment, please retain the invoice for your records. If you have already made the payment, please disregard this reminder.
+
+    We appreciate your business and look forward to serving you again in the future. 
+    If there's anything else we can assist you with, feel free to let us know.
+
+    Thank you for choosing Car Rental System.   
+    """
+    send_email(recipient_email,
+               "Your Car Rental Invoice", msg, invoice_path)
