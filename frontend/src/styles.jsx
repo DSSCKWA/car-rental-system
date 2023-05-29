@@ -14,6 +14,7 @@ export const modalStyle = {
     justifyContent: 'center',
     transform: 'translate(-50%, -50%)',
     position: 'absolute',
+
 }
 
 export const reviewCardStyle = {
