@@ -192,8 +192,6 @@ export function VehicleDetailsPage(props) {
         )
     } else if (user?.permissions === 'client') {
         return (
-
-
             <div className='vehicle page_content'>
                 <VehicleCard vehicle={vehicle} extra={true} />
                 <label htmlFor='insurance_policy_select' className='insurance_policy_select_label'>Insurance: </label>
@@ -247,6 +245,14 @@ export function VehicleDetailsPage(props) {
                     <VehicleCardLine name={'Rental cost'} value={`${rentalCost}${currency}/h`} />
                     {policyCost !== 0 ? <VehicleCardLine name={'Insurance policy cost'} value={`${policyCost}${currency}`} /> : null}
                     <VehicleCardLine name={'Total cost'} value={formatCost(parseInt(rentalCost * totalHours) + parseInt(policyCost))} />
+                </div>
+                <div>
+                    {reviews && reviews.map(review =>
+                        <ReviewCard
+                            key={review.comment}
+                            review={review}
+                        />,
+                    )}
                 </div>
             </div>
         )
