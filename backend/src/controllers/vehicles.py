@@ -34,7 +34,8 @@ def get_available_vehicle_ids(start_time, end_time):
             .with_entities(Vehicle, Price_list.price).all())
     else:
         return (
-            Vehicle.query.join(Price_list, Vehicle.vehicle_class == Price_list.vehicle_class)
+            Vehicle.query.join(
+                Price_list, Vehicle.vehicle_class == Price_list.vehicle_class)
             .with_entities(Vehicle, Price_list.price).all())
 
 
@@ -92,16 +93,16 @@ def edit(id):
         if vehicle is None:
             abort(404, description="Vehicle not found")
         vehicle_body = request.json
+        old_reg = vehicle.registration_number
+        validate_edition_request_body(vehicle_body, old_reg)
         vehicle.status = vehicle_body["status"]
         vehicle.technical_review_date = vehicle_body["technical_review_date"]
         vehicle.image = base64.b64decode(vehicle_body["image"])
         vehicle.description = vehicle_body["description"]
         vehicle.additional_equipment = vehicle_body["additional_equipment"]
-        old_reg = vehicle.registration_number
         vehicle.registration_number = vehicle_body["registration_number"]
         vehicle.color = vehicle_body["color"]
 
-        validate_edition_request_body(vehicle_body, old_reg)
         db.session.commit()
         return vehicle.serialize()
     else:

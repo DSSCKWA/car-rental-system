@@ -40,7 +40,8 @@ def email_taken(email):
 def is_valid_date(date):
     current_date = datetime.datetime.now().date()
     date_string = current_date.strftime('%Y-%m-%d')
-    current_date_formatted = datetime.datetime.strptime(date_string, '%Y-%m-%d').date()
+    current_date_formatted = datetime.datetime.strptime(
+        date_string, '%Y-%m-%d').date()
     current_date_formatted = datetime.datetime.strptime(
         date_string, '%Y-%m-%d').date()
 
@@ -97,16 +98,17 @@ def registration_number_available(reg_number):
 
 def registration_number_available_edit(reg_number, old_reg_number):
     vehicle = Vehicle.query.filter_by(registration_number=reg_number).first()
-    if reg_number != old_reg_number:
-        return vehicle is None
+    if reg_number == old_reg_number:
+        return True
     else:
-        return not (vehicle is None)
+        return vehicle is None
 
 
 def is_valid_review_date(date):
     current_date = datetime.datetime.now().date()
     date_string = current_date.strftime('%Y-%m-%d')
-    current_date_formated = datetime.datetime.strptime(date_string, '%Y-%m-%d').date()
+    current_date_formated = datetime.datetime.strptime(
+        date_string, '%Y-%m-%d').date()
     current_date_formated = datetime.datetime.strptime(
         date_string, '%Y-%m-%d').date()
 
