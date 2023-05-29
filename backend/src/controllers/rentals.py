@@ -17,6 +17,9 @@ from datetime import datetime
 from ..models.vehicle import Vehicle
 from ..models.insurance import Insurance
 from ..models.feedback import Feedback
+from ..utils.emails import send_rental_invoice
+from ..utils.emails import send_rental_confirmation
+import threading
 from ..models.cost_distribution import Cost_distribution
 from sqlalchemy import and_, not_, or_
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph
@@ -28,6 +31,7 @@ response_class = Blueprint('response_class', __name__)
 
 def check_if_feedback_exist(rental):
     return Feedback.query.filter_by(rental_id=rental.rental_id).first() is not None
+
 
 @rentals.route('/report', methods=['GET'])
 def download_report():
@@ -47,11 +51,13 @@ def download_report():
     ).filter(
         and_(Rental.start_time >= start_date, Rental.end_time <= end_date)
     )
-    data = [('Name', 'Surname', 'Brand', 'Model', 'Registration number', 'Start time', 'End time', 'Total cost')]
+    data = [('Name', 'Surname', 'Brand', 'Model',
+             'Registration number', 'Start time', 'End time', 'Total cost')]
     total_cost = 0
     for row in data_query:
         data.append(row)
-        total_cost += row[data[0].index('Total cost')]  # assuming total cost is the last column
+        # assuming total cost is the last column
+        total_cost += row[data[0].index('Total cost')]
 
     data.append(('Total', '', '', '', '', '', '', total_cost))
 
@@ -69,13 +75,16 @@ def download_report():
 
         ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
         ('BACKGROUND', (0, 1), (-1, -2), colors.beige),
-        ('GRID', (0,0), (-1,-1), 1, colors.black)
+        ('GRID', (0, 0), (-1, -1), 1, colors.black)
     ])
     table.setStyle(style)
     styles = getSampleStyleSheet()
-    start_date_formatted = datetime.strptime(start_date, "%a, %d %b %Y %H:%M:%S %Z").strftime("%d/%m/%Y")
-    end_date_formatted = datetime.strptime(end_date, "%a, %d %b %Y %H:%M:%S %Z").strftime("%d/%m/%Y")
-    title = Paragraph(f"Report from {start_date_formatted} to {end_date_formatted}", styles['Title'])
+    start_date_formatted = datetime.strptime(
+        start_date, "%a, %d %b %Y %H:%M:%S %Z").strftime("%d/%m/%Y")
+    end_date_formatted = datetime.strptime(
+        end_date, "%a, %d %b %Y %H:%M:%S %Z").strftime("%d/%m/%Y")
+    title = Paragraph(
+        f"Report from {start_date_formatted} to {end_date_formatted}", styles['Title'])
     elements = [title, table]
     doc.build(elements)
     pdf = buffer.getvalue()
@@ -110,60 +119,62 @@ def get_all():
     user_permissions = current_user.permissions
 
     if user_permissions in ["manager"]:
-            if start_datetime and end_datetime:
-                rentals_unavailable = Rental.query.join(
+        if start_datetime and end_datetime:
+            rentals_unavailable = Rental.query.join(
+                User, Rental.client_id == User.user_id).join(
+                Vehicle, Rental.vehicle_id == Vehicle.vehicle_id).join(
+                    Cost_distribution,
+                    Rental.rental_id == Cost_distribution.rental_id
+            ).outerjoin(
+                    Insurance,
+                    Rental.policy_number == Insurance.policy_number
+            ).where(
+
+                or_(Rental.end_time <= start_datetime,
+                    Rental.end_time >= end_datetime),
+            ).all()
+            rentals = [
+                rental for rental in Rental.query.join(
                     User, Rental.client_id == User.user_id).join(
                     Vehicle, Rental.vehicle_id == Vehicle.vehicle_id).join(
-                        Cost_distribution,
-                        Rental.rental_id == Cost_distribution.rental_id 
-                    ).outerjoin(
-                        Insurance,
-                        Rental.policy_number == Insurance.policy_number 
-                    ).where(
-                    
-                            or_(Rental.end_time <= start_datetime,
-                                Rental.end_time >= end_datetime),
-                        ).all()
-                rentals = [
-                    rental for rental in Rental.query.join(
-                    User, Rental.client_id == User.user_id).join(
-                    Vehicle, Rental.vehicle_id == Vehicle.vehicle_id).join(
-                        Cost_distribution,
-                        Rental.rental_id == Cost_distribution.rental_id 
-                    ).outerjoin(
-                            Insurance,
-                            Rental.policy_number == Insurance.policy_number 
-                    ).all()
-                    if rental not in rentals_unavailable
-                ]
-            else:
-                rentals = Rental.query.join(
-                    User, Rental.client_id == User.user_id).join(
-                        Vehicle, Rental.vehicle_id == Vehicle.vehicle_id).join(
-                        Cost_distribution,
-                        Rental.rental_id == Cost_distribution.rental_id 
-                    ).outerjoin(
-                            Insurance,
-                            Rental.policy_number == Insurance.policy_number).all()
-    else: 
-        if user_permissions in ["worker"]:
-            rentals = Rental.query.join(
-            User, Rental.client_id == User.user_id).join(
-            Vehicle, Rental.vehicle_id == Vehicle.vehicle_id).outerjoin(
-            Insurance,
-            Rental.policy_number == Insurance.policy_number).all()
+                    Cost_distribution,
+                    Rental.rental_id == Cost_distribution.rental_id
+                ).outerjoin(
+                    Insurance,
+                        Rental.policy_number == Insurance.policy_number
+                ).all()
+                if rental not in rentals_unavailable
+            ]
         else:
             rentals = Rental.query.join(
-            User, Rental.client_id == User.user_id).join(
+                User, Rental.client_id == User.user_id).join(
+                    Vehicle, Rental.vehicle_id == Vehicle.vehicle_id).join(
+                    Cost_distribution,
+                    Rental.rental_id == Cost_distribution.rental_id
+            ).outerjoin(
+                        Insurance,
+                        Rental.policy_number == Insurance.policy_number).all()
+    else:
+        if user_permissions in ["worker"]:
+            rentals = Rental.query.join(
+                User, Rental.client_id == User.user_id).join(
+                Vehicle, Rental.vehicle_id == Vehicle.vehicle_id).outerjoin(
+                Insurance,
+                Rental.policy_number == Insurance.policy_number).all()
+        else:
+            rentals = Rental.query.join(
+                User, Rental.client_id == User.user_id).join(
                 Vehicle, Rental.vehicle_id == Vehicle.vehicle_id).outerjoin(
                     Insurance,
                     Rental.policy_number == Insurance.policy_number).filter(
                         Rental.client_id == current_user.user_id).all()
-            
+
     better_rental = []
     for rental in rentals:
-        costs = Cost_distribution.query.where(rental.rental_id == Cost_distribution.rental_id).first()
-        better_rental.append({**rental.serialize(costs.total), 'feedback_status': check_if_feedback_exist(rental)})
+        costs = Cost_distribution.query.where(
+            rental.rental_id == Cost_distribution.rental_id).first()
+        better_rental.append({**rental.serialize(costs.total),
+                             'feedback_status': check_if_feedback_exist(rental)})
 
     return better_rental
 
@@ -175,6 +186,9 @@ def add():
     new_rental = Rental(new_rental_body)
     db.session.add(new_rental)
     db.session.commit()
+    thread = threading.Thread(target=send_rental_confirmation, args=(
+        new_rental.client.user_email_address, new_rental.start_time, new_rental.end_time, new_rental.vehicle.brand, new_rental.vehicle.model))
+    thread.start()
     return new_rental.serialize()
 
 
@@ -209,7 +223,12 @@ def review(id):
 
         db.session.commit()
 
-        # TODO: send invoice to client here
+        client = User.query.filter_by(user_id=rental.client_id).first()
+
+        thread = threading.Thread(target=send_rental_invoice, args=(
+            client.user_email_address, client.name, client.surname, vehicle.brand, vehicle.model,
+            costs.vehicle_cost, costs.insurance_cost, costs.penalty_charges, rental.start_time, rental.end_time))
+        thread.start()
 
         return new_review.serialize()
     else:
@@ -252,7 +271,8 @@ def update(id):
             task.task_status = "canceled"
             db.session.commit()
         else:
-            abort(403, description="Cannot cancel the rental in less than 24 hours to the start date")
+            abort(
+                403, description="Cannot cancel the rental in less than 24 hours to the start date")
     else:
         abort(403, description="Invalid permissions")
     return rental.serialize()
