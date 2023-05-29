@@ -145,14 +145,14 @@ export function ClientRentalsPage() {
                                 <td>{rental.policy_name}</td>
                                 <td>{rental?.rental_status !== 'completed' ? 'you can rate when your rental ends' :
                                     rental?.rental_status === 'completed' && !rental.feedback_status ?
-                                        <button onClick={() => {openRatingModal(rental.rental_id)}}> Rate </button>
+                                        <button onClick={() => { openRatingModal(rental.rental_id) }}> Rate </button>
                                         : 'Rental already rated'}</td>
                                 <td>
-                                    {isMoreThan24Hours(rental.start_time) && rental.rental_status !== 'canceled' &&
-                                    <button onClick={() => {
-                                        changeStatus(rental.rental_id, 'canceled', rental.client_id, rental.start_time)
-                                    }}>Cancel
-                                    </button>
+                                    {isMoreThan24Hours(rental.start_time) && rental.rental_status === 'upcoming' &&
+                                        <button onClick={() => {
+                                            changeStatus(rental.rental_id, 'canceled', rental.client_id, rental.start_time)
+                                        }}>Cancel
+                                        </button>
                                     }
                                 </td>
                             </tr>
