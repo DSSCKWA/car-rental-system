@@ -1,6 +1,6 @@
 .sidebar_layout {
     display: grid;
-    grid-template-columns: 1fr 4fr;
+    grid-template-columns: 1fr 6fr;
     grid-template-rows: 1fr;
     grid-template-areas: "sidebar main";
     gap: 1em;
@@ -13,17 +13,17 @@
 }
 
 .sidebar_layout .navigation_panel .navigation_panel_item {
-    color: #ffffff;
+    color: var(--main-text-color);
     text-decoration: none;
     font-size: 1em;
     font-weight: 500;
     padding: 1em;
-    background-color: #252525;
+    background-color: var(--content-bg-color);
 }
 
 .sidebar_layout .navigation_panel .navigation_panel_item:hover {
-    background-color: #202020;
-    color: #4eaae8;
+    background-color: var(--deep-gray);
+    color: var(--highlight-blue);
 }
 
 .sidebar_layout .page_content {
@@ -32,4 +32,11 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+@media screen and (max-width: 1024px) {
+    .sidebar_layout {
+        display: flex;
+        flex-direction: column;
+    }
 }

@@ -12,11 +12,11 @@ export function WorkerPage(props) {
             { name: 'Rentals', path: '/worker/rentals' },
             { name: 'Cars', path: '/worker/cars' },
         ]}
-            routes={[
-                { path: '/tasks', element: <WorkerTasksPage user={user} /> },
-                { path: '/rentals', element: <WorkerRentalsPage /> },
-                { path: '/cars', element: <WorkerCarsPage /> },
-                { path: '/cars/review', element: <WorkerCarsReviewPage /> },
-            ]} />
+        routes={[
+            { path: '/tasks', element: <WorkerTasksPage user={user} /> },
+            { path: '/rentals', element: <WorkerRentalsPage /> },
+            { path: '/cars', element: <WorkerCarsPage /> },
+            { path: '/cars/review', element: <WorkerCarsReviewPage /> },
+        ]} />
     )
 }

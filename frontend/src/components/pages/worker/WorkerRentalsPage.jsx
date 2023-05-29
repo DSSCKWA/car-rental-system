@@ -35,8 +35,8 @@ export function WorkerRentalsPage() {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                rental_status: status
-            })
+                rental_status: status,
+            }),
         })
             .catch(error => {
                 console.log('Error getting rental info', error)
@@ -49,11 +49,11 @@ export function WorkerRentalsPage() {
         const rental_id = row.rental_id
         return <>
             {['upcoming', 'ongoing'].includes(status) &&
-                <td key="action">
-                    <button onClick={(e) => {
-                        { status === "ongoing" ? changeStatus(rental_id, "in_review") : changeStatus(rental_id, "canceled") }
+                <td key='action'>
+                    <button onClick={e => {
+                        { status === 'ongoing' ? changeStatus(rental_id, 'in_review') : changeStatus(rental_id, 'canceled') }
                     }}>
-                        {status === "ongoing" ? "End" : "Cancel"}
+                        {status === 'ongoing' ? 'End' : 'Cancel'}
                     </button>
                 </td>
             }
@@ -90,7 +90,7 @@ export function WorkerRentalsPage() {
                 { label: 'End time', key: 'end_time', type: 'text' },
                 { label: 'Status', key: 'rental_status', type: 'text' },
                 { label: 'Policy', key: 'policy_name', type: 'text' },
-                { label: 'Action', type: 'raw', getRow: (row) => getRow(row) }
+                { label: 'Action', type: 'raw', getRow: row => getRow(row) },
             ]} />
         </div >
     )

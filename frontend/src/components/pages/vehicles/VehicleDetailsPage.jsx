@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import './VehiclesPage.css'
 import { VehicleCard, VehicleCardLine } from './VehicleCard.jsx'
-import { VehicleCardCool, VehicleCardLineForm } from './VehicleCardCool.jsx'
+import { VehicleCardCool } from './VehicleCardCool.jsx'
 import { ReviewCard } from './ReviewCard.jsx'
 
 
@@ -14,10 +14,7 @@ export function VehicleDetailsPage(props) {
     const [submitSuccess, setSubmitSuccess] = useState(false)
     const [error, setError] = useState('')
     const [reviews, setReviews] = useState([])
-    const [serviceAvg, setServiceAvg] = useState(0)
-    const [vehicleAvg, setVehicleAvg] = useState(0)
     const location = useLocation()
-
 
     const currency = '¥'
     const vehicle = location.state?.vehicle
@@ -102,7 +99,7 @@ export function VehicleDetailsPage(props) {
         console.log(startDateTime)
         e.preventDefault()
         let policy_number = null
-        if (!(policyType == null) && !(policyType == 'none')) {
+        if (!(policyType == null) && !(policyType === 'none')) {
             const policyResponse = await fetch('/api/insurances/' + policyType, {
                 method: 'GET',
                 headers: {
@@ -130,11 +127,8 @@ export function VehicleDetailsPage(props) {
             body: JSON.stringify({ 'vehicle_id': vehicle.vehicle_id, 'start_time': startDateTime, 'end_time': endDateTime, 'discount_code_id': null, 'client_id': user.user_id, 'policy_number': policy_number }),
         })
         const rentalBody = await rentalResponse.json()
-        console.log('response', rentalBody)
-
 
         if (!rentalResponse.ok) {
-            console.log('rental failed')
             setError(rentalBody.description)
             return
         }
@@ -147,7 +141,6 @@ export function VehicleDetailsPage(props) {
             body: JSON.stringify({ 'rental_id': rentalBody.rental_id, 'vehicle_cost': parseInt(rentalCost * totalHours), 'item_cost': null, 'insurance_cost': policyCost, 'penalty_charges': null }),
         })
         const costsBody = await costsResponse.json()
-        console.log('response', costsBody)
         if (!costsResponse.ok) {
             console.log('cost table setting failed')
             setError(costsBody.description)
@@ -169,16 +162,13 @@ export function VehicleDetailsPage(props) {
             }),
         })
         const tasksBody = await tasksResponse.json()
-        console.log('response', tasksBody)
 
         if (!tasksResponse.ok) {
-            console.log('task table setting failed')
             setError(tasksBody.description)
             return
         }
 
         if (rentalBody['rental_id']) {
-            console.log('rental success', rentalBody)
             setSubmitSuccess(true)
         }
     }
@@ -194,17 +184,17 @@ export function VehicleDetailsPage(props) {
         )
     }
 
-    if (user.permissions == 'worker') {
+    if (user.permissions === 'worker') {
         return (
             <div className='vehicle'>
                 <VehicleCardCool vehicle={vehicle} extra={false} />
             </div>
         )
-    } else if (user.permissions == 'client') {
+    } else if (user.permissions === 'client') {
         return (
 
 
-            <div className='vehicle'>
+            <div className='vehicle page_content'>
                 <VehicleCard vehicle={vehicle} extra={true} />
                 <label htmlFor='insurance_policy_select' className='insurance_policy_select_label'>Insurance: </label>
                 <select className='insurance_policy_select' value={policyCost} onChange={e => { setPolicyCost(e.target.value); setPolicyType(e.target.options[e.target.options.selectedIndex].innerHTML.toLowerCase().replace(/ /g, '_')) }}>
@@ -219,7 +209,7 @@ export function VehicleDetailsPage(props) {
                 </select>
                 <div className='rental_cost'>
                     <VehicleCardLine name={'Rental cost'} value={`${rentalCost}${currency}/h`} />
-                    {policyCost != 0 ? <VehicleCardLine name={'Insurance policy cost'} value={`${policyCost}${currency}`} /> : null}
+                    {policyCost !== 0 ? <VehicleCardLine name={'Insurance policy cost'} value={`${policyCost}${currency}`} /> : null}
                     <VehicleCardLine name={'Total cost'} value={formatCost(parseInt(rentalCost * totalHours) + parseInt(policyCost))} />
                 </div>
                 <form className='log_form' onSubmit={handleSubmit}>
@@ -240,7 +230,7 @@ export function VehicleDetailsPage(props) {
         )
     } else {
         return (
-            <div className='vehicle'>
+            <div className='vehicle page_content'>
                 <VehicleCard vehicle={vehicle} extra={true} />
                 <label htmlFor='insurance_policy_select' className='insurance_policy_select_label'>Insurance: </label>
                 <select className='insurance_policy_select' value={policyCost} onChange={e => { setPolicyCost(e.target.value); setPolicyType(e.target.options[e.target.options.selectedIndex].innerHTML.toLowerCase().replace(/ /g, '_')) }}>
@@ -255,10 +245,9 @@ export function VehicleDetailsPage(props) {
                 </select>
                 <div className='rental_cost'>
                     <VehicleCardLine name={'Rental cost'} value={`${rentalCost}${currency}/h`} />
-                    {policyCost != 0 ? <VehicleCardLine name={'Insurance policy cost'} value={`${policyCost}${currency}`} /> : null}
+                    {policyCost !== 0 ? <VehicleCardLine name={'Insurance policy cost'} value={`${policyCost}${currency}`} /> : null}
                     <VehicleCardLine name={'Total cost'} value={formatCost(parseInt(rentalCost * totalHours) + parseInt(policyCost))} />
                 </div>
-
             </div>
         )
     }

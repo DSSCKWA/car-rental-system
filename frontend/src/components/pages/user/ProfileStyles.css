@@ -1,13 +1,14 @@
-.profile_info {
+.user_info {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     width: 100%;
-    padding: 1em;
+    font-size: 1.2em;
 }
 
-.profile_info p {
+.user_info > p {
     text-align: left;
-    width: 400px;
+    width: 80%;
+    margin: 0.3em 0;
 }

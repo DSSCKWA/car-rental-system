@@ -3,9 +3,9 @@ from sqlalchemy import and_, not_, or_
 from datetime import datetime
 from ..config.extensions import bcrypt, db, login_manager
 from ..models.vehicle import Vehicle
+from ..models.price_list import Price_list
 from ..models.rental import Rental
 from ..utils.validator import validate_addition_request_body
-from ..models.price_list import Price_list
 from ..utils.validator import validate_edition_request_body
 import base64
 
@@ -53,7 +53,6 @@ def get_all():
     ], 200
 
 
-
 @vehicles.route('/<int:id>', methods=['GET'])
 def get_by_id(id):
     vehicle = Vehicle.query.get(id)
@@ -89,7 +88,6 @@ def edit(id):
     old_reg=vehicle.registration_number
     vehicle.registration_number = vehicle_body["registration_number"]
     vehicle.color = vehicle_body["color"]
-    validate_addition_request_body(vehicle_body)
 
     validate_edition_request_body(vehicle_body,old_reg)
     db.session.commit()
