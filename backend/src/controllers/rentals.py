@@ -50,7 +50,7 @@ def download_report():
     total_cost = 0
     for row in data_query:
         data.append(row)
-        total_cost += row[-1]  # assuming total cost is the last column
+        total_cost += row[data[0].index('Total cost')]  # assuming total cost is the last column
 
     data.append(('Total', '', '', '', '', '', '', total_cost))
 
