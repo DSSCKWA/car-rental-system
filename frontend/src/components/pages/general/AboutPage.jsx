@@ -1,5 +1,6 @@
 import Achievement from '../../../assets/achievement.png'
 import CarsImage from '../../../assets/cars.jpg'
+import './AboutPageStyles.css'
 export function ContactInfoLine({ name, value }) {
     return (
         <>

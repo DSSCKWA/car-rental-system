@@ -6,20 +6,22 @@ export function ProfilePage(props) {
 
     return (
         <div className='profile_page'>
-            <div className='profile'>
-                <h1>User Profile</h1>
+            <div className='profile page_content column_layout'>
                 <div className='profile_info'>
-                    <p>Email Address: {user?.user_email_address}</p>
-                    <p>Name: {user?.name}</p>
-                    <p>Surname: {user?.surname}</p>
-                    <p>Permissions: {user?.permissions}</p>
-                    <p>Phone Number: {user?.phone_number}</p>
-                    <p>Date of Birth: {new Date(user?.date_of_birth).toLocaleDateString()}</p>
+                    <h2>User Info</h2>
+                    <div className='user_info'>
+                        <p>Email Address: {user?.user_email_address}</p>
+                        <p>Name: {user?.name}</p>
+                        <p>Surname: {user?.surname}</p>
+                        <p>Permissions: {user?.permissions}</p>
+                        <p>Phone Number: {user?.phone_number}</p>
+                        <p>Date of Birth: {new Date(user?.date_of_birth).toLocaleDateString()}</p>
+                    </div>
                 </div>
-            </div>
-            <div className='profile_actions'>
-                <h2>Actions</h2>
-                <Link to='/profile/change-password'>Change password</Link>
+                <div className='profile_actions'>
+                    <h2>Actions</h2>
+                    <Link to='/profile/change-password' className='link_button_style'>Change password</Link>
+                </div>
             </div>
         </div>
     )

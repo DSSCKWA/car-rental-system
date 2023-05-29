@@ -18,7 +18,7 @@ export function WorkerTasksPage(props) {
         })
             .then(response => response.json())
             .then(data => {
-                data.sort((a, b) => a.task_id - b.task_id);
+                data.sort((a, b) => a.task_id - b.task_id)
                 setTasks(data)
             })
             .catch(error => {
@@ -65,21 +65,21 @@ export function WorkerTasksPage(props) {
                     <td>{task.task_description}</td>
                     <td>{task.task_status.replace(/_/g, ' ')}</td>
                     <td>{task.worker_name} {task.worker_surname}</td>
-                    {task.task_status !== "completed" && task.task_status !== "canceled" && (task.staff_id === user?.user_id || !task.staff_id) ?
-                        < td >
+                    < td >
+                        {task.task_status !== 'completed' && task.task_status !== 'canceled' && (task.staff_id === user?.user_id || !task.staff_id) &&
                             <button onClick={() => {
                                 if (!task.staff_id) {
                                     assign_worker_to_task(task.task_id)
-                                } else if (task.task_type === "prepare_vehicle") {
-                                    change_task_status(task.task_id, (task.task_status === "active" ? "completed" : ""))
+                                } else if (task.task_type === 'prepare_vehicle') {
+                                    change_task_status(task.task_id, task.task_status === 'active' ? 'completed' : '')
                                 } else {
-                                    navigate("/worker/cars/review", { state: { "rental_id": task.rental_id } })
+                                    navigate('/worker/cars/review', { state: { 'rental_id': task.rental_id } })
                                 }
                             }}>
-                                {task.staff_id ? (task.task_status === "active" && task.task_type === "prepare_vehicle" ? "Close" : "Review") : "Assign to me"}
+                                {task.staff_id ? task.task_status === 'active' && task.task_type === 'prepare_vehicle' ? 'Close' : 'Review' : 'Assign to me'}
                             </button>
-                        </td>
-                        : null}
+                        }
+                    </td>
                 </tr>)}</tbody>
             </table>
         </div >
