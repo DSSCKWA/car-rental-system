@@ -10,42 +10,6 @@
   min-height: 100vh;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
-
 body {
   display: flex;
   flex-direction: column;
@@ -56,217 +20,34 @@ body {
   min-height: 100vh;
 }
 
-.footer_container {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  background-color: #242424;
-  border-top: 3px solid #4eaae8;
-  width: 100%;
-  flex-wrap: wrap;
-  padding: 2em 1em 1em;
-  margin-top: auto;
-
-}
-
-.footer_container .footer_rights {
-  width: 100%;
-  padding: 2em;
-  color: #888;
-}
-
-.footer_container .footer_links, .footer_container .footer_contact {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-}
-
-.footer_container .footer_logo {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: center;
-  height: 3em;
-}
-
-.footer_container .footer_logo img {
-  height: 3em;
-  margin-right: 1em;
-}
-
-.footer_container .footer_logo p {
-  line-height: 3em;
-  font-weight: bold;
-}
-
-.footer_contact_title {
-  font-weight: bold;
-  margin-bottom: 1em;
-}
-
-.footer_links .footer_link {
-  color: #888;
-  margin-bottom: 0.5em;
-}
-
-.footer_links .footer_link:hover {
-  color: #299bbe;
-}
-
-.footer_social {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-    align-items: flex-start;
-}
-
-.footer_social img {
-  height: 2.5em;
-  margin: 0 0.5em;
-  width: 2.5em;
-}
-
-/* PageContainer */
 .page_container {
-  width: 80em;
-  max-width: 90vw;
+  width: 90%;
   padding: 2em;
 }
 
 .page_content, .about_page .about_info {
-  background-color: #252525;
+  background-color: var(--content-bg-color);
   width: 100%;
   border-radius: 5px;
+  padding: 2em;
 }
 
-/* AboutPage */
-.about_page {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 2em;
-}
-
-.about_page p {
-  font-size: 1.2em;
+.page_content p {
   text-align: justify;
-  max-width: 90%;
-}
-
-.about_page .about_info {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.about_info .motto {
-  font-size: 1.5em;
-  font-weight: bold;
-  margin: 2em 0 1em;
-}
-
-.about_info .about_us {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  width: 100%;
-}
-
-.about_us p {
-  width: 45%;
-}
-
-.about_us img {
+  font-size: 1.2em;
   margin: 1em;
-  width: 30%;
 }
 
-@font-face {
-  font-family: Satisfy-Regular;
-  src: url(assets/Satisfy-Regular.ttf);
-}
-
-.motto blockquote {
-  font-family: Satisfy-Regular, serif;
-  font-size: 1.5em;
-  font-weight: bold;
-  margin: 0;
-  color: #4eaae8;
-}
-
-.about_info h2 {
-  font-size: 1.5em;
-  font-weight: bold;
-  margin: 1em 0 2em 0;
-}
-
-.about_info .achievements {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  width: 100%;
-}
-
-.achievements img {
-    width: 10%;
-    margin: 1em;
-}
-
-.achievements p {
-  width: 70%;
-}
-
-.contact_info {
-  display: grid;
-  gap: 20px;
-  grid-template-columns: repeat(2, 1fr);
-}
-
-.contact_info .contact_name {
-  grid-column: 1 / 2;
-  text-align: left;
-}
-
-.contact_info .contact_value {
-  grid-column: 2 / 3;
-  text-align: right;
-}
-
-.about_info .location {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  width: 100%;
-  padding-left: 1em;
-  padding-right: 1em;
-  text-align: left;
-}
-
-.location p {
-  width: 30%;
-}
-
-.location .map {
-  width: 55%;
-  height: 25em;
-}
-
-.location .map iframe {
-  width: 100%;
-  height: 100%;
-}
-
-@media (max-width: 768px) {
-  .about_info .about_us {
-    flex-direction: column;
+@media screen and (max-width: 768px) {
+  .page_content p {
+    margin: 0.2em;
   }
-  .about_info .achievements {
-    flex-direction: column;
+
+  .page_content {
+    padding: 0.5em;
+  }
+
+  .page_container {
+    padding: 0.5em 0;
   }
 }

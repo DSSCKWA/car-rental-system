@@ -16,11 +16,11 @@ export function WorkerCarsReviewPage() {
     async function handleSubmit(e) {
         e.preventDefault()
         console.log({
-            "fuel_level": fuelLevel,
-            "vehicle_body_condition": vehicleBodyCondition,
-            "other_mechanical_damage": otherMechanicalDamage,
-            "interior_cleanness": interiorCleanness,
-            "exterior_cleanness": exteriorCleanness
+            'fuel_level': fuelLevel,
+            'vehicle_body_condition': vehicleBodyCondition,
+            'other_mechanical_damage': otherMechanicalDamage,
+            'interior_cleanness': interiorCleanness,
+            'exterior_cleanness': exteriorCleanness,
         })
         const response = await fetch(`/api/rentals/${rental_id}/review`, {
             method: 'POST',
@@ -28,11 +28,11 @@ export function WorkerCarsReviewPage() {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                "fuel_level": fuelLevel,
-                "vehicle_body_condition": vehicleBodyCondition,
-                "other_mechanical_damage": otherMechanicalDamage,
-                "interior_cleanness": interiorCleanness,
-                "exterior_cleanness": exteriorCleanness
+                'fuel_level': fuelLevel,
+                'vehicle_body_condition': vehicleBodyCondition,
+                'other_mechanical_damage': otherMechanicalDamage,
+                'interior_cleanness': interiorCleanness,
+                'exterior_cleanness': exteriorCleanness,
             }),
         })
         const body = await response.json()
@@ -60,18 +60,18 @@ export function WorkerCarsReviewPage() {
         <Form formName='Review vehicle after rental' className='big' submitText='Review' onSubmit={handleSubmit} error={error} inputs={[
             {
                 name: 'fuelLevel', label: 'Fuel Level', type: 'select', options: [
-                    { value: "full", label: "Full" },
-                    { value: "depleted", label: "Depleted" },
-                    { value: "empty", label: "Empty" },
-                ], onChange: e => setFuelLevel(e.target.value)
+                    { value: 'full', label: 'Full' },
+                    { value: 'depleted', label: 'Depleted' },
+                    { value: 'empty', label: 'Empty' },
+                ], onChange: e => setFuelLevel(e.target.value),
             },
             { name: 'vehicleBodyCondition', label: 'Vehicle Body Damaged', type: 'checkbox', onChange: e => setVehicleBodyCondition(e.target.checked) },
             {
                 name: 'otherMechanicalDamage', label: 'Mechanical Damage', type: 'select', options: [
-                    { value: "none", label: "None" },
-                    { value: "minor", label: "Minor" },
-                    { value: "major", label: "Major" },
-                ], onChange: e => setOtherMechanicalDamage(e.target.value)
+                    { value: 'none', label: 'None' },
+                    { value: 'minor', label: 'Minor' },
+                    { value: 'major', label: 'Major' },
+                ], onChange: e => setOtherMechanicalDamage(e.target.value),
             },
             { name: 'interiorCleanness', label: 'Interior Clean', type: 'checkbox', onChange: e => setInteriorCleanness(e.target.checked) },
             { name: 'exteriorCleanness', label: 'Exterior Clean', type: 'checkbox', onChange: e => setExteriorCleanness(e.target.checked) },

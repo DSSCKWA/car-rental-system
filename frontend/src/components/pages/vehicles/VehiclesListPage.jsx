@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { VehicleCard } from './VehicleCard.jsx'
 import './VehiclesPage.css'
-import { VehicleAdditionPage } from './VehicleAdditionPage.jsx'
 import { Link } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import OutlinedInput from '@mui/material/OutlinedInput'
@@ -201,26 +200,12 @@ export function VehiclesListPage(props) {
 
     if (user?.permissions == 'worker') {
         return (
-            <div className='Vehicles'>
+            <div className='Vehicles page_content'>
                 <div className='vehicle_add'>
-                    <Link to={'/vehicles/new'}> Add new </Link>
+                    <Link to={'/vehicles/new'} className='link_button_style'> Add new </Link>
                 </div>
 
                 {vehicles.length != 0 ? <>
-                    <div className='vehicle-filter-sort'>
-                        <input
-                            className='vehicle-filter'
-                            type='text'
-                            placeholder='Filter by brand or model'
-                            value={filter}
-                            onChange={e => setFilter(e.target.value)}
-                        />
-                        <select className='vehicle-sort' value={sortType} onChange={e => setSortType(e.target.value)}>
-                            <option value='none'>Sort by year of production</option>
-                            <option value='year_asc'>Oldest</option>
-                            <option value='year_desc'>Newest</option>
-                        </select>
-                    </div>
                     <div className='vehicle-list'>
                         {filteredVehicles.map(vehicle =>
                             vehicle.status === 'available' ?
@@ -238,8 +223,8 @@ export function VehiclesListPage(props) {
         )
     } else {
         return (
-            <div className='Vehicles'>
-                <form className='vehicle_time_search_from' onSubmit={e => {
+            <div className='Vehicles page_content'>
+                <form className='vehicle_time_search_from big' onSubmit={e => {
                     e.preventDefault()
                     if (startDate && startTime && endDate && endTime) {
                         fetchVehicles()
@@ -279,8 +264,8 @@ export function VehiclesListPage(props) {
                 </form>
                 {vehicles.length != 0 ? <>
                     <div className='vehicle-filter-sort'>
-                        <FormControl className='form-control' sx={{ m: 1, width: 300, backgroundColor: '#252525', color: '#888' }}>
-                            <InputLabel className='input-label' id='filter-by-brand' sx={{ color: '#888' }}> Brand </InputLabel>
+                        <FormControl className='form-control' sx={{ m: 1, width: 300, color: 'var(--medium-gray)' }}>
+                            <InputLabel className='input-label' id='filter-by-brand' sx={{ color: 'var(--light-gray)' }}> Brand </InputLabel>
                             <Select
                                 className='select'
                                 labelId='filter-by-brand'
@@ -288,16 +273,16 @@ export function VehiclesListPage(props) {
                                 multiple
                                 value={selectedBrands}
                                 onChange={handleBrandChange}
-                                input={<OutlinedInput id='select-multiple-chip' label='Brand' sx={{ color: '#888' }}/>}
+                                input={<OutlinedInput id='select-multiple-chip' label='Brand' sx={{ color: 'var(--medium-gray)' }}/>}
                                 renderValue={selected =>
                                     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                         {selected.map(value =>
-                                            <Chip key={value} label={value} sx={{ backgroundColor: '#4eaae8', color: '#252525' }}/>,
+                                            <Chip key={value} label={value} sx={{ backgroundColor: 'var(--highlight-blue)', color: 'var(--content-bg-color)' }}/>,
                                         )}
                                     </Box>
                                 }
                                 MenuProps={MenuProps}
-                                sx={{ color: '#888' }}
+                                sx={{ color: 'var(--medium-gray)' }}
                             >
                                 {brands.map(brand =>
                                     <MenuItem
@@ -305,16 +290,16 @@ export function VehiclesListPage(props) {
                                         key={brand}
                                         value={brand}
                                         style={getStyles(brand, brands, theme)}
-                                        sx={{ color: '#888' }}
+                                        sx={{ color: 'var(--medium-gray)' }}
                                     >
-                                        <Checkbox checked={selectedBrands.indexOf(brand) > -1} sx={{ color: '#4eaae8' }}/>
-                                        <ListItemText primary={brand} sx={{ color: '#888' }}/>
+                                        <Checkbox checked={selectedBrands.indexOf(brand) > -1} sx={{ color: 'var(--highlight-blue)' }}/>
+                                        <ListItemText primary={brand} sx={{ color: 'var(--medium-gray)' }}/>
                                     </MenuItem>,
                                 )}
                             </Select>
                         </FormControl>
-                        <FormControl className='form-control' sx={{ m: 1, width: 300, backgroundColor: '#252525', color: '#888' }}>
-                            <InputLabel className='input-label' id='filter-by-model' sx={{ color: '#888' }}> Model </InputLabel>
+                        <FormControl className='form-control' sx={{ m: 1, width: 300, color: 'var(--medium-gray)' }}>
+                            <InputLabel className='input-label' id='filter-by-model' sx={{ color: 'var(--light-gray)' }}> Model </InputLabel>
                             <Select
                                 className='select'
                                 labelId='filter-by-model'
@@ -322,16 +307,16 @@ export function VehiclesListPage(props) {
                                 multiple
                                 value={selectedModels}
                                 onChange={handleModelChange}
-                                input={<OutlinedInput id='select-multiple-chip' label='Model' sx={{ color: '#888' }}/>}
+                                input={<OutlinedInput id='select-multiple-chip' label='Model' sx={{ color: 'var(--medium-gray)' }}/>}
                                 renderValue={selected =>
                                     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                         {selected.map(value =>
-                                            <Chip key={value} label={value} sx={{ backgroundColor: '#4eaae8', color: '#252525' }}/>,
+                                            <Chip key={value} label={value} sx={{ backgroundColor: 'var(--highlight-blue)', color: 'var(--content-bg-color)' }}/>,
                                         )}
                                     </Box>
                                 }
                                 MenuProps={MenuProps}
-                                sx={{ color: '#888' }}
+                                sx={{ color: 'var(--medium-gray)' }}
                             >
                                 {models.map(model =>
                                     <MenuItem
@@ -340,14 +325,14 @@ export function VehiclesListPage(props) {
                                         value={model}
                                         style={getStyles(model, models, theme)}
                                     >
-                                        <Checkbox checked={selectedModels.indexOf(model) > -1} sx={{ color: '#4eaae8' }}/>
-                                        <ListItemText primary={model} sx={{ color: '#888' }}/>
+                                        <Checkbox checked={selectedModels.indexOf(model) > -1} sx={{ color: 'var(--highlight-blue)' }}/>
+                                        <ListItemText primary={model} sx={{ color: 'var(--medium-gray)' }}/>
                                     </MenuItem>,
                                 )}
                             </Select>
                         </FormControl>
-                        <FormControl className='form-control' sx={{ m: 1, width: 300, backgroundColor: '#252525', color: '#888' }}>
-                            <InputLabel className='input-label' id='filter-by-gearbox' sx={{ color: '#888' }}> Gearbox </InputLabel>
+                        <FormControl className='form-control' sx={{ m: 1, width: 300, color: 'var(--medium-gray)' }}>
+                            <InputLabel className='input-label' id='filter-by-gearbox' sx={{ color: 'var(--light-gray)' }}> Gearbox </InputLabel>
                             <Select
                                 className='select'
                                 labelId='filter-by-gearbox'
@@ -355,16 +340,16 @@ export function VehiclesListPage(props) {
                                 multiple
                                 value={selectedGearboxes}
                                 onChange={handleGearboxChange}
-                                input={<OutlinedInput id='select-multiple-chip' label='Gearbox' sx={{ color: '#888' }}/>}
+                                input={<OutlinedInput id='select-multiple-chip' label='Gearbox' sx={{ color: 'var(--medium-gray)' }}/>}
                                 renderValue={selected =>
                                     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                         {selected.map(value =>
-                                            <Chip key={value} label={value} sx={{ backgroundColor: '#4eaae8', color: '#252525' }}/>,
+                                            <Chip key={value} label={value} sx={{ backgroundColor: 'var(--highlight-blue)', color: 'var(--content-bg-color)' }}/>,
                                         )}
                                     </Box>
                                 }
                                 MenuProps={MenuProps}
-                                sx={{ color: '#888' }}
+                                sx={{ color: 'var(--medium-gray)' }}
                             >
                                 {gearboxes.map(gearbox =>
                                     <MenuItem
@@ -372,16 +357,16 @@ export function VehiclesListPage(props) {
                                         key={gearbox}
                                         value={gearbox}
                                         style={getStyles(gearbox, gearboxes, theme)}
-                                        sx={{ color: '#888' }}
+                                        sx={{ color: 'var(--medium-gray)' }}
                                     >
-                                        <Checkbox checked={selectedGearboxes.indexOf(gearbox) > -1} sx={{ color: '#4eaae8' }}/>
-                                        <ListItemText primary={gearbox} sx={{ color: '#888' }}/>
+                                        <Checkbox checked={selectedGearboxes.indexOf(gearbox) > -1} sx={{ color: 'var(--highlight-blue)' }}/>
+                                        <ListItemText primary={gearbox} sx={{ color: 'var(--medium-gray)' }}/>
                                     </MenuItem>,
                                 )}
                             </Select>
                         </FormControl>
-                        <FormControl className='form-control' sx={{ m: 1, width: 300, backgroundColor: '#252525', color: '#888' }}>
-                            <InputLabel className='input-label' id='filter-by-color' sx={{ color: '#888' }}> Color </InputLabel>
+                        <FormControl className='form-control' sx={{ m: 1, width: 300, color: 'var(--medium-gray)' }}>
+                            <InputLabel className='input-label' id='filter-by-color' sx={{ color: 'var(--light-gray)' }}> Color </InputLabel>
                             <Select
                                 className='select'
                                 labelId='filter-by-color'
@@ -389,16 +374,16 @@ export function VehiclesListPage(props) {
                                 multiple
                                 value={selectedColors}
                                 onChange={handleColorChange}
-                                input={<OutlinedInput id='select-multiple-chip' label='Color' sx={{ color: '#888' }}/>}
+                                input={<OutlinedInput id='select-multiple-chip' label='Color' sx={{ color: 'var(--medium-gray)' }}/>}
                                 renderValue={selected =>
                                     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                         {selected.map(value =>
-                                            <Chip key={value} label={value} sx={{ backgroundColor: '#4eaae8', color: '#252525' }}/>,
+                                            <Chip key={value} label={value} sx={{ backgroundColor: 'var(--highlight-blue)', color: 'var(--content-bg-color)' }}/>,
                                         )}
                                     </Box>
                                 }
                                 MenuProps={MenuProps}
-                                sx={{ color: '#888' }}
+                                sx={{ color: 'var(--medium-gray)' }}
                             >
                                 {colors.map(color =>
                                     <MenuItem
@@ -406,10 +391,10 @@ export function VehiclesListPage(props) {
                                         key={color}
                                         value={color}
                                         style={getStyles(color, colors, theme)}
-                                        sx={{ color: '#888' }}
+                                        sx={{ color: 'var(--medium-gray)' }}
                                     >
-                                        <Checkbox checked={selectedColors.indexOf(color) > -1} sx={{ color: '#4eaae8' }}/>
-                                        <ListItemText primary={color} sx={{ color: '#888' }}/>
+                                        <Checkbox checked={selectedColors.indexOf(color) > -1} sx={{ color: 'var(--highlight-blue)' }}/>
+                                        <ListItemText primary={color} sx={{ color: 'var(--medium-gray)' }}/>
                                     </MenuItem>,
                                 )}
                             </Select>
@@ -430,20 +415,20 @@ export function VehiclesListPage(props) {
                                 getAriaValueText={valuetext}
                             />
                         </Box>
-                        <FormControl className='vehicle-sort' sx={{ m: 1, width: 300, backgroundColor: '#252525', color: '#888' }}>
-                            <InputLabel className='input-label' id='sort-by-type' sx={{ color: '#888' }}>Sort by</InputLabel>
+                        <FormControl className='vehicle-sort form-control' sx={{ m: 1, width: 300, color: 'var(--medium-gray)' }}>
+                            <InputLabel className='input-label' id='sort-by-type' sx={{ color: 'var(--light-gray)' }}>Sort by</InputLabel>
                             <Select
                                 labelId='sort-by-type'
                                 id='sort-by-type'
                                 value={sortType}
                                 onChange={e => setSortType(e.target.value)}
-                                sx={{ color: '#888' }}
+                                sx={{ color: 'var(--medium-gray)' }}
                             >
                                 {sortOptions.map(option =>
                                     <MenuItem
                                         key={option.value}
                                         value={option.value}
-                                        sx={{ color: '#888' }}
+                                        sx={{ color: 'var(--medium-gray)' }}
                                     >
                                         {option.label}
                                     </MenuItem>,
@@ -463,7 +448,6 @@ export function VehiclesListPage(props) {
                         )}
                     </div>
                 </> : null}
-
             </div>
         )
     }

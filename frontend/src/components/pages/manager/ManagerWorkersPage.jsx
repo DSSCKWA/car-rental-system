@@ -39,7 +39,7 @@ export function ManagerWorkersPage() {
     if (!workers) return <div>Loading...</div>
 
     return (
-        <div className='manager_workers_page'>
+        <div className='manager_workers_page page_content'>
             <h2>Workers</h2>
             <Table data={workers} keys={'user_id'} columns={[{ label: 'ID', key: 'user_id', type: 'text' },
                 { label: 'Name', key: 'name', type: 'text' },

@@ -18,7 +18,7 @@ export function WorkerCarsPage() {
         })
             .then(response => response.json())
             .then(data => {
-                data.sort((a, b) => a.vehicle_id - b.vehicle_id);
+                data.sort((a, b) => a.vehicle_id - b.vehicle_id)
                 setVehicles(data)
             })
             .catch(error => {
@@ -29,14 +29,14 @@ export function WorkerCarsPage() {
     return (
         <div className='worker_vehicles_page page_content'>
             <h2>Vehicles</h2>
-            <Table data={vehicles} keys={"vehicle_id"}
+            <Table data={vehicles} keys={'vehicle_id'}
                 columns={[
                     { key: 'vehicle_id', label: 'Vehicle ID' },
                     { key: 'brand', label: 'Brand' },
                     { key: 'model', label: 'Model' },
                     { key: 'registration_number', label: 'Registration Number' },
                     { key: 'technical_review_date', label: 'Technical Review Date', type: 'date', format: 'dd/MM/yyyy' },
-                    { key: 'status', label: 'Status', type: 'text' }
+                    { key: 'status', label: 'Status', type: 'text' },
                 ]}
 
             />

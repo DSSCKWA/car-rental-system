@@ -1,7 +1,4 @@
 import { Link, Route, Routes } from 'react-router-dom'
-import './ManagerStyles.css'
-import { MainPage } from '../general/MainPage.jsx'
-import { AboutPage } from '../general/AboutPage.jsx'
 import { ManagerWorkersPage } from './ManagerWorkersPage.jsx'
 import { AddWorkerPage } from './AddWorkerPage.jsx'
 import Modal from '@mui/material/Modal'
