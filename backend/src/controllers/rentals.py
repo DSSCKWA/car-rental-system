@@ -279,8 +279,8 @@ def update(id):
 
 
 def is_more_than_24_hours(start_time):
-    current_time = datetime.datetime.utcnow()
-    rental_time = datetime.datetime.strptime(start_time, "%d/%m/%Y, %H:%M")
+    current_time = datetime.utcnow()
+    rental_time = datetime.strptime(start_time, "%d/%m/%Y, %H:%M")
     time_difference = rental_time - current_time
     return time_difference.total_seconds() > 24 * 60 * 60
 
