@@ -233,7 +233,7 @@ h2, h3 {
 }
 
 .report_button:hover {
-    color: #9663fe;
+    color: var(--highlight-violet);
 }
 
 .modal_content{
