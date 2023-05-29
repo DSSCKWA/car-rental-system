@@ -1,4 +1,5 @@
 import { Link, Route, Routes } from 'react-router-dom'
+import { SidebarLayout } from '../../page_elements/SidebarLayout.jsx'
 import { ManagerWorkersPage } from './ManagerWorkersPage.jsx'
 import { AddWorkerPage } from './AddWorkerPage.jsx'
 import React from 'react'
@@ -18,14 +19,14 @@ export function ManagerPage() {
                     <Link to='/manager/workers' className='manager_menu_item'>Workers</Link>
                     <Link to='/manager/add-worker' className='manager_menu_item'>Add worker</Link>
                     <div className='manager_menu_item report_button' onClick={handleOpen}>Report</div>
-                    <ModalComponent open={open} setOpen={setOpen} handleOpen={handleOpen}/>
+                    <ModalComponent open={open} setOpen={setOpen} handleOpen={handleOpen} />
                 </nav>
 
 
                 <div className='manager_content'>
                     <Routes>
-                        <Route path='workers' element={<ManagerWorkersPage/>}/>
-                        <Route path='add-worker' element={<AddWorkerPage/>}/>
+                        <Route path='workers' element={<ManagerWorkersPage />} />
+                        <Route path='add-worker' element={<AddWorkerPage />} />
                     </Routes>
                 </div>
             </div>

@@ -42,12 +42,12 @@ export function ManagerWorkersPage() {
         <div className='manager_workers_page page_content'>
             <h2>Workers</h2>
             <Table data={workers} keys={'user_id'} columns={[{ label: 'ID', key: 'user_id', type: 'text' },
-                { label: 'Name', key: 'name', type: 'text' },
-                { label: 'Surname', key: 'surname', type: 'text' },
-                { label: 'Email', key: 'user_email_address', type: 'text' },
-                { label: 'Phone number', key: 'phone_number', type: 'text' },
-                { label: 'Birth date', key: 'date_of_birth', type: 'date', format: 'dd/MM/yyyy' },
-                { label: 'Status', key: 'account_status', type: 'select', options: ['active', 'deleted'], onChange: (row, e) => change_worker_status(row.user_id, e.target.value) }]} />
+            { label: 'Name', key: 'name', type: 'text' },
+            { label: 'Surname', key: 'surname', type: 'text' },
+            { label: 'Email', key: 'user_email_address', type: 'text' },
+            { label: 'Phone number', key: 'phone_number', type: 'text' },
+            { label: 'Birth date', key: 'date_of_birth', type: 'date', format: 'dd/MM/yyyy' },
+            { label: 'Status', key: 'account_status', type: 'select', options: ['active', 'deleted'], onChange: (row, e) => change_worker_status(row.user_id, e.target.value) }]} />
         </div>
     )
 }

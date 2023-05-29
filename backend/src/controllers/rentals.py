@@ -1,7 +1,7 @@
 from flask import Blueprint, Response, abort, flash, jsonify, request, session, send_file
 from flask_login import login_required, current_user
 import datetime
-
+from sqlalchemy import and_, not_, or_
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter, landscape
 from reportlab.lib.styles import getSampleStyleSheet
@@ -13,6 +13,7 @@ from ..models.vehicle_review import Vehicle_review
 from ..models.price_list import Price_list
 from ..models.user import User
 from ..models.task import Task
+from datetime import datetime
 from ..models.vehicle import Vehicle
 from ..models.insurance import Insurance
 from ..models.feedback import Feedback
@@ -91,21 +92,80 @@ def download_report():
 @rentals.route('/', methods=['GET'])
 @login_required
 def get_all():
+
+    start_date = request.args.get('startDate', default=None, type=str)
+    start_time = request.args.get('startTime', default=None, type=str)
+    end_date = request.args.get('endDate', default=None, type=str)
+    end_time = request.args.get('endTime', default=None, type=str)
+
+    rentals = []
+    start_datetime = None
+    end_datetime = None
+    if start_date and start_time and end_date and end_time:
+        start_datetime = datetime.strptime(f"{start_date} {start_time}",
+                                           "%Y-%m-%d %H:%M:%S")
+        end_datetime = datetime.strptime(f"{end_date} {end_time}",
+                                         "%Y-%m-%d %H:%M:%S")
+
     user_permissions = current_user.permissions
-    if user_permissions in ["manager", "worker"]:
-        rentals = Rental.query.join(
+
+    if user_permissions in ["manager"]:
+            if start_datetime and end_datetime:
+                rentals_unavailable = Rental.query.join(
+                    User, Rental.client_id == User.user_id).join(
+                    Vehicle, Rental.vehicle_id == Vehicle.vehicle_id).join(
+                        Cost_distribution,
+                        Rental.rental_id == Cost_distribution.rental_id 
+                    ).outerjoin(
+                        Insurance,
+                        Rental.policy_number == Insurance.policy_number 
+                    ).where(
+                    
+                            or_(Rental.end_time <= start_datetime,
+                                Rental.end_time >= end_datetime),
+                        ).all()
+                rentals = [
+                    rental for rental in Rental.query.join(
+                    User, Rental.client_id == User.user_id).join(
+                    Vehicle, Rental.vehicle_id == Vehicle.vehicle_id).join(
+                        Cost_distribution,
+                        Rental.rental_id == Cost_distribution.rental_id 
+                    ).outerjoin(
+                            Insurance,
+                            Rental.policy_number == Insurance.policy_number 
+                    ).all()
+                    if rental not in rentals_unavailable
+                ]
+            else:
+                rentals = Rental.query.join(
+                    User, Rental.client_id == User.user_id).join(
+                        Vehicle, Rental.vehicle_id == Vehicle.vehicle_id).join(
+                        Cost_distribution,
+                        Rental.rental_id == Cost_distribution.rental_id 
+                    ).outerjoin(
+                            Insurance,
+                            Rental.policy_number == Insurance.policy_number).all()
+    else: 
+        if user_permissions in ["worker"]:
+            rentals = Rental.query.join(
             User, Rental.client_id == User.user_id).join(
             Vehicle, Rental.vehicle_id == Vehicle.vehicle_id).outerjoin(
             Insurance,
             Rental.policy_number == Insurance.policy_number).all()
-    else:
-        rentals = Rental.query.join(
+        else:
+            rentals = Rental.query.join(
             User, Rental.client_id == User.user_id).join(
-            Vehicle, Rental.vehicle_id == Vehicle.vehicle_id).outerjoin(
-            Insurance,
-            Rental.policy_number == Insurance.policy_number).filter(
-            Rental.client_id == current_user.user_id).all()
-    return [{**rental.serialize(), 'feedback_status': check_if_feedback_exist(rental)} for rental in rentals]
+                Vehicle, Rental.vehicle_id == Vehicle.vehicle_id).outerjoin(
+                    Insurance,
+                    Rental.policy_number == Insurance.policy_number).filter(
+                        Rental.client_id == current_user.user_id).all()
+            
+    better_rental = []
+    for rental in rentals:
+        costs = Cost_distribution.query.where(rental.rental_id == Cost_distribution.rental_id).first()
+        better_rental.append({**rental.serialize(costs.total), 'feedback_status': check_if_feedback_exist(rental)})
+
+    return better_rental
 
 
 @rentals.route('/', methods=['POST'])
