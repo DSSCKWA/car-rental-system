@@ -6,7 +6,8 @@ from flask import abort
 from ..models.user import User
 from ..models.vehicle import Vehicle
 from ..config.extensions import bcrypt
-import re, datetime
+import re
+import datetime
 
 
 def is_valid_email(email):
@@ -43,7 +44,8 @@ def email_taken(email):
 def is_valid_date(date):
     current_date = datetime.datetime.now().date()
     date_string = current_date.strftime('%Y-%m-%d')
-    current_date_formatted = datetime.datetime.strptime(date_string, '%Y-%m-%d').date()
+    current_date_formatted = datetime.datetime.strptime(
+        date_string, '%Y-%m-%d').date()
 
     regex = re.compile(r'^\d{4}-\d{2}-\d{2}$')
     if regex.match(date):
@@ -59,6 +61,7 @@ def is_valid_phone_number(phone_number):
         return False
     if not re.match(regex, phone_number):
         return False
+    return True
 
 
 def is_valid_password(password):
@@ -106,7 +109,8 @@ def registration_number_available_edit(reg_number, old_reg_number):
 def is_valid_review_date(date):
     current_date = datetime.datetime.now().date()
     date_string = current_date.strftime('%Y-%m-%d')
-    current_date_formated = datetime.datetime.strptime(date_string, '%Y-%m-%d').date()
+    current_date_formated = datetime.datetime.strptime(
+        date_string, '%Y-%m-%d').date()
 
     regex = re.compile(r'^\d{4}-\d{2}-\d{2}$')
     if regex.match(date):
