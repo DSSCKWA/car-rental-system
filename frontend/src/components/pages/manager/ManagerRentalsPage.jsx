@@ -66,44 +66,44 @@ export function ManagerRentalsPage() {
 
     return (
         <div>
-            <form className='rental_time_search_from' onSubmit={e => {
-                e.preventDefault()
-                if (startDate && startTime && endDate && endTime) {
-                    fetchRentals()
-                } else {
-                    alert('Pick a date range first!')
-                }
-            }}>
-                <div className='form_group'>
-                    <label htmlFor='start_date'>Start date</label>
-                    <input type='date' id='start_date' name='start_date' value={startDate}
-                        onChange={e => {
-                            setStartDate(e.target.value);
-                        }} />
-                </div>
-                <div className='form_group'>
-                    <label htmlFor='start_time'>Start time</label>
-                    <input type='time' id='start_time' name='start_time' step='3600' value={startTime}
-                        onChange={e => {
-                            setStartTime(`${e.target.value.split(':')[0]}:00:00`)
-                        }} />
-                </div>
-                <div className='form_group'>
-                    <label htmlFor='end_date'>End date</label>
-                    <input type='date' id='end_date' name='end_date' value={endDate}
-                        min={startDate ? startDate : startDate} onChange={e => setEndDate(e.target.value)} />
-                </div>
-                <div className='form_group'>
-                    <label htmlFor='end_time'>End time</label>
-                    <input type='time' id='end_time' name='end_time' step='3600' value={endTime} onChange={e => {
-                        setEndTime(`${e.target.value.split(':')[0]}:00:00`)
-                    }} />
-                </div>
-                <div className='form_group'>
-                    <button type='submit'>Search</button>
-                </div>
-            </form>
             <div className='manager_rentals_page page_content'>
+                <form className='rental_time_search_from' onSubmit={e => {
+                    e.preventDefault()
+                    if (startDate && startTime && endDate && endTime) {
+                        fetchRentals()
+                    } else {
+                        alert('Pick a date range first!')
+                    }
+                }}>
+                    <div className='form_group'>
+                        <label htmlFor='start_date'>Start date</label>
+                        <input type='date' id='start_date' name='start_date' value={startDate}
+                            onChange={e => {
+                                setStartDate(e.target.value);
+                            }} />
+                    </div>
+                    <div className='form_group'>
+                        <label htmlFor='start_time'>Start time</label>
+                        <input type='time' id='start_time' name='start_time' step='3600' value={startTime}
+                            onChange={e => {
+                                setStartTime(`${e.target.value.split(':')[0]}:00:00`)
+                            }} />
+                    </div>
+                    <div className='form_group'>
+                        <label htmlFor='end_date'>End date</label>
+                        <input type='date' id='end_date' name='end_date' value={endDate}
+                            min={startDate ? startDate : startDate} onChange={e => setEndDate(e.target.value)} />
+                    </div>
+                    <div className='form_group'>
+                        <label htmlFor='end_time'>End time</label>
+                        <input type='time' id='end_time' name='end_time' step='3600' value={endTime} onChange={e => {
+                            setEndTime(`${e.target.value.split(':')[0]}:00:00`)
+                        }} />
+                    </div>
+                    <div className='form_group'>
+                        <button type='submit'>Search</button>
+                    </div>
+                </form>
                 <h2>Rentals</h2>
                 <Table data={rentals} keys={'rental_id'} columns={[
                     { label: 'Name', key: 'name', type: 'text' },
