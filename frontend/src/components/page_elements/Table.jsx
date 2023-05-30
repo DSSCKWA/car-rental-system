@@ -36,9 +36,7 @@ export function Table({ columns, data, keys }) {
     return (
         <table>
             <thead>
-                <tr>
-                    {columns?.map(column => <th key={column.key}>{column.label}</th>)}
-                </tr>
+                {columns?.map(column => <th key={column.key}>{column.label}</th>)}
             </thead>
             <tbody>
                 {tableRows}
