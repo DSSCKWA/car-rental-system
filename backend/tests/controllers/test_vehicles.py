@@ -137,18 +137,13 @@ class VehiclesBlueprintTestCase(unittest.TestCase):
     def test_edit(self):
         with self.app.test_client() as client:
 
-            # valid add
+            # valid edit
             self.login_with_check(client, 'worker@test.com:spirol123')
             vehicle_data = self.create_test_vehicle_data("base64")
             vehicle_data["fuel_type"] = 'diesel'
-
-            print("\nEE:\n", vehicle_data)
-
             response = client.put(f'/vehicles/{self.test_vehicle.vehicle_id}', data=json.dumps(vehicle_data),
                                   headers={'Content-Type': 'application/json'})
-            print("MSSG: ", response.json)
             self.assertEqual(response.status_code, 200)
-
             self.logout_with_check(client)
 
     def create_test_vehicle(self):
