@@ -20,7 +20,7 @@ export function LoginPage(props) {
                 'Content-Type': 'application/json',
                 'Authorization': 'Basic ' + btoa(email + ':' + password),
             },
-            body: JSON.stringify({ }),
+            body: JSON.stringify({}),
         })
 
         const body = await response.json()
@@ -36,16 +36,16 @@ export function LoginPage(props) {
 
         switch (body.permissions) {
             case 'admin':
-                navigate('/admin')
+                navigate('/admin/edit-users')
                 break
             case 'manager':
-                navigate('/manager')
+                navigate('/manager/workers')
                 break
             case 'worker':
-                navigate('/worker')
+                navigate('/worker/tasks')
                 break
             case 'client':
-                navigate('/client')
+                navigate('/client/rentals')
                 break
             default:
                 console.log('no permissions')

@@ -17,19 +17,19 @@ export function Menu(props) {
     }
 
     if (props.user && props.user['permissions'] === 'admin') {
-        menuItems.push({ name: 'Admin Panel', path: '/admin' })
+        menuItems.push({ name: 'Admin Panel', path: '/admin/edit-users' })
     }
 
     if (props.user && props.user['permissions'] === 'manager') {
-        menuItems.push({ name: 'Manager Panel', path: '/manager' })
+        menuItems.push({ name: 'Manager Panel', path: '/manager/workers' })
     }
 
     if (props.user && props.user['permissions'] === 'worker') {
-        menuItems.push({ name: 'Worker Panel', path: '/worker' })
+        menuItems.push({ name: 'Worker Panel', path: '/worker/tasks' })
     }
 
     if (props.user && props.user['permissions'] === 'client') {
-        menuItems.push({ name: 'Client Panel', path: '/client' })
+        menuItems.push({ name: 'Client Panel', path: '/client/rentals' })
     }
 
     if (!props.user?.permissions) {
