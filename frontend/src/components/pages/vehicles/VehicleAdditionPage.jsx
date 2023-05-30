@@ -20,7 +20,7 @@ export function VehicleAdditionPage(props) {
             <div className='register_success'>
                 <h2>Rental Success</h2>
                 <p>You can track your rental in the
-                    <Link to={'/client'}> History </Link> tab
+                    <Link to={'/client/rentals'}> History </Link> tab
                 </p>
             </div>
         )
