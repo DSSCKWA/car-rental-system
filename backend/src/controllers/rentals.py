@@ -1,29 +1,28 @@
-from flask import Blueprint, Response, abort, flash, jsonify, request, session, send_file
-from flask_login import login_required, current_user
 import datetime
-from sqlalchemy import and_, not_, or_
+import threading
+from datetime import datetime
+from io import BytesIO
+
+from flask import Blueprint, abort, request, send_file
+from flask_login import login_required, current_user
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter, landscape
 from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.pdfgen import canvas
-from io import BytesIO
-from ..config.extensions import bcrypt, db, login_manager
-from ..models.rental import Rental
-from ..models.vehicle_review import Vehicle_review
-from ..models.price_list import Price_list
-from ..models.user import User
-from ..models.task import Task
-from datetime import datetime
-from ..models.vehicle import Vehicle
-from ..models.insurance import Insurance
-from ..models.feedback import Feedback
-from ..utils.emails import send_rental_invoice
-from ..utils.emails import send_rental_confirmation
-import threading
-from ..models.cost_distribution import Cost_distribution
-from sqlalchemy import and_, not_, or_
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph
-from datetime import datetime
+from sqlalchemy import and_, or_
+
+from ..config.extensions import db
+from ..models.cost_distribution import Cost_distribution
+from ..models.feedback import Feedback
+from ..models.insurance import Insurance
+from ..models.price_list import Price_list
+from ..models.rental import Rental
+from ..models.task import Task
+from ..models.user import User
+from ..models.vehicle import Vehicle
+from ..models.vehicle_review import Vehicle_review
+from ..utils.emails import send_rental_confirmation
+from ..utils.emails import send_rental_invoice
 
 rentals = Blueprint('rentals', __name__, url_prefix='/rentals')
 response_class = Blueprint('response_class', __name__)
@@ -35,7 +34,6 @@ def check_if_feedback_exist(rental):
 
 @rentals.route('/report', methods=['GET'])
 def download_report():
-
     start_date = request.args.get('start')
     end_date = request.args.get('end')
 
@@ -101,7 +99,6 @@ def download_report():
 @rentals.route('/', methods=['GET'])
 @login_required
 def get_all():
-
     start_date = request.args.get('startDate', default=None, type=str)
     start_time = request.args.get('startTime', default=None, type=str)
     end_date = request.args.get('endDate', default=None, type=str)
@@ -123,11 +120,11 @@ def get_all():
             rentals_unavailable = Rental.query.join(
                 User, Rental.client_id == User.user_id).join(
                 Vehicle, Rental.vehicle_id == Vehicle.vehicle_id).join(
-                    Cost_distribution,
-                    Rental.rental_id == Cost_distribution.rental_id
+                Cost_distribution,
+                Rental.rental_id == Cost_distribution.rental_id
             ).outerjoin(
-                    Insurance,
-                    Rental.policy_number == Insurance.policy_number
+                Insurance,
+                Rental.policy_number == Insurance.policy_number
             ).where(
 
                 or_(Rental.end_time <= start_datetime,
@@ -141,19 +138,19 @@ def get_all():
                     Rental.rental_id == Cost_distribution.rental_id
                 ).outerjoin(
                     Insurance,
-                        Rental.policy_number == Insurance.policy_number
+                    Rental.policy_number == Insurance.policy_number
                 ).all()
                 if rental not in rentals_unavailable
             ]
         else:
             rentals = Rental.query.join(
                 User, Rental.client_id == User.user_id).join(
-                    Vehicle, Rental.vehicle_id == Vehicle.vehicle_id).join(
-                    Cost_distribution,
-                    Rental.rental_id == Cost_distribution.rental_id
+                Vehicle, Rental.vehicle_id == Vehicle.vehicle_id).join(
+                Cost_distribution,
+                Rental.rental_id == Cost_distribution.rental_id
             ).outerjoin(
-                        Insurance,
-                        Rental.policy_number == Insurance.policy_number).all()
+                Insurance,
+                Rental.policy_number == Insurance.policy_number).all()
     else:
         if user_permissions in ["worker"]:
             rentals = Rental.query.join(
@@ -165,16 +162,16 @@ def get_all():
             rentals = Rental.query.join(
                 User, Rental.client_id == User.user_id).join(
                 Vehicle, Rental.vehicle_id == Vehicle.vehicle_id).outerjoin(
-                    Insurance,
-                    Rental.policy_number == Insurance.policy_number).filter(
-                        Rental.client_id == current_user.user_id).all()
+                Insurance,
+                Rental.policy_number == Insurance.policy_number).filter(
+                Rental.client_id == current_user.user_id).all()
 
     better_rental = []
     for rental in rentals:
         costs = Cost_distribution.query.where(
             rental.rental_id == Cost_distribution.rental_id).first()
         better_rental.append({**rental.serialize(costs.total),
-                             'feedback_status': check_if_feedback_exist(rental)})
+                              'feedback_status': check_if_feedback_exist(rental)})
 
     return better_rental
 
@@ -187,7 +184,8 @@ def add():
     db.session.add(new_rental)
     db.session.commit()
     thread = threading.Thread(target=send_rental_confirmation, args=(
-        new_rental.client.user_email_address, new_rental.start_time, new_rental.end_time, new_rental.vehicle.brand, new_rental.vehicle.model))
+        new_rental.client.user_email_address, new_rental.start_time, new_rental.end_time, new_rental.vehicle.brand,
+        new_rental.vehicle.model))
     thread.start()
     return new_rental.serialize()
 
@@ -263,7 +261,8 @@ def update(id):
                 if task.task_status != "completed":
                     task.task_status = "canceled"
         db.session.commit()
-    elif user_permissions == "client" and current_user.user_id == request.json["client_id"] and rental_belongs_to_client(current_user.user_id, id):
+    elif user_permissions == "client" and current_user.user_id == request.json[
+        "client_id"] and rental_belongs_to_client(current_user.user_id, id):
         if is_more_than_24_hours(request.json["start_time"]):
             rental = Rental.query.filter_by(rental_id=id).first()
             rental.rental_status = request.json["rental_status"]

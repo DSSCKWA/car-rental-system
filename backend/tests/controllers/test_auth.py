@@ -48,15 +48,17 @@ class AuthBlueprintTestCase(unittest.TestCase):
 
     def test_me(self):
         with self.app.test_client() as client:
+
+            # logged user
             self.login_with_check(client, "user@test.com:spirol123")
             response = client.get('/auth/me')
-
             self.assertEqual(response.status_code, 200)
 
+            # check response length
             self.assertTrue(len(response.data) > 0)
 
+            # check response type
             user_data = response.get_json()
-
             correct_keys = ["account_status", "date_of_birth", "name", "permissions", "phone_number", "surname",
                             "user_email_address", "user_id"]
             self.assertEqual(type(user_data), dict)
@@ -65,13 +67,15 @@ class AuthBlueprintTestCase(unittest.TestCase):
 
             self.logout_with_check(client)
 
+            # not logged user
             response = client.get('/auth/me')
             self.assertEqual(response.status_code, 200)
-
             self.assertEqual(response.get_json(), {})
 
     def test_register(self):
         with self.app.test_client() as client:
+
+            # valid register
             user_data = {
                 "user_email_address": "register_test@gmail.com",
                 "name": "John",
@@ -84,6 +88,7 @@ class AuthBlueprintTestCase(unittest.TestCase):
             user_id = int(response.json["user_id"])
             self.assertEqual(response.status_code, 200)
 
+            # check response type
             response_json = response.get_json()
             correct_keys = ["account_status", "date_of_birth", "name", "permissions", "phone_number", "surname",
                             "user_email_address", "user_id"]
@@ -91,9 +96,11 @@ class AuthBlueprintTestCase(unittest.TestCase):
             for key in correct_keys:
                 self.assertTrue(key in response_json)
 
+            # check data
             self.assertEqual(response_json["account_status"], "active")
             self.assertEqual(response_json["permissions"], "client")
 
+            # multiple register
             response = self.register_user(client, user_data)
             self.assertEqual(response.status_code, 409)
 
